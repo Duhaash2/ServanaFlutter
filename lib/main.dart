@@ -65,11 +65,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // @override
- // void initState() {
-  //   super.initState();
-  //   getToken();
-  // }
+  @override
+ void initState() {
+    super.initState();
+    getToken();
+  }
 
   getToken() async {
     String? token = await FirebaseMessaging.instance.getToken();
