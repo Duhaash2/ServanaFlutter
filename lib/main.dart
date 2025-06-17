@@ -27,7 +27,7 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-// ✅ Background message handler
+// ✅ Background handler
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   print("🔔 Background message: ${message.messageId}");
@@ -37,7 +37,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
 
-// 🔔 Store FCM messages globally (can later use Provider instead)
+// 🔔 Store notifications (replace with Provider later)
 final List<RemoteMessage> notificationMessages = [];
 
 void main() async {
@@ -47,8 +47,10 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // 🔔 Init local notification plugin
-  const AndroidInitializationSettings androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
-  const InitializationSettings initSettings = InitializationSettings(android: androidSettings);
+  const AndroidInitializationSettings androidSettings =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+  const InitializationSettings initSettings =
+  InitializationSettings(android: androidSettings);
   await flutterLocalNotificationsPlugin.initialize(initSettings);
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -88,7 +90,22 @@ class _MyAppState extends State<MyApp> {
     String? token = await FirebaseMessaging.instance.getToken();
     print("📲 Firebase Token: $token");
 
-    // 📥 Foreground message
+    // ✅ Request permission (Android 13+)
+    NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    print('🔐 Permission granted: ${settings.authorizationStatus}');
+
+    // ✅ Handle terminated state (cold start)
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      notificationMessages.add(initialMessage);
+      _navigateToNotificationScreen();
+    }
+
+    // ✅ Foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       notificationMessages.add(message);
 
@@ -114,25 +131,25 @@ class _MyAppState extends State<MyApp> {
       }
     });
 
-    // 📲 App opened from notification
+    // ✅ When app is resumed from background via tap
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       notificationMessages.add(message);
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => WorkerNotificationScreen(fcmMessages: notificationMessages),
-        ),
-      );
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => ClientNotificationScreen(fcmMessages: notificationMessages),
-        ),
-      );
+      _navigateToNotificationScreen();
     });
+  }
 
+  // ✅ Navigate based on role (replace isWorker with real logic later)
+  void _navigateToNotificationScreen() {
+    bool isWorker = true; // replace with ProfileController logic or SharedPreferences
 
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => isWorker
+            ? WorkerNotificationScreen(fcmMessages: notificationMessages)
+            : ClientNotificationScreen(fcmMessages: notificationMessages),
+      ),
+    );
   }
 
   @override

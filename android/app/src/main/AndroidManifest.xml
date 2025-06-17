@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.servana"> <!-- ✅ Replace with your actual package name -->
+    package="com.example.servana"> <!-- 🔁 Replace with your actual package if needed -->
 
-    <!-- Required permissions -->
+    <!-- 🔐 Required Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -13,7 +13,7 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
-        <!-- Firebase Cloud Messaging service (for background and foreground) -->
+        <!-- 🔔 FCM Service -->
         <service
             android:name="com.google.firebase.messaging.FirebaseMessagingService"
             android:exported="true"
@@ -23,12 +23,12 @@
             </intent-filter>
         </service>
 
-        <!-- Notification channel (required by FCM on Android 8+) -->
+        <!-- 🔔 Notification Channel ID -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="default_channel" />
 
-        <!-- Embed FlutterActivity (v2 embedding) -->
+        <!-- 🚀 Flutter Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -49,16 +49,18 @@
             </intent-filter>
         </activity>
 
-        <!-- Required for Flutter v2 embedding -->
+        <!-- ✅ Required for Flutter -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
 
+    <!-- 📋 Optional Queries (e.g., sharing text externally) -->
     <queries>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
+
 </manifest>
