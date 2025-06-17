@@ -7,7 +7,7 @@ import 'package:servana/view/screens/section_5/detail_profile_screen.dart';
 import '../../../controller/lang_controller.dart';
 import '../../../core/theme/theme_provider.dart';
 import '../../widgets/botton_navigation_widget.dart';
-import '../section_3/home_screen.dart';
+import '../section_3/home_client_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -56,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: SingleChildScrollView(
         child: Center(
           child: Column(
-            children: [
+            children: <Widget>[
               SizedBox(height: height * .02),
               CircleAvatar(
                 radius: width * .15,
@@ -82,8 +82,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               SizedBox(height: height * .02),
-
-              // Account Card
               Container(
                 width: width * .9,
                 padding: EdgeInsets.all(width * .04),
@@ -101,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       'My Account',
                       style: TextStyle(
@@ -111,7 +109,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     SizedBox(height: width * .02),
-
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.person_outline, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -125,7 +122,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => DetailProfileScreen())),
                     ),
-
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.language, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -147,7 +143,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: const Text('عربية', style: TextStyle(fontWeight: FontWeight.bold)),
                       ),
                     ),
-
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.dark_mode, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -166,7 +161,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         activeTrackColor: Colors.blue[100],
                       ),
                     ),
-
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.privacy_tip_outlined, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -180,7 +174,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       onTap: () {},
                     ),
-
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.settings_outlined, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -197,8 +190,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-
-              // Notifications
               Container(
                 width: width * .9,
                 margin: EdgeInsets.only(top: width * .04),
@@ -217,7 +208,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       'Notifications',
                       style: TextStyle(
@@ -265,8 +256,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-
-              // More
               Container(
                 width: width * .9,
                 margin: EdgeInsets.only(top: width * .04, bottom: width * .04),
@@ -285,7 +274,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       'More',
                       style: TextStyle(

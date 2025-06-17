@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:servana/controller/profile_controller.dart';
 import 'package:servana/view/screens/section_2/login_client_screen.dart';
-import 'package:servana/view/screens/section_5/detail_profile_screen.dart';
 import 'package:servana/view/screens/section_5/detail_profile_worker_screen.dart';
 import '../../../controller/lang_controller.dart';
 import '../../../core/theme/theme_provider.dart';
 import '../../widgets/botton_navigation_widget.dart';
-import '../section_3/home_screen.dart';
+import '../section_3/home_client_screen.dart';
 
 class ProfileWorkerScreen extends StatefulWidget {
   const ProfileWorkerScreen({super.key});
@@ -57,7 +56,7 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
       body: SingleChildScrollView(
         child: Center(
           child: Column(
-            children: [
+            children: <Widget>[
               SizedBox(height: height * .02),
               CircleAvatar(
                 radius: width * .15,
@@ -91,8 +90,6 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
                   ),
                 ),
               SizedBox(height: height * .02),
-
-              // Account Card
               Container(
                 width: width * .9,
                 padding: EdgeInsets.all(width * .04),
@@ -110,7 +107,7 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       'My Account',
                       style: TextStyle(
@@ -131,8 +128,7 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
                           color: Theme.of(context).textTheme.bodyMedium?.color,
                         ),
                       ),
-                      onTap:
-                          () => Navigator.push(context, MaterialPageRoute(builder: (_) => DetailProfileWorkerScreen())),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => DetailProfileWorkerScreen())),
                     ),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
@@ -202,8 +198,6 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
                   ],
                 ),
               ),
-
-              // Notifications
               Container(
                 width: width * .9,
                 margin: EdgeInsets.only(top: width * .04),
@@ -222,7 +216,7 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       'Notifications',
                       style: TextStyle(
@@ -270,8 +264,6 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
                   ],
                 ),
               ),
-
-              // More
               Container(
                 width: width * .9,
                 margin: EdgeInsets.only(top: width * .04, bottom: width * .04),
@@ -290,7 +282,7 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       'More',
                       style: TextStyle(

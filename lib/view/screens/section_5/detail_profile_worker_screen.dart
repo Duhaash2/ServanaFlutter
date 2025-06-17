@@ -5,7 +5,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../../../controller/profile_controller.dart';
 import '../../widgets/botton_navigation_widget.dart';
-import '../section_3/home_screen.dart';
+import '../section_3/home_client_screen.dart';
 import '../section_4/wallet_screen.dart';
 import '../section_4/history_screen.dart';
 import 'profile_worker_screen.dart';
@@ -108,6 +108,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
     final profileController = Provider.of<ProfileController>(context);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: isDarkMode ? Colors.black : Colors.white,
@@ -122,13 +123,13 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
       body: _usernameController == null
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(horizontal: width * 0.04, vertical: height * 0.02),
         child: Column(
           children: [
             Stack(
               children: [
                 CircleAvatar(
-                  radius: 50,
+                  radius: width * 0.13,
                   backgroundColor: Colors.grey[200],
                   backgroundImage: _profileImage != null
                       ? FileImage(_profileImage!)
@@ -140,7 +141,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
                   child: GestureDetector(
                     onTap: _pickImage,
                     child: CircleAvatar(
-                      radius: 16,
+                      radius: width * 0.045,
                       backgroundColor: Colors.blue,
                       child: const Icon(Icons.edit, size: 16, color: Colors.white),
                     ),
@@ -148,7 +149,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: height * 0.015),
             Text(profileController.username,
                 style: TextStyle(
                     fontSize: 18,
@@ -156,9 +157,9 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
                     color: isDarkMode ? Colors.white : Colors.black)),
             Text(profileController.email,
                 style: TextStyle(fontSize: 14, color: isDarkMode ? Colors.white70 : Colors.grey)),
-            const SizedBox(height: 20),
+            SizedBox(height: height * 0.03),
             _buildInfoCard(profileController, isDarkMode),
-            const SizedBox(height: 20),
+            SizedBox(height: height * 0.03),
             ElevatedButton(
               onPressed: () {
                 profileController.setAllUserData(
@@ -175,7 +176,6 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
                   const SnackBar(content: Text("Profile updated successfully")),
                 );
 
-                // Navigate back to profile screen
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (_) => const ProfileWorkerScreen()),
@@ -183,7 +183,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
               },
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[900],
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12)),
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.015)),
               child: const Text("Update", style: TextStyle(color: Colors.white)),
             ),
           ],
