@@ -1,82 +1,100 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:servana/view/screens/section_5/profile_screen.dart';
-import '../../widgets/botton_navigation_widget.dart';
-import '../section_3/home_screen.dart';
+import 'package:servana/view/screens/section_3/home_client_screen.dart';
+import 'package:servana/view/widgets/botton_navigation_widget.dart';
 
 class ClientNotificationScreen extends StatefulWidget {
-  const ClientNotificationScreen({super.key});
+  final List<RemoteMessage>? fcmMessages;
+
+  const ClientNotificationScreen({super.key, this.fcmMessages});
 
   @override
   State<ClientNotificationScreen> createState() => _ClientNotificationScreenState();
 }
 
-class _ClientNotificationScreenState extends State<ClientNotificationScreen> with SingleTickerProviderStateMixin {
+class _ClientNotificationScreenState extends State<ClientNotificationScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int selectedIndex = 0;
-
-  final List<Map<String, dynamic>> notifications = [
-    {
-      'icon': Icons.check_circle,
-      'title': 'Your job has been completed',
-      'subtitle': 'The worker marked your job as completed',
-      'time': '2h ago',
-      'isRead': false,
-    },
-    {
-      'icon': Icons.payment,
-      'title': 'Payment received',
-      'subtitle': 'Your payment has been processed',
-      'time': '4h ago',
-      'isRead': true,
-    },
-    {
-      'icon': Icons.message,
-      'title': 'You have a new message',
-      'subtitle': 'The worker: Hello, I\'m on my way',
-      'time': 'Yesterday',
-      'isRead': false,
-    },
-    {
-      'icon': Icons.check_circle,
-      'title': 'Job started',
-      'subtitle': 'The worker started the job',
-      'time': 'Yesterday',
-      'isRead': true,
-    },
-    {
-      'icon': Icons.message,
-      'title': 'You have a new message',
-      'subtitle': 'The worker: I will arrive shortly',
-      'time': '2d ago',
-      'isRead': false,
-    },
-    {
-      'icon': Icons.check_circle,
-      'title': 'Job request accepted',
-      'subtitle': 'The worker accepted your request',
-      'time': '2d ago',
-      'isRead': true,
-    },
-    {
-      'icon': Icons.message,
-      'title': 'You have a new message',
-      'subtitle': 'The worker: I can come tomorrow',
-      'time': '3d ago',
-      'isRead': true,
-    },
-    {
-      'icon': Icons.close,
-      'title': 'Job request rejected',
-      'subtitle': 'The worker is not available at the moment',
-      'time': '3d ago',
-      'isRead': false,
-    },
-  ];
+  late List<Map<String, dynamic>> notifications;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    // Convert FCM messages if provided, otherwise use mock data
+    if (widget.fcmMessages != null && widget.fcmMessages!.isNotEmpty) {
+      notifications = widget.fcmMessages!.map((msg) {
+        return {
+          'icon': Icons.notifications,
+          'title': msg.notification?.title ?? "No Title",
+          'subtitle': msg.notification?.body ?? "No Body",
+          'time': 'Just now',
+          'isRead': false,
+        };
+      }).toList();
+    } else {
+      notifications = [
+        {
+          'icon': Icons.check_circle,
+          'title': 'Your job has been completed',
+          'subtitle': 'The worker marked your job as completed',
+          'time': '2h ago',
+          'isRead': false,
+        },
+        {
+          'icon': Icons.payment,
+          'title': 'Payment received',
+          'subtitle': 'Your payment has been processed',
+          'time': '4h ago',
+          'isRead': true,
+        },
+        {
+          'icon': Icons.message,
+          'title': 'You have a new message',
+          'subtitle': 'The worker: Hello, I\'m on my way',
+          'time': 'Yesterday',
+          'isRead': false,
+        },
+        {
+          'icon': Icons.check_circle,
+          'title': 'Job started',
+          'subtitle': 'The worker started the job',
+          'time': 'Yesterday',
+          'isRead': true,
+        },
+        {
+          'icon': Icons.message,
+          'title': 'You have a new message',
+          'subtitle': 'The worker: I will arrive shortly',
+          'time': '2d ago',
+          'isRead': false,
+        },
+        {
+          'icon': Icons.check_circle,
+          'title': 'Job request accepted',
+          'subtitle': 'The worker accepted your request',
+          'time': '2d ago',
+          'isRead': true,
+        },
+        {
+          'icon': Icons.message,
+          'title': 'You have a new message',
+          'subtitle': 'The worker: I can come tomorrow',
+          'time': '3d ago',
+          'isRead': true,
+        },
+        {
+          'icon': Icons.close,
+          'title': 'Job request rejected',
+          'subtitle': 'The worker is not available at the moment',
+          'time': '3d ago',
+          'isRead': false,
+        },
+      ];
+    }
   }
 
   void onItemTapped(int index) {
@@ -94,7 +112,8 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> unreadNotifications = notifications.where((n) => n['isRead'] == false).toList();
+    List<Map<String, dynamic>> unreadNotifications =
+    notifications.where((n) => n['isRead'] == false).toList();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -121,12 +140,21 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _buildNotificationList(notifications),
-          _buildNotificationList(unreadNotifications),
-        ],
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 500),
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  _buildNotificationList(notifications),
+                  _buildNotificationList(unreadNotifications),
+                ],
+              ),
+            ),
+          );
+        },
       ),
       bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
     );
@@ -161,9 +189,11 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
                 ),
             ],
           ),
-          title: Text(item['title'], style: const TextStyle(fontWeight: FontWeight.bold)),
+          title: Text(item['title'],
+              style: const TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text(item['subtitle']),
-          trailing: Text(item['time'], style: const TextStyle(fontSize: 12, color: Colors.grey)),
+          trailing: Text(item['time'],
+              style: const TextStyle(fontSize: 12, color: Colors.grey)),
         );
       },
     );

@@ -21,12 +21,15 @@ class HistoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final responsiveFont = (double base) => width * base / 375; // base from iPhone 11
+
     return Container(
-      width: 370,
+      width: width * 0.9,
       margin: const EdgeInsets.only(right: 10, bottom: 12),
-      padding: const EdgeInsets.all(14),
+      padding: EdgeInsets.all(responsiveFont(14)),
       decoration: BoxDecoration(
-        color: Colors.white, // ✅ soft sky blue
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -39,55 +42,52 @@ class HistoryWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(width: 12),
+          SizedBox(width: responsiveFont(12)),
 
           // 📋 Info Section
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 🧑‍🔧 Title
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 20,
+                  style: TextStyle(
+                    fontSize: responsiveFont(20),
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF0D47A1),
+                    color: const Color(0xFF0D47A1),
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
 
-                const SizedBox(height: 5),
+                SizedBox(height: responsiveFont(5)),
 
-                // 🧾 Description1
                 Text(
                   description1,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: responsiveFont(16),
                     fontWeight: FontWeight.w400,
                     color: Colors.black87,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
 
-                const SizedBox(height: 25),
+                SizedBox(height: responsiveFont(25)),
 
-                // 📅 Date
                 Row(
                   children: [
                     Text(
                       date,
-                      style: const TextStyle(
-                        fontSize: 13,
+                      style: TextStyle(
+                        fontSize: responsiveFont(13),
                         fontWeight: FontWeight.w400,
                         color: Colors.grey,
                       ),
                     ),
-                    SizedBox(width: 18,),
+                    SizedBox(width: responsiveFont(18)),
                     Text(
                       'JD $price/hr',
-                      style: const TextStyle(
-                        fontSize: 13,
+                      style: TextStyle(
+                        fontSize: responsiveFont(13),
                         fontWeight: FontWeight.w600,
                         color: Colors.grey,
                       ),
@@ -95,63 +95,59 @@ class HistoryWidget extends StatelessWidget {
                   ],
                 ),
 
-                const SizedBox(height: 8),
-
-                // 💵 Price
-
+                SizedBox(height: responsiveFont(8)),
               ],
             ),
           ),
 
-          const SizedBox(width: 10),
+          SizedBox(width: responsiveFont(10)),
 
-          // 📍 Buttons
           Column(
             children: [
-              // ✅ Rate Worker Button
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RatingScreen()),
+                    MaterialPageRoute(builder: (context) =>  RatingScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF0D47A1),
-                  minimumSize: const Size(100, 36),
+                  backgroundColor: const Color(0xFF0D47A1),
+                  minimumSize: Size(responsiveFont(100), responsiveFont(36)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   "Rate Worker",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: responsiveFont(14),
+                  ),
                 ),
               ),
 
-              const SizedBox(height: 10),
+              SizedBox(height: responsiveFont(10)),
 
-              // 📝 Description Button
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFDAF6FF),
+                  backgroundColor: const Color(0xFFDAF6FF),
                   elevation: 0,
-                  side: BorderSide(color: Color(0xFFDAF6FF), width: 1),
-                  minimumSize: const Size(100, 36),
+                  side: const BorderSide(color: Color(0xFFDAF6FF), width: 1),
+                  minimumSize: Size(responsiveFont(100), responsiveFont(36)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 child: Text(
                   description,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.black),
+                  style: TextStyle(
+                    fontSize: responsiveFont(14),
+                    color: Colors.black,
                   ),
-                  //overflow: TextOverflow.ellipsis,
                 ),
-             // ),
+              ),
             ],
           ),
         ],

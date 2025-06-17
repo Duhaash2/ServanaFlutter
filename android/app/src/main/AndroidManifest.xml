@@ -1,14 +1,34 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.servana"> <!-- ✅ Replace with your actual package name -->
 
-    <!-- Location permissions -->
+    <!-- Required permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:label="servana"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
+        <!-- Firebase Cloud Messaging service (for background and foreground) -->
+        <service
+            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+            android:exported="true"
+            tools:replace="android:exported">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Notification channel (required by FCM on Android 8+) -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="default_channel" />
+
+        <!-- Embed FlutterActivity (v2 embedding) -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -24,11 +44,12 @@
                 android:resource="@style/NormalTheme" />
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <!-- Required for Flutter v2 embedding -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

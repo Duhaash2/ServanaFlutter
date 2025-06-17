@@ -24,13 +24,16 @@ class PlumingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final scale = width / 375;
+
     return Container(
-      width: 370,
-      margin: const EdgeInsets.only(right: 10, bottom: 12),
-      padding: const EdgeInsets.all(12),
+      width: scale * 370,
+      margin: EdgeInsets.only(right: scale * 10, bottom: scale * 12),
+      padding: EdgeInsets.all(scale * 12),
       decoration: BoxDecoration(
-        color: Colors.blue[50],// soft sky blue
-        borderRadius: BorderRadius.circular(16),
+        color: Colors.blue[50],
+        borderRadius: BorderRadius.circular(scale * 16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.07),
@@ -42,136 +45,111 @@ class PlumingWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // 👤 Avatar
           CircleAvatar(
-            radius: 40,
+            radius: scale * 40,
             backgroundImage: AssetImage(imagePath),
           ),
-          const SizedBox(width: 12),
-
-          // 📋 Info Section
+          SizedBox(width: scale * 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Name
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 20,
+                  style: TextStyle(
+                    fontSize: scale * 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 6),
-
-                // ⭐ Rating
+                SizedBox(height: scale * 6),
                 Row(
                   children: [
                     RatingBarIndicator(
                       rating: rating,
-                      itemBuilder: (context, index) => const Icon(
+                      itemBuilder: (context, _) => const Icon(
                         Icons.star,
                         color: Colors.orange,
                       ),
                       itemCount: 5,
-                      itemSize: 20.0,
+                      itemSize: scale * 20.0,
                       direction: Axis.horizontal,
                     ),
-                    const SizedBox(width: 6),
+                    SizedBox(width: scale * 6),
                     Text(
                       rating.toStringAsFixed(1),
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: TextStyle(
+                        fontSize: scale * 14,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
                 ),
-
-                const SizedBox(height: 6),
-
-                // 💵 Price
+                SizedBox(height: scale * 6),
                 Text(
                   'JD $price/hr',
-                  style: const TextStyle(
-                    fontSize: 17,
+                  style: TextStyle(
+                    fontSize: scale * 17,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF0D47A1),
+                    color: const Color(0xFF0D47A1),
                   ),
                 ),
               ],
             ),
           ),
-
-          const SizedBox(width: 10),
-
-          // 📞 Contact and Description
+          SizedBox(width: scale * 10),
           Column(
             children: [
-              // 📞 Phone
               InkWell(
                 onTap: onPressed,
-                borderRadius: BorderRadius.circular(30),
-                child: const Padding(
-                  padding: EdgeInsets.all(6.0),
+                borderRadius: BorderRadius.circular(scale * 30),
+                child: Padding(
+                  padding: EdgeInsets.all(scale * 6.0),
                   child: Icon(
                     Icons.phone,
                     color: Colors.green,
-                    size: 28,
+                    size: scale * 28,
                   ),
                 ),
               ),
-              const SizedBox(height: 6),
-
-              // 🟢 WhatsApp
+              SizedBox(height: scale * 6),
               InkWell(
                 onTap: () async {
                   if (whatsappNumber != null) {
                     final url = Uri.parse("https://wa.me/$whatsappNumber");
                     if (await canLaunchUrl(url)) {
-                      await launchUrl(
-                        url,
-                        mode: LaunchMode.externalApplication,
-                      );
+                      await launchUrl(url, mode: LaunchMode.externalApplication);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Could not open WhatsApp"),
-                        ),
+                        const SnackBar(content: Text("Could not open WhatsApp")),
                       );
                     }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("WhatsApp number not available"),
-                      ),
+                      const SnackBar(content: Text("WhatsApp number not available")),
                     );
                   }
                 },
                 child: Image.asset(
                   'assets/images/whatsapp.jpg',
-                  width: 28,
-                  height: 28,
+                  width: scale * 28,
+                  height: scale * 28,
                 ),
               ),
-
-              const SizedBox(height: 6),
-
-              // 🟠 Description
+              SizedBox(height: scale * 6),
               TextButton(
                 onPressed: onPressed,
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
-                  minimumSize: const Size(50, 20),
+                  minimumSize: Size(scale * 50, scale * 20),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 child: Text(
                   description,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Color(0xFF0D47A1),
+                  style: TextStyle(
+                    fontSize: scale * 13,
+                    color: const Color(0xFF0D47A1),
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),

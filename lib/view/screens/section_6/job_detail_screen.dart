@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/botton_navigation_widget.dart';
-import '../section_3/home_screen.dart';
+import '../section_3/home_client_screen.dart';
 import '../section_5/profile_screen.dart';
 
 class JobDetailScreen extends StatefulWidget {
@@ -143,8 +143,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                 ],
               ),
             ),
-            const SizedBox(height:100),
-            // Contact Worker Button - Styled like End Work
+            const SizedBox(height: 100),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

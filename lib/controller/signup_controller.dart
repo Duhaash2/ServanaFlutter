@@ -33,6 +33,9 @@ class SignUpController extends ChangeNotifier {
 
   Future<bool> registerUser(SignUpModel user) async {
     setLoading(true);
+
+    // ✅✅ تم تعليق كود تسجيل المستخدم مؤقتًا لتجربة الواجهة فقط بدون استدعاء API:
+    /*
     try {
       final client = createHttpClient();
       final response = await client.post(
@@ -54,5 +57,9 @@ class SignUpController extends ChangeNotifier {
       setLoading(false);
       return false;
     }
+    */
+
+    setLoading(false);
+    return true; // ✅ وهميًا لإكمال تجربة الواجهة بدون سيرفر
   }
 }

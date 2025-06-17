@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:servana/view/screens/section_5/profile_screen.dart';
-import '../../widgets/botton_navigation_widget.dart';
-import '../section_3/home_screen.dart';
+import 'package:servana/view/screens/section_3/home_client_screen.dart';
+import 'package:servana/view/widgets/botton_navigation_widget.dart';
 
 class WorkerNotificationScreen extends StatefulWidget {
-  const WorkerNotificationScreen({super.key});
+  final List<RemoteMessage>? fcmMessages;
+
+  const WorkerNotificationScreen({super.key, this.fcmMessages});
 
   @override
   State<WorkerNotificationScreen> createState() => _WorkerNotificationScreenState();
@@ -14,55 +17,71 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
   late TabController _tabController;
   int selectedIndex = 0;
 
-  final List<Map<String, dynamic>> notifications = [
-    {
-      'icon': Icons.work,
-      'title': 'New job assigned',
-      'subtitle': 'You have accepted a new job',
-      'time': '1h ago',
-      'isRead': false,
-    },
-    {
-      'icon': Icons.timer,
-      'title': 'Job started',
-      'subtitle': 'You marked the job as started',
-      'time': '3h ago',
-      'isRead': true,
-    },
-    {
-      'icon': Icons.payment,
-      'title': 'Payment confirmed',
-      'subtitle': 'The client confirmed payment',
-      'time': 'Today',
-      'isRead': false,
-    },
-    {
-      'icon': Icons.chat,
-      'title': 'New message from client',
-      'subtitle': 'Client: Please arrive before 3 PM',
-      'time': 'Yesterday',
-      'isRead': true,
-    },
-    {
-      'icon': Icons.check_circle,
-      'title': 'Job completed',
-      'subtitle': 'You marked the job as done',
-      'time': '2d ago',
-      'isRead': true,
-    },
-    {
-      'icon': Icons.cancel,
-      'title': 'Job cancelled',
-      'subtitle': 'The client cancelled the request',
-      'time': '2d ago',
-      'isRead': false,
-    },
-  ];
+  late List<Map<String, dynamic>> notifications;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    // If messages from Firebase are passed, convert them
+    if (widget.fcmMessages != null && widget.fcmMessages!.isNotEmpty) {
+      notifications = widget.fcmMessages!.map((msg) {
+        return {
+          'icon': Icons.notifications,
+          'title': msg.notification?.title ?? "No Title",
+          'subtitle': msg.notification?.body ?? "No Body",
+          'time': 'Just now',
+          'isRead': false,
+        };
+      }).toList();
+    } else {
+      // Default demo data
+      notifications = [
+        {
+          'icon': Icons.work,
+          'title': 'New job assigned',
+          'subtitle': 'You have accepted a new job',
+          'time': '1h ago',
+          'isRead': false,
+        },
+        {
+          'icon': Icons.timer,
+          'title': 'Job started',
+          'subtitle': 'You marked the job as started',
+          'time': '3h ago',
+          'isRead': true,
+        },
+        {
+          'icon': Icons.payment,
+          'title': 'Payment confirmed',
+          'subtitle': 'The client confirmed payment',
+          'time': 'Today',
+          'isRead': false,
+        },
+        {
+          'icon': Icons.chat,
+          'title': 'New message from client',
+          'subtitle': 'Client: Please arrive before 3 PM',
+          'time': 'Yesterday',
+          'isRead': true,
+        },
+        {
+          'icon': Icons.check_circle,
+          'title': 'Job completed',
+          'subtitle': 'You marked the job as done',
+          'time': '2d ago',
+          'isRead': true,
+        },
+        {
+          'icon': Icons.cancel,
+          'title': 'Job cancelled',
+          'subtitle': 'The client cancelled the request',
+          'time': '2d ago',
+          'isRead': false,
+        },
+      ];
+    }
   }
 
   void onItemTapped(int index) {
@@ -114,7 +133,7 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
           _buildNotificationList(unread),
         ],
       ),
-      bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
+    //  bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
     );
   }
 
@@ -155,43 +174,43 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
     );
   }
 
-  BottomAppBar _buildBottomBar(double width) {
-    return BottomAppBar(
-      color: Colors.white,
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 8,
-      child: SizedBox(
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            BottonNavigationWidget(
-              icon: Icons.home_filled,
-              label: "Home",
-              isSelected: selectedIndex == 0,
-              onTap: () => _navigate(0, const HomeScreen()),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.wallet,
-              label: "Wallet",
-              isSelected: selectedIndex == 1,
-              onTap: () => onItemTapped(1),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.history,
-              label: "History",
-              isSelected: selectedIndex == 2,
-              onTap: () => onItemTapped(2),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.person,
-              label: "Profile",
-              isSelected: selectedIndex == 3,
-              onTap: () => _navigate(3, const ProfileScreen()),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // BottomAppBar _buildBottomBar(double width) {
+  //   return BottomAppBar(
+  //     color: Colors.white,
+  //     shape: const CircularNotchedRectangle(),
+  //     notchMargin: 8,
+  //     child: SizedBox(
+  //       height: 60,
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //         children: [
+  //           BottonNavigationWidget(
+  //             icon: Icons.home_filled,
+  //             label: "Home",
+  //             isSelected: selectedIndex == 0,
+  //             onTap: () => _navigate(0, const HomeScreen()),
+  //           ),
+  //           BottonNavigationWidget(
+  //             icon: Icons.wallet,
+  //             label: "Wallet",
+  //             isSelected: selectedIndex == 1,
+  //             onTap: () => onItemTapped(1),
+  //           ),
+  //           BottonNavigationWidget(
+  //             icon: Icons.history,
+  //             label: "History",
+  //             isSelected: selectedIndex == 2,
+  //             onTap: () => onItemTapped(2),
+  //           ),
+  //           BottonNavigationWidget(
+  //             icon: Icons.person,
+  //             label: "Profile",
+  //             isSelected: selectedIndex == 3,
+  //             onTap: () => _navigate(3, const ProfileScreen()),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

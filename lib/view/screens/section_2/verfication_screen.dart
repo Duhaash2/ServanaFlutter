@@ -6,16 +6,16 @@ import '../../../service/auth/authentication_service.dart';
 import 'forgot_password_page.dart';
 import '../../../l10n/app_localizations.dart';
 
-class OTPScreen extends StatefulWidget {
+class VerficationScreen extends StatefulWidget {
   final String email;
 
-  OTPScreen({required this.email});
+  VerficationScreen({required this.email});
 
   @override
-  _OTPScreenState createState() => _OTPScreenState();
+  _VerficationScreenState createState() => _VerficationScreenState();
 }
 
-class _OTPScreenState extends State<OTPScreen> {
+class _VerficationScreenState extends State<VerficationScreen> {
   late List<TextEditingController> _controllers;
   late List<FocusNode> _focusNodes;
   bool isLoading = false;

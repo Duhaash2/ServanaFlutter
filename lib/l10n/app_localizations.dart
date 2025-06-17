@@ -396,7 +396,7 @@ abstract class AppLocalizations {
   /// No description provided for @search_service_workers_or_etc.
   ///
   /// In en, this message translates to:
-  /// **'Search for services, workers, etc'**
+  /// **'Search workers, etc'**
   String get search_service_workers_or_etc;
 
   /// No description provided for @notifications.

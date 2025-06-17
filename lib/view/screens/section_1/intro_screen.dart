@@ -17,14 +17,17 @@ class _IntroScreenState extends State<IntroScreen> {
   @override
   Widget build(BuildContext context) {
     final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final size = MediaQuery.of(context).size;
+    final width = size.width;
+    final height = size.height;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFEAF6FF), // Light blue background
+      backgroundColor: const Color(0xFFEAF6FF),
       body: Column(
         children: [
-          // 🔵 Top Half Full Image
+          // 🔵 Top Image Section (Responsive Height)
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.55,
+            height: height * 0.55,
             width: double.infinity,
             child: Image.asset(
               "assets/images/introdu1.png",
@@ -35,45 +38,54 @@ class _IntroScreenState extends State<IntroScreen> {
           // 🔵 Texts and Button Section
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: width * 0.05),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     AppLocalizations.of(context)!.welcome_to_servana,
                     style: TextStyle(
-                      fontSize: 26,
+                      fontSize: width * 0.060,
                       fontWeight: FontWeight.bold,
                       color: isDarkMode ? Colors.white : Colors.blue[900],
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: height * 0.015),
                   Text(
                     AppLocalizations.of(context)!.experience_quick_seamless_service,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: width * 0.042,
                       color: isDarkMode ? Colors.grey[300] : Colors.grey[700],
                     ),
                   ),
-                  const SizedBox(height: 50),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Intro2Screen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[900],
-                      padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
+                  SizedBox(height: height * 0.05),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const Intro2Screen()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[900],
+                        padding: EdgeInsets.symmetric(
+                          vertical: height * 0.018,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      AppLocalizations.of(context)!.btn_cont,
-                      style: const TextStyle(fontSize: 18, color: Colors.white),
+                      child: Text(
+                        AppLocalizations.of(context)!.btn_cont,
+                        style: TextStyle(
+                          fontSize: width * 0.045,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -83,7 +95,10 @@ class _IntroScreenState extends State<IntroScreen> {
 
           // 🔵 Bottom Navigation Row
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            padding: EdgeInsets.symmetric(
+              horizontal: width * 0.05,
+              vertical: height * 0.02,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -91,13 +106,13 @@ class _IntroScreenState extends State<IntroScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Intro4LocationScreen()),
+                      MaterialPageRoute(builder: (_) => const Intro4LocationScreen()),
                     );
                   },
                   child: Text(
                     "Skip",
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: width * 0.04,
                       color: isDarkMode ? Colors.blue[900] : Colors.grey,
                     ),
                   ),
@@ -115,12 +130,12 @@ class _IntroScreenState extends State<IntroScreen> {
                   icon: Icon(
                     Icons.arrow_forward,
                     color: Colors.blue[900],
-                    size: 28,
+                    size: width * 0.07,
                   ),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Intro2Screen()),
+                      MaterialPageRoute(builder: (_) => const Intro2Screen()),
                     );
                   },
                 ),

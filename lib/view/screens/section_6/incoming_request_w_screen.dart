@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:servana/view/screens/section_6/home_worker_screen.dart';
+import 'package:servana/view/screens/section_6/job_detail_screen.dart';
 import '../../widgets/botton_navigation_widget.dart';
-import '../section_3/home_screen.dart';
+import '../section_3/home_client_screen.dart';
 import '../section_5/profile_screen.dart';
 
 class IncomingRequestWScreen extends StatefulWidget {
@@ -43,7 +45,6 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         children: [
@@ -51,32 +52,56 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
             name: 'Alice Smith',
             service: 'Plumbing - Leaky Faucet',
             address: '123 Mani St. Anytown',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => JobDetailScreen()),
+              );
+            },
           ),
           _buildRequestCard(
             name: 'Dayid Johnson',
             service: 'Electrical - Light Fixture',
             address: '45 Ehn St. Anytown',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => JobDetailScreen()),
+              );
+            },
           ),
           _buildRequestCard(
             name: 'Susan Brown',
             service: 'HVAC - Amotallation',
             address: '55 Gan St. Anytown',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => JobDetailScreen()),
+              );
+            },
           ),
           _buildRequestCard(
-            name: 'Susan Brown',
+            name: 'Jakob Alice',
             service: 'HVAC - Amotallation',
-            address: '55 Gan St. Anytown',
+            address: '123 Mani St. Anytown',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => JobDetailScreen()),
+              );
+            },
           ),
         ],
       ),
     );
   }
 
-
   Widget _buildRequestCard({
     required String name,
     required String service,
     required String address,
+    required final VoidCallback onTap,
   }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -85,21 +110,23 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          )
+          BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(name, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Text(
+            name,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 4),
           Text(service, style: const TextStyle(fontSize: 14)),
           const SizedBox(height: 2),
-          Text(address, style: const TextStyle(fontSize: 13, color: Colors.grey)),
+          Text(
+            address,
+            style: const TextStyle(fontSize: 13, color: Colors.grey),
+          ),
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
@@ -111,12 +138,15 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
                 minimumSize: const Size(0, 0),
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              child: const Text(
-                "View Details",
-                style: TextStyle(
-                  fontSize: 13,
-                  decoration: TextDecoration.underline,
-                  color: Colors.blue,
+              child: TextButton(
+                onPressed: onTap,
+                child: Text(
+                  "View Details",
+                  style: TextStyle(
+                    fontSize: 13,
+                    decoration: TextDecoration.underline,
+                    color: Colors.blue,
+                  ),
                 ),
               ),
             ),
@@ -129,11 +159,29 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
               // View Details Button with custom style
               TextButton(
                 onPressed: () {
-                  // Handle View Details
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text("Request Accepted"),
+                      backgroundColor: Colors.green,
+                      behavior: SnackBarBehavior.floating,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HomeWorkerScreen()),
+                    );
+                  });
                 },
+
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.blue[900],
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                    vertical: 10,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -147,12 +195,32 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
               // Accept Button with white text
               ElevatedButton(
                 onPressed: () {
-                  // Handle Accept
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text("Request Declined "),
+                      backgroundColor: Colors.red,
+                      behavior: SnackBarBehavior.floating,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HomeWorkerScreen()),
+                    );
+                  });
                 },
+
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[50],
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                    vertical: 10,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
                 child: const Text(
                   "Decline",
@@ -161,48 +229,7 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
               ),
             ],
           ),
-
         ],
-      ),
-    );
-  }
-
-  BottomAppBar _buildBottomBar(double width) {
-    return BottomAppBar(
-      color: Colors.white,
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 8,
-      child: SizedBox(
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            BottonNavigationWidget(
-              icon: Icons.home_filled,
-              label: "Home",
-              isSelected: selectedIndex == 0,
-              onTap: () => _navigate(0, const HomeScreen()),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.wallet,
-              label: "Wallet",
-              isSelected: selectedIndex == 1,
-              onTap: () => onItemTapped(1),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.history,
-              label: "History",
-              isSelected: selectedIndex == 2,
-              onTap: () => onItemTapped(2),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.person,
-              label: "Profile",
-              isSelected: selectedIndex == 3,
-              onTap: () => _navigate(3, const ProfileScreen()),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:servana/view/screens/section_2/login_selection_screen.dart';
 import '../../../l10n/app_localizations.dart';
-import '../section_2/login_client_screen.dart';
 
 class Intro4LocationScreen extends StatefulWidget {
   const Intro4LocationScreen({super.key});
@@ -19,9 +18,7 @@ class _Intro4LocationScreenState extends State<Intro4LocationScreen> {
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text(
-            "📍 Location services are disabled. Please enable them.",
-          ),
+          content: Text("📍 Location services are disabled. Please enable them."),
         ),
       );
       await Geolocator.openLocationSettings();
@@ -39,7 +36,6 @@ class _Intro4LocationScreenState extends State<Intro4LocationScreen> {
         desiredAccuracy: LocationAccuracy.high,
       );
 
-      // ✅ Print location to console
       print("✅ Latitude: ${position.latitude}");
       print("✅ Longitude: ${position.longitude}");
     } else if (permission == PermissionStatus.denied) {
@@ -49,9 +45,7 @@ class _Intro4LocationScreenState extends State<Intro4LocationScreen> {
     } else if (permission == PermissionStatus.permanentlyDenied) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text(
-            "⚠️ Location permission permanently denied. Open settings to allow.",
-          ),
+          content: Text("⚠️ Location permission permanently denied. Open settings to allow."),
         ),
       );
       await openAppSettings();
@@ -61,98 +55,100 @@ class _Intro4LocationScreenState extends State<Intro4LocationScreen> {
   @override
   Widget build(BuildContext context) {
     final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final size = MediaQuery.of(context).size;
+    final width = size.width;
+    final height = size.height;
+
     return Scaffold(
-      //  backgroundColor: const Color(0xFFEAF6FF), // Light blue background
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.50,
-            width: double.infinity,
-            child: Image.asset("assets/images/intodu3.PNG", fit: BoxFit.cover),
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.turn_on_your_location,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: isDarkMode ? Colors.white : Colors.blue[900],
-                  ),
-                  textAlign: TextAlign.center,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+          child: Column(
+            children: [
+              SizedBox(
+                height: height * 0.5,
+                width: double.infinity,
+                child: Image.asset("assets/images/intodu3.PNG", fit: BoxFit.cover),
+              ),
+              SizedBox(height: height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.turn_on_your_location,
+                style: TextStyle(
+                  fontSize: width * 0.05,
+                  fontWeight: FontWeight.bold,
+                  color: isDarkMode ? Colors.white : Colors.blue[900],
                 ),
-                const SizedBox(height: 12),
-                Text(
-                  AppLocalizations.of(
-                    context,
-                  )!.to_continues_let_your_device_turn_on_location_which_uses_googles_location_service,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: isDarkMode ? Colors.grey[300] : Colors.grey[600],
-                  ),
-                  textAlign: TextAlign.center,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: height * 0.015),
+              Text(
+                AppLocalizations.of(context)!
+                    .to_continues_let_your_device_turn_on_location_which_uses_googles_location_service,
+                style: TextStyle(
+                  fontSize: width * 0.04,
+                  color: isDarkMode ? Colors.grey[300] : Colors.grey[600],
                 ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 60),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Column(
-              children: [
-                ElevatedButton(
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: height * 0.07),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
                   onPressed: () => _enableLocation(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue[900],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
-                    minimumSize: const Size(double.infinity, 50),
+                    padding: EdgeInsets.symmetric(
+                      vertical: height * 0.02,
+                    ),
                   ),
                   child: Text(
                     AppLocalizations.of(context)!.yes_turn_it_on,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: TextStyle(
+                      fontSize: width * 0.045,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
-                OutlinedButton(
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginSelectionScreen(),
-                        ),
-                      ),
+              ),
+              SizedBox(height: height * 0.02),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const LoginSelectionScreen()),
+                    );
+                  },
                   style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
-                    minimumSize: const Size(double.infinity, 50),
                     side: BorderSide(
                       color: isDarkMode ? Colors.grey[600]! : Colors.grey[400]!,
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      vertical: height * 0.02,
                     ),
                   ),
                   child: Text(
                     AppLocalizations.of(context)!.btn_cancel,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: width * 0.045,
                       fontWeight: FontWeight.bold,
                       color: isDarkMode ? Colors.white : Colors.black,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+              SizedBox(height: height * 0.05),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

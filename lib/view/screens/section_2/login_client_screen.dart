@@ -8,7 +8,7 @@ import '../../../controller/login_controller.dart';
 import '../../../model/auth_model/sign_model.dart';
 import '../../../service/auth/authentication_service.dart';
 import '../../widgets/input_widget.dart';
-import '../section_3/home_screen.dart';
+import '../section_3/home_client_screen.dart';
 
 class LoginClientScreen extends StatefulWidget {
   const LoginClientScreen({super.key});
@@ -59,222 +59,225 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
   Widget build(BuildContext context) {
     final loginController = Provider.of<LoginController>(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final topPadding = MediaQuery.of(context).size.height * 0.3;
 
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/Servana_login.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(top: topPadding, left: 20, right: 20, bottom: 20),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 500),
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.83),
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.login,
-                        style: const TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF0D47A1), // Same as Colors.blue[900]
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final topPadding = constraints.maxHeight * 0.3;
+
+          return Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/Servana_login.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(top: topPadding, left: 20, right: 20, bottom: 20),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 500),
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.83),
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.dont_have_an_account,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                            ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.login,
+                          style: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 30,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF0D47A1),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => SignUpScreen()),
-                              );
-                            },
-                            child: const Text(
-                              "Sign Up",
-                              style: TextStyle(
-                                color: Color(0xFF0D47A1), // Same as Colors.blue[900]
-                                fontSize: 15,
-                              ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.dont_have_an_account,
+                              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 15),
-                      Consumer<LoginController>(
-                        builder: (context, loginController, child) {
-                          return InputWidget(
-                            obscureText: false,
-                            textEditingController: emailTextEditingController,
-                            label: AppLocalizations.of(context)!.email,
-                            hintText: "you@example.com",
-                            errorText: loginController.showErrorEmail
-                                ? loginController.errorEmailMessage
-                                : null,
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      Consumer<LoginController>(
-                        builder: (context, loginController, child) {
-                          return TextFormField(
-                            controller: passTextEditingController,
-                            obscureText: loginController.obscureTextPassword,
-                            decoration: InputDecoration(
-                            //  filled: true,
-                           //   fillColor: Colors.white,
-                              labelText: AppLocalizations.of(context)!.password,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              suffixIcon: IconButton(
-                                onPressed: () => loginController.changeObscureTextPassword(),
-                                icon: Icon(
-                                  loginController.obscureTextPassword
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              errorText: loginController.showErrorPassword
-                                  ? loginController.errorPasswordMessage
-                                  : null,
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SizedBox(
-                                height: 24,
-                                width: 24,
-                                child: Checkbox(
-                                  value: rememberMe,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      rememberMe = value!;
-                                    });
-                                  },
-                                  activeColor:  Color(0xFF0D47A1),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              const Text(
-                                "Remember Me",
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => SignUpScreen()),
+                                );
+                              },
+                              child: const Text(
+                                "Sign Up",
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  color: Color(0xFF0D47A1),
+                                  fontSize: 15,
                                 ),
                               ),
-                            ],
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => ResetPasswordScreen()),
-                              );
-                            },
-                            child: const Text(
-                              "Forgot Password?",
-                              style: TextStyle(
-                                color: Color(0xFF0D47A1),
-                                fontSize: 14,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 15),
+                        Consumer<LoginController>(
+                          builder: (context, loginController, child) {
+                            return InputWidget(
+                              obscureText: false,
+                              textEditingController: emailTextEditingController,
+                              label: AppLocalizations.of(context)!.email,
+                              hintText: "you@example.com",
+                              errorText: loginController.showErrorEmail
+                                  ? loginController.errorEmailMessage
+                                  : null,
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 15),
+                        Consumer<LoginController>(
+                          builder: (context, loginController, child) {
+                            return TextFormField(
+                              controller: passTextEditingController,
+                              obscureText: loginController.obscureTextPassword,
+                              decoration: InputDecoration(
+                                labelText: AppLocalizations.of(context)!.password,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                suffixIcon: IconButton(
+                                  onPressed: () => loginController.changeObscureTextPassword(),
+                                  icon: Icon(
+                                    loginController.obscureTextPassword
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                errorText: loginController.showErrorPassword
+                                    ? loginController.errorPasswordMessage
+                                    : null,
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  height: 24,
+                                  width: 24,
+                                  child: Checkbox(
+                                    value: rememberMe,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        rememberMe = value!;
+                                      });
+                                    },
+                                    activeColor: Color(0xFF0D47A1),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                const Text(
+                                  "Remember Me",
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ],
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => ResetPasswordScreen()),
+                                );
+                              },
+                              child: const Text(
+                                "Forgot Password?",
+                                style: TextStyle(color: Color(0xFF0D47A1), fontSize: 14),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () async {
-                          if (emailTextEditingController.text.isEmpty ||
-                              passTextEditingController.text.isEmpty) {
-                            loginController.showCustomEmailError("Please enter both email and password");
-                            return;
-                          }
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () async {
+                            if (emailTextEditingController.text.isEmpty ||
+                                passTextEditingController.text.isEmpty) {
+                              loginController.showCustomEmailError("Please enter both email and password");
+                              return;
+                            }
 
-                          loginController.checkEmail(email: emailTextEditingController.text);
-                          loginController.checkPassword(
-                            password: passTextEditingController.text,
-                            email: emailTextEditingController.text,
-                          );
+                            loginController.checkEmail(email: emailTextEditingController.text);
+                            loginController.checkPassword(
+                              password: passTextEditingController.text,
+                              email: emailTextEditingController.text,
+                            );
 
-                          if (loginController.showErrorEmail || loginController.showErrorPassword) return;
+                            if (loginController.showErrorEmail || loginController.showErrorPassword) return;
 
-                          Sign_Model signModel = Sign_Model(
-                            email: emailTextEditingController.text,
-                            password: passTextEditingController.text,
-                          );
+                            // ✅✅ تم تعطيل الكود الأصلي لتسجيل الدخول مؤقتًا لتجربة الواجهة بدون تحقق من السيرفر:
+                            /*
+                            Sign_Model signModel = Sign_Model(
+                              email: emailTextEditingController.text,
+                              password: passTextEditingController.text,
+                            );
 
-                          final authService = AuthenticationService();
-                          bool success = await authService.login(signModel);
+                            final authService = AuthenticationService();
+                            bool success = await authService.login(signModel);
 
-                          if (success) {
+                            if (success) {
+                              await _saveCredentials(emailTextEditingController.text, "user_id_123");
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => HomeScreen()),
+                              );
+                            } else {
+                              loginController.showCustomEmailError("Login failed. Please check your credentials.");
+                            }
+                            */
+
+                            // ✅ تسجيل دخول وهمي بدون تحقق
                             await _saveCredentials(emailTextEditingController.text, "user_id_123");
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(builder: (context) => HomeScreen()),
                             );
-                          } else {
-                            loginController.showCustomEmailError("Login failed. Please check your credentials.");
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF0D47A1),
-                          minimumSize: const Size(double.infinity, 45),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF0D47A1),
+                            minimumSize: const Size(double.infinity, 45),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
