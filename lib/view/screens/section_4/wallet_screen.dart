@@ -17,7 +17,7 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true, // background goes behind AppBar
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -194,5 +194,6 @@ class _WalletScreenState extends State<WalletScreen> {
         ),
       ),
     );
+
   }
 }

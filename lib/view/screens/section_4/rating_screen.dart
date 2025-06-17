@@ -3,6 +3,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:servana/view/screens/section_3/home_client_screen.dart';
 import 'package:servana/view/screens/section_4/wallet_screen.dart';
 import '../../widgets/botton_navigation_widget.dart';
+import '../section_5/client_notification_screen.dart';
+import '../section_5/profile_screen.dart';
+import 'history_screen.dart';
 
 class RatingScreen extends StatefulWidget {
   @override
@@ -58,7 +61,14 @@ class _RatingScreenState extends State<RatingScreen> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder:
+                            (context) => ClientNotificationScreen()),
+                  );
+                },
                 icon: const Icon(Icons.notifications, color: Color(0xFF0D47A1), size: 32),
               ),
             ],
@@ -182,21 +192,24 @@ class _RatingScreenState extends State<RatingScreen> {
           },
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Colors.white.withOpacity(0.9),
+          color: bgColor,
           shape: const CircularNotchedRectangle(),
           notchMargin: 8.0,
           child: SizedBox(
-            height: 40,
+            height: 50,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 BottonNavigationWidget(
                   icon: Icons.home_filled,
                   label: "Home",
                   isSelected: selectedIndex2 == 0,
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) =>  HomeScreen()));
                     onItemTapped2(0);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HomeScreen()),
+                    );
                   },
                 ),
                 BottonNavigationWidget(
@@ -204,26 +217,45 @@ class _RatingScreenState extends State<RatingScreen> {
                   label: "Wallet",
                   isSelected: selectedIndex2 == 1,
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) =>  WalletScreen()));
                     onItemTapped2(1);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => WalletScreen()),
+                    );
                   },
                 ),
                 BottonNavigationWidget(
                   icon: Icons.history,
-                  label: "History ",
+                  label: "History",
                   isSelected: selectedIndex2 == 2,
-                  onTap: () => onItemTapped2(2),
+                  onTap: () {
+                    onItemTapped2(2);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => HistoryScreen()),
+                    );
+                  },
                 ),
                 BottonNavigationWidget(
                   icon: Icons.person,
                   label: "Profile",
                   isSelected: selectedIndex2 == 3,
-                  onTap: () => onItemTapped2(3),
+                  onTap: () {
+                    onItemTapped2(3);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) => ProfileScreen(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
           ),
         ),
+
       ),
     );
   }

@@ -4,7 +4,11 @@ import 'package:servana/view/widgets/pluming_widget.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
+import '../section_4/history_screen.dart';
 import '../section_4/request_screen.dart';
+import '../section_4/wallet_screen.dart';
+import '../section_5/client_notification_screen.dart';
+import '../section_5/profile_screen.dart';
 
 class PaintScreen extends StatefulWidget {
   const PaintScreen({super.key});
@@ -45,7 +49,15 @@ class _PaintScreenState extends State<PaintScreen> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder:
+                          (context) => ClientNotificationScreen()),
+                );
+
+              },
               icon: Icon(Icons.notifications, color: Colors.blue[900], size: 32),
             ),
           ],
@@ -169,7 +181,10 @@ class _PaintScreenState extends State<PaintScreen> {
                 isSelected: selectedIndex2 == 1,
                 onTap: () {
                   onItemTapped2(1);
-                  // Navigate to WalletScreen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => WalletScreen()),
+                  );
                 },
               ),
               BottonNavigationWidget(
@@ -178,19 +193,32 @@ class _PaintScreenState extends State<PaintScreen> {
                 isSelected: selectedIndex2 == 2,
                 onTap: () {
                   onItemTapped2(2);
-                  // Navigate to HistoryScreen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => HistoryScreen()),
+                  );
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.person,
                 label: "Profile",
                 isSelected: selectedIndex2 == 3,
-                onTap: () => onItemTapped2(3),
+                onTap: () {
+                  onItemTapped2(3);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => ProfileScreen(),
+                    ),
+                  );
+                },
               ),
             ],
           ),
         ),
       ),
+
     );
   }
 }

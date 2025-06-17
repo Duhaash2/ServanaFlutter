@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:servana/view/screens/section_3/home_client_screen.dart';
+import 'package:servana/view/screens/section_5/client_notification_screen.dart';
 import 'package:servana/view/widgets/pluming_widget.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
+import '../section_4/history_screen.dart';
 import '../section_4/request_screen.dart';
+import '../section_4/wallet_screen.dart';
+import '../section_5/profile_screen.dart';
 
 class ElectricalScreen extends StatefulWidget {
   const ElectricalScreen({super.key});
@@ -45,8 +49,19 @@ class _ElectricalScreenState extends State<ElectricalScreen> {
               ),
             ),
             IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.notifications, color: Colors.blue[900], size: 30),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ClientNotificationScreen(),
+                  ),
+                );
+              },
+              icon: Icon(
+                Icons.notifications,
+                color: Colors.blue[900],
+                size: 30,
+              ),
             ),
           ],
         ),
@@ -62,7 +77,10 @@ class _ElectricalScreenState extends State<ElectricalScreen> {
               children: [
                 TextFormField(
                   decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.search_service_workers_or_etc,
+                    hintText:
+                        AppLocalizations.of(
+                          context,
+                        )!.search_service_workers_or_etc,
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -83,7 +101,10 @@ class _ElectricalScreenState extends State<ElectricalScreen> {
                       imagePath: "assets/images/man1.PNG",
                       rating: 4.0,
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) =>  RequestScreen()));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => RequestScreen()),
+                        );
                       },
                       price: "30",
                     ),
@@ -94,7 +115,10 @@ class _ElectricalScreenState extends State<ElectricalScreen> {
                       imagePath: "assets/images/girl1.PNG",
                       rating: 3.5,
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) =>  RequestScreen()));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => RequestScreen()),
+                        );
                       },
                       price: "30",
                     ),
@@ -105,7 +129,10 @@ class _ElectricalScreenState extends State<ElectricalScreen> {
                       imagePath: "assets/images/man2.PNG",
                       rating: 3.0,
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) =>  RequestScreen()));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => RequestScreen()),
+                        );
                       },
                       price: "30",
                     ),
@@ -116,7 +143,10 @@ class _ElectricalScreenState extends State<ElectricalScreen> {
                       imagePath: "assets/images/girl2.PNG",
                       rating: 4.2,
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) =>  RequestScreen()));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => RequestScreen()),
+                        );
                       },
                       price: "30",
                     ),
@@ -133,7 +163,7 @@ class _ElectricalScreenState extends State<ElectricalScreen> {
         shape: const CircularNotchedRectangle(),
         notchMargin: 8.0,
         child: SizedBox(
-          height: 40,
+          height: 50,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -143,26 +173,47 @@ class _ElectricalScreenState extends State<ElectricalScreen> {
                 isSelected: selectedIndex2 == 0,
                 onTap: () {
                   onItemTapped2(0);
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => const HomeScreen()),
+                  );
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.wallet,
                 label: "Wallet",
                 isSelected: selectedIndex2 == 1,
-                onTap: () => onItemTapped2(1),
+                onTap: () {
+                  onItemTapped2(1);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => WalletScreen()),
+                  );
+                },
               ),
               BottonNavigationWidget(
                 icon: Icons.history,
                 label: "History",
                 isSelected: selectedIndex2 == 2,
-                onTap: () => onItemTapped2(2),
+                onTap: () {
+                  onItemTapped2(2);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => HistoryScreen()),
+                  );
+                },
               ),
               BottonNavigationWidget(
                 icon: Icons.person,
                 label: "Profile",
                 isSelected: selectedIndex2 == 3,
-                onTap: () => onItemTapped2(3),
+                onTap: () {
+                  onItemTapped2(3);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  );
+                },
               ),
             ],
           ),

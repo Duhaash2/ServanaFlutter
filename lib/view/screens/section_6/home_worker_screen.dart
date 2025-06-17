@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:servana/view/screens/section_5/profile_worker_screen.dart';
 import 'package:servana/view/screens/section_6/end_work_w_screen.dart';
 import 'package:servana/view/screens/section_6/incoming_request_w_screen.dart';
 import 'package:servana/view/screens/section_6/worker_notification_screen.dart';
@@ -70,7 +71,7 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const WorkerNotificationScreen(),
+                    builder: (context) =>  WorkerNotificationScreen(),
                   ),
                 );
               },
@@ -163,8 +164,12 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                         description: "See Your Profile",
                         Icons: Icons.person,
                         onTap: () {
-                          // Add profile navigation here if available
-                        },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder:
+                                    (context) => ProfileWorkerScreen()),
+                          );                        },
                       ),
                     ],
                   ),

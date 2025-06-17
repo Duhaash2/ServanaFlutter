@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_3/home_client_screen.dart';
 import '../section_5/profile_screen.dart';
+import 'home_worker_screen.dart';
 
 class EndWorkWScreen extends StatefulWidget {
   const EndWorkWScreen({super.key});
@@ -49,7 +50,6 @@ class _EndWorkWScreenState extends State<EndWorkWScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -58,28 +58,55 @@ class _EndWorkWScreenState extends State<EndWorkWScreen> {
             const SizedBox(height: 16),
             _infoCard("LOCATION", "123 Main St", Icons.location_on),
             const SizedBox(height: 16),
-            _infoCard("ISSUE", "Leaking faucet in kitchen", Icons.warning_amber_rounded),
+            _infoCard(
+              "ISSUE",
+              "Leaking faucet in kitchen",
+              Icons.warning_amber_rounded,
+            ),
             const SizedBox(height: 16),
             _infoCard("DURATION", "01:25:30", Icons.timer),
             const SizedBox(height: 16),
             _infoCard("STATUS", "Working", Icons.work_outline),
-            const Spacer(),
+            SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // End Work logic goes here
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text("Ended Work Successfully  "),
+                      backgroundColor: Colors.blue[400],
+                      behavior: SnackBarBehavior.floating,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HomeWorkerScreen()),
+                    );
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[900],
                   elevation: 5,
                   shadowColor: Colors.black26,
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                    vertical: 16,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
                 child: const Text(
                   'End Work',
-                  style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -97,11 +124,7 @@ class _EndWorkWScreenState extends State<EndWorkWScreen> {
         color: Colors.blue[50],
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 6,
-            offset: Offset(0, 3),
-          )
+          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3)),
         ],
       ),
       child: Row(
@@ -133,46 +156,6 @@ class _EndWorkWScreenState extends State<EndWorkWScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  BottomAppBar _buildBottomBar(double width) {
-    return BottomAppBar(
-      color: Colors.white,
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 8,
-      child: SizedBox(
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            BottonNavigationWidget(
-              icon: Icons.home_filled,
-              label: "Home",
-              isSelected: selectedIndex == 0,
-              onTap: () => _navigate(0, const HomeScreen()),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.wallet,
-              label: "Wallet",
-              isSelected: selectedIndex == 1,
-              onTap: () => onItemTapped(1),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.history,
-              label: "History",
-              isSelected: selectedIndex == 2,
-              onTap: () => onItemTapped(2),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.person,
-              label: "Profile",
-              isSelected: selectedIndex == 3,
-              onTap: () => _navigate(3, const ProfileScreen()),
-            ),
-          ],
-        ),
       ),
     );
   }

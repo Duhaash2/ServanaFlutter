@@ -5,6 +5,10 @@ import 'package:servana/view/widgets/pluming_widget.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
+import '../section_4/history_screen.dart';
+import '../section_4/wallet_screen.dart';
+import '../section_5/client_notification_screen.dart';
+import '../section_5/profile_screen.dart';
 
 class PlumingScreen extends StatefulWidget {
   const PlumingScreen({super.key});
@@ -47,7 +51,15 @@ class _PlumingScreenState extends State<PlumingScreen> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder:
+                          (context) => ClientNotificationScreen()),
+                );
+
+              },
               icon: Icon(Icons.notifications, color: Colors.blue[900], size: 32),
             ),
           ],
@@ -153,44 +165,66 @@ class _PlumingScreenState extends State<PlumingScreen> {
         shape: const CircularNotchedRectangle(),
         notchMargin: 8.0,
         child: SizedBox(
-          height: 40,
+          height: 50,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               BottonNavigationWidget(
                 icon: Icons.home_filled,
                 label: "Home",
                 isSelected: selectedIndex2 == 0,
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  );
                   onItemTapped2(0);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => const HomeScreen()),
+                  );
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.wallet,
                 label: "Wallet",
                 isSelected: selectedIndex2 == 1,
-                onTap: () => onItemTapped2(1),
+                onTap: () {
+                  onItemTapped2(1);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => WalletScreen()),
+                  );
+                },
               ),
               BottonNavigationWidget(
                 icon: Icons.history,
-                label: "History ",
+                label: "History",
                 isSelected: selectedIndex2 == 2,
-                onTap: () => onItemTapped2(2),
+                onTap: () {
+                  onItemTapped2(2);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => HistoryScreen()),
+                  );
+                },
               ),
               BottonNavigationWidget(
                 icon: Icons.person,
                 label: "Profile",
                 isSelected: selectedIndex2 == 3,
-                onTap: () => onItemTapped2(3),
+                onTap: () {
+                  onItemTapped2(3);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => ProfileScreen(),
+                    ),
+                  );
+                },
               ),
             ],
           ),
         ),
       ),
+
     );
   }
 }

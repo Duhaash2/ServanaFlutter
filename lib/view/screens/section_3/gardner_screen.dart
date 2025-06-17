@@ -4,7 +4,11 @@ import 'package:servana/view/widgets/pluming_widget.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
+import '../section_4/history_screen.dart';
 import '../section_4/request_screen.dart';
+import '../section_4/wallet_screen.dart';
+import '../section_5/client_notification_screen.dart';
+import '../section_5/profile_screen.dart';
 
 class GardnerScreen extends StatefulWidget {
   const GardnerScreen({super.key});
@@ -45,7 +49,14 @@ class _GardnerScreenState extends State<GardnerScreen> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder:
+                          (context) => ClientNotificationScreen()),
+                );
+              },
               icon: Icon(Icons.notifications, color: Colors.blue[900], size: 30),
             ),
           ],
@@ -133,7 +144,7 @@ class _GardnerScreenState extends State<GardnerScreen> {
         shape: const CircularNotchedRectangle(),
         notchMargin: 8.0,
         child: SizedBox(
-          height: 40,
+          height: 50,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -143,31 +154,56 @@ class _GardnerScreenState extends State<GardnerScreen> {
                 isSelected: selectedIndex2 == 0,
                 onTap: () {
                   onItemTapped2(0);
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => const HomeScreen()),
+                  );
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.wallet,
                 label: "Wallet",
                 isSelected: selectedIndex2 == 1,
-                onTap: () => onItemTapped2(1),
+                onTap: () {
+                  onItemTapped2(1);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => WalletScreen()),
+                  );
+                },
               ),
               BottonNavigationWidget(
                 icon: Icons.history,
                 label: "History",
                 isSelected: selectedIndex2 == 2,
-                onTap: () => onItemTapped2(2),
+                onTap: () {
+                  onItemTapped2(2);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => HistoryScreen()),
+                  );
+                },
               ),
               BottonNavigationWidget(
                 icon: Icons.person,
                 label: "Profile",
                 isSelected: selectedIndex2 == 3,
-                onTap: () => onItemTapped2(3),
+                onTap: () {
+                  onItemTapped2(3);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => ProfileScreen(),
+                    ),
+                  );
+                },
               ),
             ],
           ),
         ),
       ),
+
     );
   }
 }

@@ -5,6 +5,8 @@ import 'package:servana/view/screens/section_3/paint_screen.dart';
 import 'package:servana/view/screens/section_3/pluming%20_screen.dart';
 import 'package:servana/view/screens/section_4/history_screen.dart';
 import 'package:servana/view/screens/section_4/wallet_screen.dart';
+import 'package:servana/view/screens/section_5/client_notification_screen.dart';
+import 'package:servana/view/screens/section_5/profile_screen.dart';
 import 'package:servana/view/widgets/botton_navigation_widget.dart';
 import 'package:servana/view/widgets/category_button_widget.dart';
 import 'package:servana/view/widgets/top_rated_widget.dart';
@@ -79,7 +81,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           IconButton(
                             onPressed: () {
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=>));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => ClientNotificationScreen(),
+                                ),
+                              );
                             },
                             icon: Icon(
                               Icons.notifications,
@@ -352,6 +360,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 isSelected: selectedIndex2 == 3,
                 onTap: () {
                   onItemTapped2(3);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => ProfileScreen(),
+                    ),
+                  );
                 },
               ),
             ],

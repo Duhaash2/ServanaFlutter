@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:servana/view/screens/section_3/home_client_screen.dart';
 import 'package:servana/view/screens/section_4/wallet_screen.dart';
+import 'package:servana/view/screens/section_5/profile_screen.dart';
 import 'package:servana/view/widgets/history_widget.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
+import '../section_5/client_notification_screen.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -51,7 +53,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder:
+                          (context) => ClientNotificationScreen()),
+                );
+              },
               icon: Icon(Icons.notifications, color: Colors.blue[900], size: 32),
             ),
           ],
@@ -167,7 +176,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 icon: Icons.person,
                 label: "Profile",
                 isSelected: selectedIndex2 == 3,
-                onTap: () => onItemTapped2(3),
+                onTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder:
+                            (context) => ProfileScreen()),
+                  ),
+
+                  onItemTapped2(3)},
               ),
             ],
           ),

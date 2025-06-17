@@ -115,85 +115,93 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Scaffold(
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          appBar: AppBar(
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            title: Text('Profile', style: TextStyle(color: isDarkMode ? Colors.white : Colors.black)),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: isDarkMode ? Colors.white : Colors.black),
-              onPressed: () => Navigator.pop(context),
+        return Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF83BAD8), Color(0xFFE1F5FE)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
           ),
-          body: _usernameController == null
-              ? const Center(child: CircularProgressIndicator())
-              : SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: IntrinsicHeight(
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        CircleAvatar(
-                          radius: 50,
-                          backgroundColor: Colors.grey[200],
-                          backgroundImage: _profileImage != null
-                              ? FileImage(_profileImage!)
-                              : const AssetImage("assets/images/profile.png") as ImageProvider,
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: GestureDetector(
-                            onTap: _pickImage,
-                            child: CircleAvatar(
-                              radius: 16,
-                              backgroundColor: Colors.blue,
-                              child: const Icon(Icons.edit, size: 16, color: Colors.white),
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: const Text('Profile', style: TextStyle(color: Colors.white)),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+            body: _usernameController == null
+                ? const Center(child: CircularProgressIndicator())
+                : SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          CircleAvatar(
+                            radius: 50,
+                            backgroundColor: Colors.grey[200],
+                            backgroundImage: _profileImage != null
+                                ? FileImage(_profileImage!)
+                                : const AssetImage("assets/images/profile.png") as ImageProvider,
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: GestureDetector(
+                              onTap: _pickImage,
+                              child: const CircleAvatar(
+                                radius: 16,
+                                backgroundColor: Colors.blue,
+                                child: Icon(Icons.edit, size: 16, color: Colors.white),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Text(profileController.username,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: isDarkMode ? Colors.white : Colors.black)),
-                    Text(profileController.email,
-                        style: TextStyle(fontSize: 14, color: isDarkMode ? Colors.white70 : Colors.grey)),
-                    const SizedBox(height: 20),
-                    _buildInfoCard(profileController, isDarkMode),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        profileController.setAllUserData(
-                          username: _usernameController.text,
-                          email: _emailController.text,
-                          phoneNumber: _phoneController.text,
-                          password: _passwordController.text,
-                          address: _addressController.text,
-                          profileImage: _profileImage,
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Profile updated successfully")));
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) => const ProfileScreen()));
-                      },
-                      style: ElevatedButton.styleFrom(
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text(profileController.username,
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+                      Text(profileController.email,
+                          style: const TextStyle(fontSize: 14, color: Colors.white70)),
+                      const SizedBox(height: 20),
+                      _buildInfoCard(profileController, isDarkMode),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          profileController.setAllUserData(
+                            username: _usernameController.text,
+                            email: _emailController.text,
+                            phoneNumber: _phoneController.text,
+                            password: _passwordController.text,
+                            address: _addressController.text,
+                            profileImage: _profileImage,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Profile updated successfully")));
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                        },
+                        style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue[900],
-                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12)),
-                      child: const Text("Update", style: TextStyle(color: Colors.white)),
-                    ),
-                  ],
+                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                        ),
+                        child: const Text("Update", style: TextStyle(color: Colors.white)),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
+            bottomNavigationBar: _buildBottomBar(width),
           ),
-          bottomNavigationBar: _buildBottomBar(width),
         );
       },
     );
@@ -226,13 +234,8 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
     );
   }
 
-  Widget _buildTextField(
-      String label,
-      TextEditingController controller,
-      Function(String) onChanged, {
-        bool isPassword = false,
-        bool isDarkMode = false,
-      }) {
+  Widget _buildTextField(String label, TextEditingController controller, Function(String) onChanged,
+      {bool isPassword = false, bool isDarkMode = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 7),
       child: TextField(
@@ -266,8 +269,8 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
             BottonNavigationWidget(
               icon: Icons.home_filled,
               label: "Home",
-              isSelected: widget.selectedIndex == 0,
-              onTap: () => _navigate(0, HomeScreen()),
+              isSelected: widget.selectedIndex == 3,
+              onTap: () => _navigate(3, HomeScreen()),
             ),
             BottonNavigationWidget(
               icon: Icons.wallet,
@@ -284,8 +287,8 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
             BottonNavigationWidget(
               icon: Icons.person,
               label: "Profile",
-              isSelected: widget.selectedIndex == 3,
-              onTap: () => _navigate(3, const ProfileScreen()),
+              isSelected: widget.selectedIndex == 0,
+              onTap: () => _navigate(0, const ProfileScreen()),
             ),
           ],
         ),
