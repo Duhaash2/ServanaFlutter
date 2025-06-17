@@ -4,19 +4,20 @@ import 'package:provider/provider.dart';
 import 'package:servana/controller/profile_controller.dart';
 import 'package:servana/view/screens/section_2/login_client_screen.dart';
 import 'package:servana/view/screens/section_5/detail_profile_screen.dart';
+import 'package:servana/view/screens/section_5/detail_profile_worker_screen.dart';
 import '../../../controller/lang_controller.dart';
 import '../../../core/theme/theme_provider.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_3/home_screen.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ProfileWorkerScreen extends StatefulWidget {
+  const ProfileWorkerScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileWorkerScreen> createState() => _ProfileWorkerScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
   int selectedIndex = 3;
   bool pushNotifications = true;
   bool promotionalNotifications = false;
@@ -81,6 +82,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: Theme.of(context).textTheme.bodyMedium?.color,
                 ),
               ),
+              if (profileController.pricePerHour.isNotEmpty)
+                Text(
+                  '${profileController.pricePerHour} JOD/hr',
+                  style: TextStyle(
+                    fontSize: width * .035,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                  ),
+                ),
               SizedBox(height: height * .02),
 
               // Account Card
@@ -111,7 +120,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     SizedBox(height: width * .02),
-
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.person_outline, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -123,9 +131,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Theme.of(context).textTheme.bodyMedium?.color,
                         ),
                       ),
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => DetailProfileScreen())),
+                      onTap:
+                          () => Navigator.push(context, MaterialPageRoute(builder: (_) => DetailProfileWorkerScreen())),
                     ),
-
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.language, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -147,7 +155,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: const Text('عربية', style: TextStyle(fontWeight: FontWeight.bold)),
                       ),
                     ),
-
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.dark_mode, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -166,7 +173,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         activeTrackColor: Colors.blue[100],
                       ),
                     ),
-
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.privacy_tip_outlined, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -180,7 +186,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       onTap: () {},
                     ),
-
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.settings_outlined, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -366,7 +371,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.person,
               label: "Profile",
               isSelected: selectedIndex == 3,
-              onTap: () => _navigate(3, const ProfileScreen()),
+              onTap: () => _navigate(3, const ProfileWorkerScreen()),
             ),
           ],
         ),
