@@ -1,9 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-
 import 'intro_screen.dart';
-//import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,33 +14,29 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Timer(Duration(seconds: 4), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => IntroScreen()),
-      );
+    // Safe delayed navigation
+    Timer(const Duration(seconds: 4), () {
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const IntroScreen()),
+        );
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/splash.png"),
-            fit: BoxFit.fill,
-          ),
+      body: SizedBox(
+        width: size.width,
+        height: size.height,
+        child: Image.asset(
+          "assets/images/splash.png",
+          fit: BoxFit.cover,
         ),
-        //   child: Container(
-        //     decoration: BoxDecoration(
-        //       image: DecorationImage(
-        //         image: AssetImage("assets/images/foodtek.png"),
-        //         fit: BoxFit.cover,
-        //       ),
-        //     ),
-        //   ),
-        //
       ),
     );
   }

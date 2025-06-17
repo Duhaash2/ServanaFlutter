@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "15565102567",
+    "project_id": "servana-ab0e5",
+    "storage_bucket": "servana-ab0e5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15565102567:android:717d088b3ed5d35579b142",
+        "android_client_info": {
+          "package_name": "com.example.servana"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC43xfOpR2wSHfEjN3TZ9VC9PbkMOMUwck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

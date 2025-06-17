@@ -162,8 +162,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get top_rated => 'Top Rated';
 
   @override
-  String get search_service_workers_or_etc =>
-      'Search for services, workers, etc';
+  String get search_service_workers_or_etc => 'Search workers, etc';
 
   @override
   String get notifications => 'Notifications';

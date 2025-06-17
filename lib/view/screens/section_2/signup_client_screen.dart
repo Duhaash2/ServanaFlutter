@@ -19,8 +19,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -31,8 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Gender? _selectedGender;
 
   Future<void> _registerUser(BuildContext context) async {
-    if (_firstNameController.text.isEmpty ||
-        _lastNameController.text.isEmpty ||
+    if (_fullNameController.text.isEmpty ||
         _emailController.text.isEmpty ||
         _dateController.text.isEmpty ||
         _phoneController.text.isEmpty ||
@@ -42,18 +40,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
       return;
     }
 
+    // ✅✅ تم تعطيل هذا الكود مؤقتًا لتجربة واجهة المستخدم فقط بدون اتصال API:
+    /*
     final signUpController = Provider.of<SignUpController>(context, listen: false);
     final SignUpModel user = SignUpModel(
       email: _emailController.text,
       password: _passwordController.text,
       phonenum: _phoneController.text,
-      firstname: _firstNameController.text,
-      lastname: _lastNameController.text,
+      fullname: _fullNameController.text,
       birthDate: _backendFormattedDate,
       gender: _selectedGender == Gender.male ? "Male" : "Female",
     );
 
-    log('Sending user data with birthDate: ${user.birthDate}, gender: ${user.gender}');
+    log('Sending user data with birthDate: \${user.birthDate}, gender: \${user.gender}');
     final success = await signUpController.registerUser(user);
 
     if (success) {
@@ -64,6 +63,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } else {
       _showErrorDialog(context, signUpController.errorMessage);
     }
+    */
+
+    // ✅ بدل الاتصال بالسيرفر، يتم الانتقال مباشرة إلى شاشة تسجيل الدخول:
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginClientScreen()),
+    );
   }
 
   void _showErrorDialog(BuildContext context, String message) {
@@ -86,6 +92,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     final signUpController = Provider.of<SignUpController>(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final size = MediaQuery.of(context).size;
+    final width = size.width;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -100,24 +109,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
           SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 90),
-                const SizedBox(height: 100),
+                SizedBox(height: width * 0.2),
+                SizedBox(height: width * 0.25),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  padding: const EdgeInsets.all(20),
+                  margin: EdgeInsets.symmetric(horizontal: width * 0.05),
+                  padding: EdgeInsets.all(width * 0.05),
                   decoration: BoxDecoration(
                     color: isDark
                         ? Colors.grey[900]!.withOpacity(0.85)
                         : Colors.white.withOpacity(0.85),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(width * 0.05),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         AppLocalizations.of(context)!.sign_up,
-                        style: const TextStyle(
-                          fontSize: 24,
+                        style: TextStyle(
+                          fontSize: width * 0.06,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -141,35 +150,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CustomTextField(
-                              controller: _firstNameController,
-                              labelText: AppLocalizations.of(context)!.first_name,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: CustomTextField(
-                              controller: _lastNameController,
-                              labelText: AppLocalizations.of(context)!.last_name,
-                            ),
-                          ),
-                        ],
+                      SizedBox(height: width * 0.02),
+                      CustomTextField(
+                        controller: _fullNameController,
+                        labelText: AppLocalizations.of(context)!.full_name,
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: width * 0.02),
                       CustomTextField(
                         controller: _emailController,
                         labelText: AppLocalizations.of(context)!.email,
                         keyboardType: TextInputType.emailAddress,
                         suffixIcon: const Icon(Icons.email),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: width * 0.02),
                       Text(
                         AppLocalizations.of(context)!.gender,
-                     //   "Gender",
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Row(
@@ -177,7 +172,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Expanded(
                             child: RadioListTile<Gender>(
                               title: Text(AppLocalizations.of(context)!.male),
-                             // title: Text("Male"),
                               value: Gender.male,
                               groupValue: _selectedGender,
                               onChanged: (Gender? value) {
@@ -190,7 +184,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Expanded(
                             child: RadioListTile<Gender>(
                               title: Text(AppLocalizations.of(context)!.female),
-                            //  title: Text("Female"),
                               value: Gender.female,
                               groupValue: _selectedGender,
                               onChanged: (Gender? value) {
@@ -201,35 +194,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                         ],
-                      ),
-                      CustomTextField(
-                        controller: _dateController,
-                        labelText: AppLocalizations.of(context)!.birth_date,
-                        readOnly: true,
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.calendar_today),
-                          onPressed: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime(2100),
-                            );
-
-                            if (pickedDate != null) {
-                              final formattedDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                                  .format(pickedDate.toUtc());
-
-                              log('Selected date formatted: $formattedDate');
-
-                              setState(() {
-                                _dateController.text =
-                                    DateFormat('dd/MM/yyyy').format(pickedDate);
-                                _backendFormattedDate = formattedDate;
-                              });
-                            }
-                          },
-                        ),
                       ),
                       PhoneInputField(controller: _phoneController),
                       CustomTextField(
@@ -247,13 +211,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: width * 0.05),
                       signUpController.isLoading
                           ? const Center(child: CircularProgressIndicator())
                           : ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue[900],
-                          minimumSize: const Size(double.infinity, 50),
+                          minimumSize: Size(double.infinity, width * 0.13),
                         ),
                         onPressed: () => _registerUser(context),
                         child: Text(
@@ -264,7 +228,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 40),
+                SizedBox(height: width * 0.1),
               ],
             ),
           ),

@@ -4,7 +4,7 @@ import 'package:servana/view/screens/section_2/login_client_screen.dart';
 import '../../../controller/lang_controller.dart';
 import '../../../core/theme/theme_provider.dart';
 import '../../widgets/botton_navigation_widget.dart';
-import '../section_3/home_screen.dart';
+import '../section_3/home_client_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

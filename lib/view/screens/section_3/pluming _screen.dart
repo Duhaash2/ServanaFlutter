@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:servana/view/screens/section_3/home_screen.dart';
+import 'package:servana/view/screens/section_3/home_client_screen.dart';
 import 'package:servana/view/screens/section_4/rating_screen.dart';
 import 'package:servana/view/screens/section_4/request_screen.dart';
 import 'package:servana/view/widgets/pluming_widget.dart';
@@ -29,6 +29,8 @@ class _PlumingScreenState extends State<PlumingScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? Colors.black : Colors.white;
     final textColor = isDark ? Colors.white : Colors.black;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final fontSize = screenWidth * 0.05; // or any scale that fits your design
 
     return Scaffold(
       appBar: AppBar(

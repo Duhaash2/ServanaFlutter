@@ -162,8 +162,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get top_rated => 'الأعلى تقييماً';
 
   @override
-  String get search_service_workers_or_etc =>
-      'ابحث عن خدمات أو عمال أو غير ذلك';
+  String get search_service_workers_or_etc => 'ابحث عن عمال أو غير ذلك';
 
   @override
   String get notifications => 'الإشعارات';

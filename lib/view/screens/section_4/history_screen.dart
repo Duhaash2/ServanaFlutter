@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:servana/view/screens/section_3/home_screen.dart';
+import 'package:servana/view/screens/section_3/home_client_screen.dart';
 import 'package:servana/view/screens/section_4/rating_screen.dart';
 import 'package:servana/view/screens/section_4/request_screen.dart';
 import 'package:servana/view/screens/section_4/wallet_screen.dart';
@@ -34,7 +34,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     return Scaffold(
       //take color from alaa
-      backgroundColor:  Color(0xFFF5F5DC),
+      backgroundColor:  Color(0xFFF3EEEC),
 
       appBar: AppBar(
         backgroundColor:  Color(0xFFF5F5DC),

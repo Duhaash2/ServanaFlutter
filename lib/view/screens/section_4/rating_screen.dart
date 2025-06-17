@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:servana/view/screens/section_3/home_screen.dart';
+import 'package:servana/view/screens/section_3/home_client_screen.dart';
 import 'package:servana/view/screens/section_4/wallet_screen.dart';
 import '../../widgets/botton_navigation_widget.dart';
 
