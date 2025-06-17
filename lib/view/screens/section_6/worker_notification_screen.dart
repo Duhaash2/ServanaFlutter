@@ -133,7 +133,7 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
           _buildNotificationList(unread),
         ],
       ),
-      bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
+    //  bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
     );
   }
 
@@ -174,43 +174,43 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
     );
   }
 
-  BottomAppBar _buildBottomBar(double width) {
-    return BottomAppBar(
-      color: Colors.white,
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 8,
-      child: SizedBox(
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            BottonNavigationWidget(
-              icon: Icons.home_filled,
-              label: "Home",
-              isSelected: selectedIndex == 0,
-              onTap: () => _navigate(0, const HomeScreen()),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.wallet,
-              label: "Wallet",
-              isSelected: selectedIndex == 1,
-              onTap: () => onItemTapped(1),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.history,
-              label: "History",
-              isSelected: selectedIndex == 2,
-              onTap: () => onItemTapped(2),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.person,
-              label: "Profile",
-              isSelected: selectedIndex == 3,
-              onTap: () => _navigate(3, const ProfileScreen()),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // BottomAppBar _buildBottomBar(double width) {
+  //   return BottomAppBar(
+  //     color: Colors.white,
+  //     shape: const CircularNotchedRectangle(),
+  //     notchMargin: 8,
+  //     child: SizedBox(
+  //       height: 60,
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //         children: [
+  //           BottonNavigationWidget(
+  //             icon: Icons.home_filled,
+  //             label: "Home",
+  //             isSelected: selectedIndex == 0,
+  //             onTap: () => _navigate(0, const HomeScreen()),
+  //           ),
+  //           BottonNavigationWidget(
+  //             icon: Icons.wallet,
+  //             label: "Wallet",
+  //             isSelected: selectedIndex == 1,
+  //             onTap: () => onItemTapped(1),
+  //           ),
+  //           BottonNavigationWidget(
+  //             icon: Icons.history,
+  //             label: "History",
+  //             isSelected: selectedIndex == 2,
+  //             onTap: () => onItemTapped(2),
+  //           ),
+  //           BottonNavigationWidget(
+  //             icon: Icons.person,
+  //             label: "Profile",
+  //             isSelected: selectedIndex == 3,
+  //             onTap: () => _navigate(3, const ProfileScreen()),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

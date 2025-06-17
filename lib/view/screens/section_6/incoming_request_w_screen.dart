@@ -50,28 +50,22 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
           _buildRequestCard(
             name: 'Alice Smith',
             service: 'Plumbing - Leaky Faucet',
-            address: '123 Mani St. Anytown',
+            address: '123 Main St. Anytown',
           ),
           _buildRequestCard(
-            name: 'Dayid Johnson',
+            name: 'David Johnson',
             service: 'Electrical - Light Fixture',
-            address: '45 Ehn St. Anytown',
+            address: '45 Elm St. Anytown',
           ),
           _buildRequestCard(
             name: 'Susan Brown',
-            service: 'HVAC - Amotallation',
-            address: '55 Gan St. Anytown',
-          ),
-          _buildRequestCard(
-            name: 'Susan Brown',
-            service: 'HVAC - Amotallation',
-            address: '55 Gan St. Anytown',
+            service: 'HVAC - Installation',
+            address: '55 Garden St. Anytown',
           ),
         ],
       ),
     );
   }
-
 
   Widget _buildRequestCard({
     required String name,
@@ -100,68 +94,35 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
           Text(service, style: const TextStyle(fontSize: 14)),
           const SizedBox(height: 2),
           Text(address, style: const TextStyle(fontSize: 13, color: Colors.grey)),
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton(
-              onPressed: () {
-                // Handle View Details
-              },
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(0, 0),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: const Text(
-                "View Details",
-                style: TextStyle(
-                  fontSize: 13,
-                  decoration: TextDecoration.underline,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-          ),
 
           const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // View Details Button with custom style
-              TextButton(
-                onPressed: () {
-                  // Handle View Details
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.blue[900],
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text(
-                  "Accept",
-                  style: TextStyle(fontSize: 13, color: Colors.white),
-                ),
-              ),
-
-              // Accept Button with white text
               ElevatedButton(
                 onPressed: () {
                   // Handle Accept
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[50],
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                  backgroundColor: Colors.blue[900],
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: const Text(
-                  "Decline",
-                  style: TextStyle(color: Colors.black),
+                child: const Text("Accept", style: TextStyle(fontSize: 14, color: Colors.white)),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // Handle Decline
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue[50],
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
+                child: const Text("Decline", style: TextStyle(color: Colors.black)),
               ),
             ],
           ),
-
         ],
       ),
     );

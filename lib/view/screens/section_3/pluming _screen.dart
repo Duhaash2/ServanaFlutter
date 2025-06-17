@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:servana/view/screens/section_3/home_client_screen.dart';
-import 'package:servana/view/screens/section_4/rating_screen.dart';
 import 'package:servana/view/screens/section_4/request_screen.dart';
 import 'package:servana/view/widgets/pluming_widget.dart';
 
@@ -26,18 +25,16 @@ class _PlumingScreenState extends State<PlumingScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? Colors.black : Colors.white;
-    final textColor = isDark ? Colors.white : Colors.black;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final fontSize = screenWidth * 0.05; // or any scale that fits your design
 
     return Scaffold(
+      backgroundColor: bgColor,
       appBar: AppBar(
         backgroundColor: bgColor,
         elevation: 0,
         automaticallyImplyLeading: false,
-        //  titleSpacing: 0,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -56,129 +53,104 @@ class _PlumingScreenState extends State<PlumingScreen> {
           ],
         ),
       ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 500),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!
+                              .search_service_workers_or_etc,
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
+                          fillColor: isDark ? Colors.grey[800] : Colors.grey[200],
+                          filled: true,
+                        ),
+                      ),
+                      const SizedBox(height: 25),
 
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText:
-                      AppLocalizations.of(
-                        context,
-                      )!.search_service_workers_or_etc,
-                  prefixIcon: Icon(Icons.search),
-                  // suffixIcon: IconButton(
-                  //   icon: Icon(Icons.tune),
-                  //   onPressed:
-                  //       () => Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(builder: (_) => FilterScreen()),
-                  //   ),
-                  // ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
+                      // List of workers
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          PlumingWidget(
+                            title: "David Harris",
+                            description: "Request? ",
+                            imagePath: "assets/images/man1.PNG",
+                            rating: 4.0,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => RequestScreen()),
+                              );
+                            },
+                            price: "30",
+                          ),
+                          const SizedBox(height: 9),
+                          PlumingWidget(
+                            title: "Amanda Wood",
+                            description: "Request? ",
+                            imagePath: "assets/images/girl1.PNG",
+                            rating: 3.5,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => RequestScreen()),
+                              );
+                            },
+                            price: "30",
+                          ),
+                          const SizedBox(height: 9),
+                          PlumingWidget(
+                            title: "James Clark",
+                            description: "Request? ",
+                            imagePath: "assets/images/man2.PNG",
+                            rating: 3.0,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => RequestScreen()),
+                              );
+                            },
+                            price: "30",
+                          ),
+                          const SizedBox(height: 9),
+                          PlumingWidget(
+                            title: "Kristin Waston",
+                            description: "Request? ",
+                            imagePath: "assets/images/girl2.PNG",
+                            rating: 4.2,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => RequestScreen()),
+                              );
+                            },
+                            price: "30",
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  fillColor: isDark ? Colors.grey[800] : Colors.grey[200],
-                  filled: true,
                 ),
               ),
-              SizedBox(height: 25),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Text(
-              //       "A Plumbers",
-              //       style: TextStyle(
-              //         fontSize: 22,
-              //         color: Colors.teal,
-              //         fontWeight: FontWeight.bold,
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    PlumingWidget(
-                      title: "David Harris",
-                      description: "Request? ",
-                      imagePath: "assets/images/man1.PNG",
-                      rating: 4.0,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RequestScreen(),
-                          ),
-                        );
-                      },
-                      price: "30",
-                    ),
-                    SizedBox(height: 9),
-                    PlumingWidget(
-                      title: "Amanda Wood",
-                      description: "Request? ",
-                      imagePath: "assets/images/girl1.PNG",
-                      rating: 3.5,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RequestScreen(),
-                          ),
-                        );
-                      },
-                      price: "30",
-                    ),
-                    SizedBox(height: 9),
-
-                    PlumingWidget(
-                      title: "James Clark",
-                      description: "Request? ",
-                      imagePath: "assets/images/man2.PNG",
-                      rating: 3.0,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RequestScreen(),
-                          ),
-                        );
-                      },
-                      price: "30",
-                    ),
-                    SizedBox(height: 9),
-
-                    PlumingWidget(
-                      title: "Kristin Waston",
-                      description: "Request? ",
-                      imagePath: "assets/images/girl2.PNG",
-                      rating: 4.2,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RequestScreen(),
-                          ),
-                        );
-                      },
-                      price: "30",
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
       bottomNavigationBar: BottomAppBar(
         color: bgColor,
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         notchMargin: 8.0,
         child: SizedBox(
           height: 40,
@@ -189,15 +161,13 @@ class _PlumingScreenState extends State<PlumingScreen> {
                 icon: Icons.home_filled,
                 label: "Home",
                 isSelected: selectedIndex2 == 0,
-                onTap:
-                    () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
-                      ),
-
-                      onItemTapped2(0),
-                    },
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  );
+                  onItemTapped2(0);
+                },
               ),
               BottonNavigationWidget(
                 icon: Icons.wallet,

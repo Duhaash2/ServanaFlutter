@@ -49,7 +49,6 @@ class _EndWorkWScreenState extends State<EndWorkWScreen> {
           ),
         ),
       ),
-
       bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -69,7 +68,7 @@ class _EndWorkWScreenState extends State<EndWorkWScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // Handle end work
+                  // End Work logic goes here
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[900],

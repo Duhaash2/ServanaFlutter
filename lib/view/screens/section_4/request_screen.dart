@@ -12,7 +12,7 @@ class _RequestScreenState extends State<RequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true, // يخلي الخلفية وراء الـ AppBar
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -34,79 +34,85 @@ class _RequestScreenState extends State<RequestScreen> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Request a Service",
-              style: TextStyle(
-                fontSize: 26,
-                color: Color(0xFF0D47A1),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 30),
-            CircleAvatar(
-              radius: 60,
-              backgroundColor: Colors.white,
-              child: CircleAvatar(
-                radius: 52,
-                backgroundImage: AssetImage("assets/images/man1.PNG"),
-              ),
-            ),
-            const SizedBox(height: 30),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.85,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.95),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: TextField(
-                controller: issueController,
-                maxLines: 7,
-                decoration: InputDecoration.collapsed(
-                  hintText: "Describe the issue you need help with",
-                  hintStyle: TextStyle(fontSize: 16, color: Colors.grey[700]),
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      "Request A Service Submitted Successfully!",
-                      style: TextStyle(color: Colors.black87),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 500),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Request a Service",
+                      style: TextStyle(
+                        fontSize: 26,
+                        color: Color(0xFF0D47A1),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    backgroundColor: Color(0xFFEAF6FF),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-                Future.delayed(const Duration(seconds: 1), () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF0D47A1),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 50,
-                  vertical: 14,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
+                    const SizedBox(height: 30),
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundColor: Colors.white,
+                      child: const CircleAvatar(
+                        radius: 52,
+                        backgroundImage: AssetImage("assets/images/man1.PNG"),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.95),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: TextField(
+                        controller: issueController,
+                        maxLines: 7,
+                        decoration: InputDecoration.collapsed(
+                          hintText: "Describe the issue you need help with",
+                          hintStyle: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              "Request A Service Submitted Successfully!",
+                              style: TextStyle(color: Colors.black87),
+                            ),
+                            backgroundColor: Color(0xFFEAF6FF),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                        Future.delayed(const Duration(seconds: 1), () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const HomeScreen()),
+                          );
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF0D47A1),
+                        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                      child: const Text(
+                        "Request Service",
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: const Text(
-                "Request Service",
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

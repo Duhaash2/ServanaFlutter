@@ -47,7 +47,6 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-
     return Scaffold(
       backgroundColor: Colors.transparent,
       extendBodyBehindAppBar: true,
@@ -122,7 +121,7 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                     children: [
                       HomeWorkerWidget(
                         title: "Notification",
-                        description: "You Have A New Notification ! ",
+                        description: "You Have A New Notification!",
                         Icons: Icons.notifications,
                         onTap: () {
                           Navigator.push(
@@ -135,8 +134,8 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                       ),
                       HomeWorkerWidget(
                         title: "Job Request",
+                        description: "Click On It To See Requests",
                         Icons: Icons.next_week_rounded,
-
                         onTap: () {
                           Navigator.push(
                             context,
@@ -144,26 +143,28 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                               builder: (context) => const IncomingRequestWScreen(),
                             ),
                           );
-                        }, description: 'Click On It To See A Requests',
+                        },
                       ),
                       HomeWorkerWidget(
-                        title: "End Work ",
+                        title: "End Work",
+                        description: "Click On It To End Work",
                         Icons: Icons.check_circle_outline,
-
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const EndWorkWScreen()),
+                            MaterialPageRoute(
+                              builder: (context) => const EndWorkWScreen(),
+                            ),
                           );
-                        }, description: 'Click On It To End Work',
+                        },
                       ),
                       HomeWorkerWidget(
                         title: "Profile",
+                        description: "See Your Profile",
                         Icons: Icons.person,
-
                         onTap: () {
-                          // Add navigation to Profile Screen here
-                        }, description: 'See Your Profile',
+                          // Add profile navigation here if available
+                        },
                       ),
                     ],
                   ),

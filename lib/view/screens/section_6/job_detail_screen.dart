@@ -143,8 +143,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                 ],
               ),
             ),
-            const SizedBox(height:100),
-            // Contact Worker Button - Styled like End Work
+            const SizedBox(height: 100),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

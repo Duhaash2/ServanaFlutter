@@ -13,7 +13,8 @@ class ClientNotificationScreen extends StatefulWidget {
   State<ClientNotificationScreen> createState() => _ClientNotificationScreenState();
 }
 
-class _ClientNotificationScreenState extends State<ClientNotificationScreen> with SingleTickerProviderStateMixin {
+class _ClientNotificationScreenState extends State<ClientNotificationScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int selectedIndex = 0;
   late List<Map<String, dynamic>> notifications;
@@ -111,7 +112,8 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> unreadNotifications = notifications.where((n) => n['isRead'] == false).toList();
+    List<Map<String, dynamic>> unreadNotifications =
+    notifications.where((n) => n['isRead'] == false).toList();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -138,12 +140,21 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _buildNotificationList(notifications),
-          _buildNotificationList(unreadNotifications),
-        ],
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 500),
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  _buildNotificationList(notifications),
+                  _buildNotificationList(unreadNotifications),
+                ],
+              ),
+            ),
+          );
+        },
       ),
       bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
     );
@@ -178,9 +189,11 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
                 ),
             ],
           ),
-          title: Text(item['title'], style: const TextStyle(fontWeight: FontWeight.bold)),
+          title: Text(item['title'],
+              style: const TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text(item['subtitle']),
-          trailing: Text(item['time'], style: const TextStyle(fontSize: 12, color: Colors.grey)),
+          trailing: Text(item['time'],
+              style: const TextStyle(fontSize: 12, color: Colors.grey)),
         );
       },
     );

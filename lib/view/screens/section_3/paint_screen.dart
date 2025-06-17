@@ -51,94 +51,97 @@ class _PaintScreenState extends State<PaintScreen> {
           ],
         ),
       ),
-
-      body: SingleChildScrollView(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 500),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!
-                          .search_service_workers_or_etc,
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          double maxWidth = constraints.maxWidth;
+          return SingleChildScrollView(
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 500),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!
+                              .search_service_workers_or_etc,
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
+                          fillColor: isDark ? Colors.grey[800] : Colors.grey[200],
+                          filled: true,
+                        ),
                       ),
-                      fillColor: isDark ? Colors.grey[800] : Colors.grey[200],
-                      filled: true,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
-                  // Workers List
-                  PlumingWidget(
-                    title: "David Harris",
-                    description: "Request?",
-                    imagePath: "assets/images/man1.PNG",
-                    rating: 4.0,
-                    price: "30",
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) =>  RequestScreen()),
-                      );
-                    },
+                      // Workers List
+                      PlumingWidget(
+                        title: "David Harris",
+                        description: "Request?",
+                        imagePath: "assets/images/man1.PNG",
+                        rating: 4.0,
+                        price: "30",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => RequestScreen()),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 13),
+                      PlumingWidget(
+                        title: "Amanda Wood",
+                        description: "Request?",
+                        imagePath: "assets/images/girl1.PNG",
+                        rating: 3.5,
+                        price: "30",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => RequestScreen()),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 13),
+                      PlumingWidget(
+                        title: "James Clark",
+                        description: "Request?",
+                        imagePath: "assets/images/man2.PNG",
+                        rating: 3.0,
+                        price: "30",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => RequestScreen()),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 13),
+                      PlumingWidget(
+                        title: "Kristin Waston",
+                        description: "Request?",
+                        imagePath: "assets/images/girl2.PNG",
+                        rating: 4.2,
+                        price: "30",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => RequestScreen()),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 13),
-                  PlumingWidget(
-                    title: "Amanda Wood",
-                    description: "Request?",
-                    imagePath: "assets/images/girl1.PNG",
-                    rating: 3.5,
-                    price: "30",
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) =>  RequestScreen()),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 13),
-                  PlumingWidget(
-                    title: "James Clark",
-                    description: "Request?",
-                    imagePath: "assets/images/man2.PNG",
-                    rating: 3.0,
-                    price: "30",
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) =>  RequestScreen()),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 13),
-                  PlumingWidget(
-                    title: "Kristin Waston",
-                    description: "Request?",
-                    imagePath: "assets/images/girl2.PNG",
-                    rating: 4.2,
-                    price: "30",
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) =>  RequestScreen()),
-                      );
-                    },
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
-
       bottomNavigationBar: BottomAppBar(
         color: bgColor,
         shape: const CircularNotchedRectangle(),
@@ -166,7 +169,7 @@ class _PaintScreenState extends State<PaintScreen> {
                 isSelected: selectedIndex2 == 1,
                 onTap: () {
                   onItemTapped2(1);
-                  // Navigate to WalletScreen if available
+                  // Navigate to WalletScreen
                 },
               ),
               BottonNavigationWidget(
@@ -175,7 +178,7 @@ class _PaintScreenState extends State<PaintScreen> {
                 isSelected: selectedIndex2 == 2,
                 onTap: () {
                   onItemTapped2(2);
-                  // Navigate to HistoryScreen if available
+                  // Navigate to HistoryScreen
                 },
               ),
               BottonNavigationWidget(

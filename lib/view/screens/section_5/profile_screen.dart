@@ -76,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: height * .02),
 
-              // Account Card
+              // My Account Section
               Container(
                 width: width * .9,
                 padding: EdgeInsets.all(width * .04),
@@ -105,7 +105,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     SizedBox(height: width * .02),
 
-                    // Personal Information Tile
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.person_outline, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -117,10 +116,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Theme.of(context).textTheme.bodyMedium?.color,
                         ),
                       ),
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen())),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen())),
                     ),
 
-                    // Language Tile with trailing button
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.language, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -143,7 +141,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
 
-                    // Dark Mode switch
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.dark_mode, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -153,7 +150,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontSize: width * .04,
                           fontWeight: FontWeight.w400,
                           color: Theme.of(context).textTheme.bodyMedium?.color,
-
                         ),
                       ),
                       trailing: Switch(
@@ -161,12 +157,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onChanged: (v) => Provider.of<ThemeProvider>(context, listen: false).toggleTheme(v),
                         activeColor: Colors.blue,
                         activeTrackColor: Colors.blue[100],
-
-
                       ),
                     ),
 
-                    // Privacy Policy Tile
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.privacy_tip_outlined, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -181,7 +174,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onTap: () {},
                     ),
 
-                    // Settings Tile
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.settings_outlined, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -199,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
 
-              // Notifications
+              // Notifications Section
               Container(
                 width: width * .9,
                 margin: EdgeInsets.only(top: width * .04),
@@ -225,11 +217,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontSize: width * .045,
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).textTheme.titleMedium?.color,
-
                       ),
                     ),
 
-                    // Push Notifications Switch
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.notifications_none, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -246,12 +236,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onChanged: (v) => setState(() => pushNotifications = v),
                         activeColor: Colors.blue,
                         activeTrackColor: Colors.blue[100],
-
-
                       ),
                     ),
 
-                    // Promotional Notifications Switch
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.notifications_none, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -268,15 +255,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onChanged: (v) => setState(() => promotionalNotifications = v),
                         activeColor: Colors.blue,
                         activeTrackColor: Colors.blue[100],
-
-
                       ),
                     ),
                   ],
                 ),
               ),
 
-              // More
+              // More Section
               Container(
                 width: width * .9,
                 margin: EdgeInsets.only(top: width * .04, bottom: width * .04),
@@ -305,7 +290,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
 
-                    // Help Center Tile
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.help_outline, size: width * .06, color: Theme.of(context).iconTheme.color),
@@ -320,7 +304,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onTap: () {},
                     ),
 
-                    // Log Out Tile
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Icon(Icons.logout, size: width * .06, color: Colors.red),
@@ -332,9 +315,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.red,
                         ),
                       ),
-                      onTap:
-                          () => Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (_) => const LoginClientScreen())),
+                      onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginClientScreen())),
                     ),
                   ],
                 ),
@@ -343,51 +324,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomBar(width),
-    );
-  }
-
-  BottomAppBar _buildBottomBar(double width) {
-    return BottomAppBar(
-      color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 8,
-      child: SizedBox(
-        height: 40,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            BottonNavigationWidget(
-              icon: Icons.home_filled,
-              label: "Home",
-              isSelected: selectedIndex == 0,
-              onTap: () => _navigate(0, const HomeScreen()),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.wallet,
-              label: "Wallet",
-              isSelected: selectedIndex == 1,
-              onTap: () {
-                onItemTapped(1);
-                // Add wallet screen if exists
-              },
-            ),
-            BottonNavigationWidget(
-              icon: Icons.history,
-              label: "History",
-              isSelected: selectedIndex == 2,
-              onTap: () {
-                onItemTapped(2);
-                // Add history screen if exists
-              },
-            ),
-            BottonNavigationWidget(
-              icon: Icons.person,
-              label: "Profile",
-              isSelected: selectedIndex == 3,
-              onTap: () => _navigate(3, const ProfileScreen()),
-            ),
-          ],
+      bottomNavigationBar: BottomAppBar(
+        color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8,
+        child: SizedBox(
+          height: 40,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              BottonNavigationWidget(
+                icon: Icons.home_filled,
+                label: "Home",
+                isSelected: selectedIndex == 0,
+                onTap: () => _navigate(0, const HomeScreen()),
+              ),
+              BottonNavigationWidget(
+                icon: Icons.wallet,
+                label: "Wallet",
+                isSelected: selectedIndex == 1,
+                onTap: () => onItemTapped(1),
+              ),
+              BottonNavigationWidget(
+                icon: Icons.history,
+                label: "History",
+                isSelected: selectedIndex == 2,
+                onTap: () => onItemTapped(2),
+              ),
+              BottonNavigationWidget(
+                icon: Icons.person,
+                label: "Profile",
+                isSelected: selectedIndex == 3,
+                onTap: () => _navigate(3, const ProfileScreen()),
+              ),
+            ],
+          ),
         ),
       ),
     );

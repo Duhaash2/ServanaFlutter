@@ -28,6 +28,8 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF3EEEC),
       appBar: AppBar(
@@ -40,7 +42,8 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
           },
         ),
         centerTitle: true,
-        title: const Text('Job Details',
+        title: const Text(
+          'Job Details',
           style: TextStyle(
             color: Colors.black,
             fontSize: 30,
@@ -48,7 +51,43 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8,
+        child: SizedBox(
+          height: 50,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              BottonNavigationWidget(
+                icon: Icons.home_filled,
+                label: "Home",
+                isSelected: selectedIndex == 0,
+                onTap: () => _navigate(0, const HomeScreen()),
+              ),
+              BottonNavigationWidget(
+                icon: Icons.wallet,
+                label: "Wallet",
+                isSelected: selectedIndex == 1,
+                onTap: () => onItemTapped(1),
+              ),
+              BottonNavigationWidget(
+                icon: Icons.history,
+                label: "History",
+                isSelected: selectedIndex == 2,
+                onTap: () => onItemTapped(2),
+              ),
+              BottonNavigationWidget(
+                icon: Icons.person,
+                label: "Profile",
+                isSelected: selectedIndex == 3,
+                onTap: () => _navigate(3, const ProfileScreen()),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Container(
@@ -84,9 +123,10 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
               const SizedBox(height: 30),
               const Divider(),
 
-
-              const Text('Issue Description',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87)),
+              const Text(
+                'Issue Description',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
+              ),
               const SizedBox(height: 8),
               const Text(
                 'Kitchen sink is leaking under the cabinet.\nWater is pooling inside the cabinet whenever the faucet is turned on.',
@@ -107,7 +147,9 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
 
               Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Start work action here
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue[900],
                     elevation: 3,
@@ -125,46 +167,6 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
               const SizedBox(height: 20),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  BottomAppBar _buildBottomBar(double width) {
-    return BottomAppBar(
-      color: Colors.white,
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 8,
-      child: SizedBox(
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            BottonNavigationWidget(
-              icon: Icons.home_filled,
-              label: "Home",
-              isSelected: selectedIndex == 0,
-              onTap: () => _navigate(0, const HomeScreen()),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.wallet,
-              label: "Wallet",
-              isSelected: selectedIndex == 1,
-              onTap: () => onItemTapped(1),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.history,
-              label: "History",
-              isSelected: selectedIndex == 2,
-              onTap: () => onItemTapped(2),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.person,
-              label: "Profile",
-              isSelected: selectedIndex == 3,
-              onTap: () => _navigate(3, const ProfileScreen()),
-            ),
-          ],
         ),
       ),
     );
