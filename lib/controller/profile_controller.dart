@@ -1,15 +1,14 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ProfileController extends ChangeNotifier {
-  String username = "Ahmad Daboor";
-  String email = "Loisbecket@gmail.com";
-  String phoneNumber = "0797653948";
-  String password = "***************";
-  String address = "123 Al-Madina Street, Abdali,...";
-
-  bool isValidName(String name) => name.isNotEmpty;
-  bool isValidEmail(String email) => email.contains('@') && email.contains('.');
-  bool isValidPassword(String password) => password.length >= 6;
+  String username = '';
+  String email = '';
+  String phoneNumber = '';
+  String password = '';
+  String address = '';
+  String pricePerHour = '';
+  File? profileImage;
 
   void updateUsername(String value) {
     username = value;
@@ -33,6 +32,35 @@ class ProfileController extends ChangeNotifier {
 
   void updateAddress(String value) {
     address = value;
+    notifyListeners();
+  }
+
+  void updatePricePerHour(String value) {
+    pricePerHour = value;
+    notifyListeners();
+  }
+
+  void updateProfileImage(File newImage) {
+    profileImage = newImage;
+    notifyListeners();
+  }
+
+  void setAllUserData({
+    required String username,
+    required String email,
+    required String phoneNumber,
+    required String password,
+    required String address,
+    String? pricePerHour,
+    File? profileImage,
+  }) {
+    this.username = username;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.password = password;
+    this.address = address;
+    if (pricePerHour != null) this.pricePerHour = pricePerHour;
+    if (profileImage != null) this.profileImage = profileImage;
     notifyListeners();
   }
 }
