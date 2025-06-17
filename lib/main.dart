@@ -11,8 +11,13 @@ import 'package:servana/view/screens/section_2/forgot_password_page.dart';
 import 'package:servana/view/screens/section_2/login_worker_screen.dart';
 import 'package:servana/view/screens/section_2/rest_password_screen.dart';
 import 'package:servana/view/screens/section_3/home_screen.dart';
+import 'package:servana/view/screens/section_5/detail_profile_screen.dart';
+import 'package:servana/view/screens/section_5/detail_profile_worker_screen.dart';
+import 'package:servana/view/screens/section_5/profile_screen.dart';
+import 'package:servana/view/screens/section_5/profile_worker_screen.dart';
 import 'controller/lang_controller.dart';
 import 'controller/login_controller.dart';
+import 'controller/profile_controller.dart';
 import 'controller/signup_controller.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_provider.dart';
@@ -46,7 +51,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => SignUpController()),
         ChangeNotifierProvider(create: (_) => AuthenticationService()),
     //    ChangeNotifierProvider(create: (_) => TrackLocationController()),
-    //    ChangeNotifierProvider(create: (_) => ProfileController()),
+     ChangeNotifierProvider(create: (_) => ProfileController()),
         ChangeNotifierProvider(create: (_) => LangController()),
       //  ChangeNotifierProvider(create: (_) => LocationController()),
       //   ChangeNotifierProvider(create: (_) => FavoritesController()),
@@ -100,7 +105,7 @@ class _MyAppState extends State<MyApp> {
           darkTheme: AppTheme.darkTheme,
           themeMode: themeProvider.themeMode,
     //   home:  SplashScreen(),
-     home:  HomeScreen(),
+     home:  ProfileWorkerScreen(),
 
 
       // home: CongraScreen(),

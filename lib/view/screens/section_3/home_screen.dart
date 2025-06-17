@@ -5,6 +5,7 @@ import 'package:servana/view/screens/section_3/paint_screen.dart';
 import 'package:servana/view/screens/section_3/pluming%20_screen.dart';
 import 'package:servana/view/screens/section_4/history_screen.dart';
 import 'package:servana/view/screens/section_4/wallet_screen.dart';
+import 'package:servana/view/screens/section_5/profile_screen.dart';
 import 'package:servana/view/widgets/botton_navigation_widget.dart';
 import 'package:servana/view/widgets/category_button_widget.dart';
 import 'package:servana/view/widgets/top_rated_widget.dart';
@@ -307,7 +308,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: "Profile",
                 isSelected: selectedIndex2 == 3,
                 onTap: () {
-                  onItemTapped2(3);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ProfileScreen()),
+                  );
+                  onItemTapped2(2);
                 },
               ),
             ],

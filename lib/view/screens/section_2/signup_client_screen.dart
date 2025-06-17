@@ -4,10 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/signup_controller.dart';
+import '../../../controller/profile_controller.dart'; // ✅ جديد
 import '../../../model/auth_model/signup_model.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../widgets/signup_widget.dart';
 import 'login_client_screen.dart';
+import '../section_5/detail_profile_screen.dart'; // ✅ جديد
 
 enum Gender { male, female }
 
@@ -57,9 +59,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final success = await signUpController.registerUser(user);
 
     if (success) {
+      // ✅ حفظ البيانات داخل ProfileController
+      final profileController = Provider.of<ProfileController>(context, listen: false);
+      profileController.setAllUserData(
+        username: "${_firstNameController.text} ${_lastNameController.text}",
+        email: _emailController.text,
+        phoneNumber: _phoneController.text,
+        password: _passwordController.text,
+        address: '',
+      );
+
+      // ✅ التوجيه لصفحة DetailProfileScreen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginClientScreen()),
+        MaterialPageRoute(builder: (_) => DetailProfileScreen()),
       );
     } else {
       _showErrorDialog(context, signUpController.errorMessage);
@@ -169,7 +182,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(height: 10),
                       Text(
                         AppLocalizations.of(context)!.gender,
-                     //   "Gender",
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Row(
@@ -177,7 +189,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Expanded(
                             child: RadioListTile<Gender>(
                               title: Text(AppLocalizations.of(context)!.male),
-                             // title: Text("Male"),
                               value: Gender.male,
                               groupValue: _selectedGender,
                               onChanged: (Gender? value) {
@@ -190,7 +201,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Expanded(
                             child: RadioListTile<Gender>(
                               title: Text(AppLocalizations.of(context)!.female),
-                            //  title: Text("Female"),
                               value: Gender.female,
                               groupValue: _selectedGender,
                               onChanged: (Gender? value) {

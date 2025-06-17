@@ -45,6 +45,9 @@ dependencies:
 
   http: ^1.4.0
   url_launcher: ^6.3.1
+  image_picker: ^1.0.4 # أو أحدث إصدار متوفر
+permission_handler: ^11.3.1
+
 
 #
 
