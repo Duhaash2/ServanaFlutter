@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -25,17 +24,24 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final scale = width / 375;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: scale * 8.0),
       child: TextField(
         controller: controller,
         keyboardType: keyboardType,
         obscureText: isPassword,
         readOnly: readOnly,
         onTap: onTap,
+        style: TextStyle(fontSize: scale * 14),
         decoration: InputDecoration(
           labelText: labelText,
-          border: const OutlineInputBorder(),
+          labelStyle: TextStyle(fontSize: scale * 14),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(scale * 12),
+          ),
           suffixIcon: suffixIcon,
         ),
       ),
@@ -50,13 +56,19 @@ class PhoneInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final scale = width / 375;
+
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: scale * 8.0),
       child: IntlPhoneField(
         controller: controller,
         decoration: InputDecoration(
           labelText: AppLocalizations.of(context)!.phone_number,
-          border: OutlineInputBorder(),
+          labelStyle: TextStyle(fontSize: scale * 14),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(scale * 12),
+          ),
         ),
         initialCountryCode: 'JO',
         onChanged: (phone) {

@@ -6,8 +6,8 @@ class TopRatedWidget extends StatelessWidget {
   final String imagePath;
   final double rating;
   final VoidCallback onPressed;
-  final String? tag;       // "Top Rated", "Verified", etc.
-  final String? subtitle;  // e.g. "Plumbing • 18 Jobs"
+  final String? tag;
+  final String? subtitle;
   final IconData? subtitleIcon;
 
   const TopRatedWidget({
@@ -24,65 +24,71 @@ class TopRatedWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final scale = screenWidth / 375; // reference design width
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        width: 170,
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+        width: scale * 170,
+        margin: EdgeInsets.symmetric(horizontal: scale * 8, vertical: scale * 10),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(scale * 18),
           border: Border.all(color: Colors.grey.shade200),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.03),
-              blurRadius: 6,
-              offset: const Offset(0, 4),
+              blurRadius: scale * 6,
+              offset: Offset(0, scale * 4),
             ),
           ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image with badge inside bottom right
+            // Image with badge
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(18),
-                    topRight: Radius.circular(18),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(scale * 18),
+                    topRight: Radius.circular(scale * 18),
                   ),
                   child: Image.asset(
                     imagePath,
-                    height: 120,
+                    height: scale * 120,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
                 if (tag != null)
                   Positioned(
-                    bottom: 1,
-                    right: 1,
+                    bottom: scale * 4,
+                    right: scale * 4,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: scale * 8,
+                        vertical: scale * 4,
+                      ),
                       decoration: BoxDecoration(
                         color: tag == "Verified"
                             ? Colors.grey[800]
                             : Colors.amber.shade600,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(scale * 12),
                       ),
                       child: Row(
                         children: [
                           Icon(
                             tag == "Verified" ? Icons.verified : Icons.star,
                             color: Colors.white,
-                            size: 14,
+                            size: scale * 14,
                           ),
-                          const SizedBox(width: 4),
+                          SizedBox(width: scale * 4),
                           Text(
                             tag!,
-                            style: const TextStyle(
-                              fontSize: 11,
+                            style: TextStyle(
+                              fontSize: scale * 11,
                               fontWeight: FontWeight.w600,
                               color: Colors.white,
                             ),
@@ -93,62 +99,58 @@ class TopRatedWidget extends StatelessWidget {
                   ),
               ],
             ),
-
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              padding: EdgeInsets.symmetric(
+                horizontal: scale * 10,
+                vertical: scale * 8,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Name
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 15,
+                    style: TextStyle(
+                      fontSize: scale * 15,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 6),
-
-                  // Rating & Role
+                  SizedBox(height: scale * 6),
                   Row(
                     children: [
-                      const Icon(Icons.star, color: Colors.orange, size: 18),
-                      const SizedBox(width: 3),
+                      Icon(Icons.star, color: Colors.orange, size: scale * 18),
+                      SizedBox(width: scale * 3),
                       Text(
                         rating.toStringAsFixed(1),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 14,
+                          fontSize: scale * 14,
                         ),
                       ),
-                      const SizedBox(width: 5),
+                      SizedBox(width: scale * 5),
                       Text(
                         description,
-                        style: const TextStyle(
-                          fontSize: 13,
+                        style: TextStyle(
+                          fontSize: scale * 13,
                           color: Colors.black87,
                         ),
                       ),
                     ],
                   ),
-
-                  const SizedBox(height: 8),
-
-                  // Subtitle with icon
+                  SizedBox(height: scale * 8),
                   if (subtitle != null)
                     Row(
                       children: [
                         Icon(
                           subtitleIcon ?? Icons.work_outline,
-                          size: 16,
+                          size: scale * 16,
                           color: Colors.teal,
                         ),
-                        const SizedBox(width: 6),
+                        SizedBox(width: scale * 6),
                         Expanded(
                           child: Text(
                             subtitle!,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: scale * 12,
                               color: Colors.grey[700],
                             ),
                           ),

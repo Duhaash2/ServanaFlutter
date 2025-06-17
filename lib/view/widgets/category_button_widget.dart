@@ -17,13 +17,16 @@ class CategoryButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? Colors.black : Colors.white;
     final textColor = isDark ? Colors.white : Colors.black;
 
+    final imageSize = screenWidth * 0.19; // ~76px on 400px width
+    final fontSize = screenWidth * 0.04; // ~16px on 400px width
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 13),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
       child: InkWell(
         onTap: onPressed,
         borderRadius: BorderRadius.circular(100),
@@ -33,22 +36,20 @@ class CategoryButtonWidget extends StatelessWidget {
             ClipOval(
               child: Image.asset(
                 ImagePath,
-                height: 76,
-                width: 76,
+                height: imageSize,
+                width: imageSize,
                 fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(height: 6),
+            SizedBox(height: screenWidth * 0.015),
             Text(
               title,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: fontSize,
                 fontWeight: FontWeight.w500,
                 color: isSelected
                     ? Colors.orange
-                    : isDark
-                    ? Colors.white
-                    : Colors.black,
+                    : textColor,
               ),
             ),
           ],

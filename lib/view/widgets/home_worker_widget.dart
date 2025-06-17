@@ -16,22 +16,26 @@ class HomeWorkerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    final responsive = (double base) => width * base / 375; // scale based on 375 width design
+
     return Center(
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          width: 380,
-          height: 120, // ⬆️ Increase box height
-          margin: const EdgeInsets.only(right: 10, bottom: 16),
-          padding: const EdgeInsets.all(20), // ⬆️ More inner spacing
+          width: width * 0.95, // responsive width
+          height: height * 0.15, // responsive height (≈ 120)
+          margin: EdgeInsets.only(right: responsive(10), bottom: responsive(16)),
+          padding: EdgeInsets.all(responsive(20)),
           decoration: BoxDecoration(
             color: Colors.blue[50],
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(responsive(24)),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
-                blurRadius: 12,
-                offset: const Offset(0, 6),
+                blurRadius: responsive(12),
+                offset: Offset(0, responsive(6)),
               ),
             ],
           ),
@@ -39,15 +43,15 @@ class HomeWorkerWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
-                radius: 38, // ⬆️ Bigger circle
+                radius: responsive(38),
                 backgroundColor: Colors.blue[100],
                 child: Icon(
                   Icons,
-                  size: 36, // ⬆️ Bigger icon
+                  size: responsive(36),
                   color: Colors.blue[900],
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: responsive(16)),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -55,18 +59,18 @@ class HomeWorkerWidget extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
-                        fontSize: 22, // ⬆️ Bigger title
+                      style: TextStyle(
+                        fontSize: responsive(22),
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: responsive(8)),
                     Text(
                       description,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: TextStyle(
+                        fontSize: responsive(14),
                         color: Colors.black54,
                       ),
                       overflow: TextOverflow.ellipsis,
