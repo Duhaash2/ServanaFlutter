@@ -5,6 +5,7 @@ import 'package:servana/view/screens/section_6/end_work_w_screen.dart';
 import 'package:servana/view/screens/section_6/incoming_request_w_screen.dart';
 import 'package:servana/view/screens/section_6/worker_notification_screen.dart';
 import 'package:servana/view/widgets/home_worker_widget.dart';
+import '../../../l10n/app_localizations.dart';
 
 class HomeWorkerScreen extends StatefulWidget {
   const HomeWorkerScreen({super.key});
@@ -15,10 +16,10 @@ class HomeWorkerScreen extends StatefulWidget {
 
 class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
   final List<List<Color>> gradientColors = [
-    [Color(0xFFB3E5FC), Color(0xFF81D4FA)],
-    [Color(0xFF81D4FA), Color(0xFF4FC3F7)],
-    [Color(0xFF4FC3F7), Color(0xFF29B6F6)],
-    [Color(0xFF29B6F6), Color(0xFF03A9F4)],
+    [const Color(0xFFB3E5FC), const Color(0xFF81D4FA)],
+    [const Color(0xFF81D4FA), const Color(0xFF4FC3F7)],
+    [const Color(0xFF4FC3F7), const Color(0xFF29B6F6)],
+    [const Color(0xFF29B6F6), const Color(0xFF03A9F4)],
   ];
 
   int currentIndex = 0;
@@ -47,6 +48,7 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final local = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -59,7 +61,7 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              " Worker",
+              local.worker_title,
               style: TextStyle(
                 color: Colors.blue[900],
                 fontSize: size.width < 400 ? 22 : 28,
@@ -71,7 +73,7 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>  WorkerNotificationScreen(),
+                    builder: (context) => const WorkerNotificationScreen(),
                   ),
                 );
               },
@@ -105,7 +107,7 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                 children: [
                   const SizedBox(height: 30),
                   Text(
-                    "Welcome ",
+                    local.welcome_text,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.blue[900],
@@ -113,16 +115,16 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                     ),
                   ),
                   Text(
-                    "Search for tasks and jobs",
+                    local.search_for_tasks,
                     style: TextStyle(color: Colors.blue[900], fontSize: 26),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       HomeWorkerWidget(
-                        title: "Notification",
-                        description: "You Have A New Notification!",
+                        title: local.notification_card_title,
+                        description: local.notification_card_sub,
                         Icons: Icons.notifications,
                         onTap: () {
                           Navigator.push(
@@ -134,8 +136,8 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                         },
                       ),
                       HomeWorkerWidget(
-                        title: "Job Request",
-                        description: "Click On It To See Requests",
+                        title: local.job_request_title,
+                        description: local.job_request_sub,
                         Icons: Icons.next_week_rounded,
                         onTap: () {
                           Navigator.push(
@@ -147,8 +149,8 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                         },
                       ),
                       HomeWorkerWidget(
-                        title: "End Work",
-                        description: "Click On It To End Work",
+                        title: local.end_work_title,
+                        description: local.end_work_sub,
                         Icons: Icons.check_circle_outline,
                         onTap: () {
                           Navigator.push(
@@ -160,16 +162,17 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                         },
                       ),
                       HomeWorkerWidget(
-                        title: "Profile",
-                        description: "See Your Profile",
+                        title: local.profile_title,
+                        description: local.profile_sub,
                         Icons: Icons.person,
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder:
-                                    (context) => ProfileWorkerScreen()),
-                          );                        },
+                              builder: (context) => ProfileWorkerScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

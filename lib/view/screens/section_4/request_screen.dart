@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servana/view/screens/section_3/home_client_screen.dart';
+import '../../../l10n/app_localizations.dart';
 
 class RequestScreen extends StatefulWidget {
   @override
@@ -20,7 +21,6 @@ class _RequestScreenState extends State<RequestScreen> {
           icon: Icon(Icons.arrow_back, color: Colors.blue[900], size: 35),
           onPressed: () {
             Navigator.pop(context);
-            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
           },
         ),
       ),
@@ -42,19 +42,19 @@ class _RequestScreenState extends State<RequestScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Request a Service",
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.request_service_title,
+                      style: const TextStyle(
                         fontSize: 26,
                         color: Color(0xFF0D47A1),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 30),
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 60,
                       backgroundColor: Colors.white,
-                      child: const CircleAvatar(
+                      child: CircleAvatar(
                         radius: 52,
                         backgroundImage: AssetImage("assets/images/man1.PNG"),
                       ),
@@ -71,7 +71,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         controller: issueController,
                         maxLines: 7,
                         decoration: InputDecoration.collapsed(
-                          hintText: "Describe the issue you need help with",
+                          hintText: AppLocalizations.of(context)!.describe_issue_hint,
                           hintStyle: TextStyle(fontSize: 16, color: Colors.grey[700]),
                         ),
                       ),
@@ -80,13 +80,13 @@ class _RequestScreenState extends State<RequestScreen> {
                     ElevatedButton(
                       onPressed: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             content: Text(
-                              "Request A Service Submitted Successfully!",
-                              style: TextStyle(color: Colors.black87),
+                              AppLocalizations.of(context)!.request_success_message,
+                              style: const TextStyle(color: Colors.black87),
                             ),
-                            backgroundColor: Color(0xFFEAF6FF),
-                            duration: Duration(seconds: 2),
+                            backgroundColor: const Color(0xFFEAF6FF),
+                            duration: const Duration(seconds: 2),
                           ),
                         );
                         Future.delayed(const Duration(seconds: 1), () {
@@ -103,9 +103,9 @@ class _RequestScreenState extends State<RequestScreen> {
                           borderRadius: BorderRadius.circular(14),
                         ),
                       ),
-                      child: const Text(
-                        "Request Service",
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      child: Text(
+                        AppLocalizations.of(context)!.submit_request_button,
+                        style: const TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ],

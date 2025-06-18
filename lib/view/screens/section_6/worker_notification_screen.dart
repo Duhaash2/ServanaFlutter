@@ -3,6 +3,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:servana/view/screens/section_5/profile_screen.dart';
 import 'package:servana/view/screens/section_3/home_client_screen.dart';
 import 'package:servana/view/widgets/botton_navigation_widget.dart';
+import 'package:servana/view/screens/section_6/worker_notification_screen.dart';
+import 'package:servana/view/screens/section_5/client_notification_screen.dart';
+import '../../../l10n/app_localizations.dart';
 
 class WorkerNotificationScreen extends StatefulWidget {
   final List<RemoteMessage>? fcmMessages;
@@ -24,7 +27,6 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
 
-    // If messages from Firebase are passed, convert them
     if (widget.fcmMessages != null && widget.fcmMessages!.isNotEmpty) {
       notifications = widget.fcmMessages!.map((msg) {
         return {
@@ -36,47 +38,46 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
         };
       }).toList();
     } else {
-      // Default demo data
       notifications = [
         {
           'icon': Icons.work,
-          'title': 'New job assigned',
-          'subtitle': 'You have accepted a new job',
+          'title': AppLocalizations.of(context)!.new_job_assigned,
+          'subtitle': AppLocalizations.of(context)!.you_accepted_job,
           'time': '1h ago',
           'isRead': false,
         },
         {
           'icon': Icons.timer,
-          'title': 'Job started',
-          'subtitle': 'You marked the job as started',
+          'title': AppLocalizations.of(context)!.job_started,
+          'subtitle': AppLocalizations.of(context)!.you_started_job,
           'time': '3h ago',
           'isRead': true,
         },
         {
           'icon': Icons.payment,
-          'title': 'Payment confirmed',
-          'subtitle': 'The client confirmed payment',
+          'title': AppLocalizations.of(context)!.payment_confirmed,
+          'subtitle': AppLocalizations.of(context)!.client_confirmed_payment,
           'time': 'Today',
           'isRead': false,
         },
         {
           'icon': Icons.chat,
-          'title': 'New message from client',
+          'title': AppLocalizations.of(context)!.new_message_from_client,
           'subtitle': 'Client: Please arrive before 3 PM',
           'time': 'Yesterday',
           'isRead': true,
         },
         {
           'icon': Icons.check_circle,
-          'title': 'Job completed',
-          'subtitle': 'You marked the job as done',
+          'title': AppLocalizations.of(context)!.job_completed,
+          'subtitle': AppLocalizations.of(context)!.you_completed_job,
           'time': '2d ago',
           'isRead': true,
         },
         {
           'icon': Icons.cancel,
-          'title': 'Job cancelled',
-          'subtitle': 'The client cancelled the request',
+          'title': AppLocalizations.of(context)!.job_cancelled,
+          'subtitle': AppLocalizations.of(context)!.client_cancelled_request,
           'time': '2d ago',
           'isRead': false,
         },
@@ -97,6 +98,18 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
     Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
   }
 
+  void _navigateToNotificationScreen() {
+    bool isWorker = true;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => isWorker
+            ? WorkerNotificationScreen(fcmMessages: widget.fcmMessages)
+            : ClientNotificationScreen(fcmMessages: widget.fcmMessages),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> unread = notifications.where((n) => n['isRead'] == false).toList();
@@ -106,13 +119,9 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Notifications',
-          style: TextStyle(
-            fontSize: 26,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
+        title: Text(
+          AppLocalizations.of(context)!.notifications,
+          style: const TextStyle(fontSize: 26, color: Colors.black, fontWeight: FontWeight.bold),
         ),
         bottom: TabBar(
           controller: _tabController,
@@ -120,9 +129,9 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
           labelColor: Colors.blue[900],
           unselectedLabelColor: Colors.grey,
           labelStyle: const TextStyle(fontWeight: FontWeight.w500),
-          tabs: const [
-            Tab(text: 'All'),
-            Tab(text: 'Unread'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context)!.all),
+            Tab(text: AppLocalizations.of(context)!.unread),
           ],
         ),
       ),
@@ -133,7 +142,6 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
           _buildNotificationList(unread),
         ],
       ),
-    //  bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
     );
   }
 
@@ -173,44 +181,4 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
       },
     );
   }
-
-  // BottomAppBar _buildBottomBar(double width) {
-  //   return BottomAppBar(
-  //     color: Colors.white,
-  //     shape: const CircularNotchedRectangle(),
-  //     notchMargin: 8,
-  //     child: SizedBox(
-  //       height: 60,
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //         children: [
-  //           BottonNavigationWidget(
-  //             icon: Icons.home_filled,
-  //             label: "Home",
-  //             isSelected: selectedIndex == 0,
-  //             onTap: () => _navigate(0, const HomeScreen()),
-  //           ),
-  //           BottonNavigationWidget(
-  //             icon: Icons.wallet,
-  //             label: "Wallet",
-  //             isSelected: selectedIndex == 1,
-  //             onTap: () => onItemTapped(1),
-  //           ),
-  //           BottonNavigationWidget(
-  //             icon: Icons.history,
-  //             label: "History",
-  //             isSelected: selectedIndex == 2,
-  //             onTap: () => onItemTapped(2),
-  //           ),
-  //           BottonNavigationWidget(
-  //             icon: Icons.person,
-  //             label: "Profile",
-  //             isSelected: selectedIndex == 3,
-  //             onTap: () => _navigate(3, const ProfileScreen()),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }

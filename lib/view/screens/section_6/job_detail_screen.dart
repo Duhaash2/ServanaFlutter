@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servana/view/screens/section_6/worker_notification_screen.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_3/home_client_screen.dart';
 import '../section_5/profile_screen.dart';
@@ -56,7 +57,10 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_none),
-            onPressed: () {},
+            onPressed: () {
+
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>WorkerNotificationScreen()));
+            },
           ),
         ],
       ),

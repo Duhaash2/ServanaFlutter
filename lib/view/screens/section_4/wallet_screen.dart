@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 
 class WalletScreen extends StatefulWidget {
   @override
@@ -16,12 +17,14 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text("Wallet"),
+        title: Text(local.wallet),
         centerTitle: true,
       ),
       body: Container(
@@ -60,9 +63,9 @@ class _WalletScreenState extends State<WalletScreen> {
                           ),
                           child: Column(
                             children: [
-                              const Text(
-                                "Your Balance",
-                                style: TextStyle(fontSize: 18),
+                              Text(
+                                local.your_balance,
+                                style: const TextStyle(fontSize: 18),
                               ),
                               const SizedBox(height: 6),
                               Text(
@@ -84,9 +87,9 @@ class _WalletScreenState extends State<WalletScreen> {
                                       ),
                                     ),
                                     onPressed: () {},
-                                    child: const Text(
-                                      "Add Money",
-                                      style: TextStyle(color: Colors.white),
+                                    child: Text(
+                                      local.add_money,
+                                      style: const TextStyle(color: Colors.white),
                                     ),
                                   ),
                                   const SizedBox(width: 10),
@@ -98,9 +101,9 @@ class _WalletScreenState extends State<WalletScreen> {
                                       ),
                                     ),
                                     onPressed: () {},
-                                    child: const Text(
-                                      "Withdraw",
-                                      style: TextStyle(color: Colors.black87),
+                                    child: Text(
+                                      local.withdraw,
+                                      style: const TextStyle(color: Colors.black87),
                                     ),
                                   ),
                                 ],
@@ -114,7 +117,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "Transaction History",
+                              local.transaction_history,
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
@@ -194,6 +197,5 @@ class _WalletScreenState extends State<WalletScreen> {
         ),
       ),
     );
-
   }
 }

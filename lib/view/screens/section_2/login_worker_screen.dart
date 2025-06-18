@@ -3,15 +3,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:servana/view/screens/section_2/signup_worker_screen.dart';
 import 'package:servana/view/screens/section_6/home_worker_screen.dart';
-
 import '../../../controller/login_controller.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../../model/auth_model/sign_model.dart';
-import '../../../service/auth/authentication_service.dart';
 import '../../widgets/input_widget.dart';
 import 'rest_password_screen.dart';
-import 'signup_client_screen.dart';
-import '../section_3/home_client_screen.dart';
 
 class LoginWorkerScreen extends StatefulWidget {
   const LoginWorkerScreen({super.key});
@@ -40,13 +35,10 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
     int loginCount = int.tryParse(loginCountStr ?? '0') ?? 0;
 
     if (remember == 'true' && userId != null && loginCount < 2) {
-      await secureStorage.write(
-        key: 'rememberLoginCount',
-        value: '${loginCount + 1}',
-      );
+      await secureStorage.write(key: 'rememberLoginCount', value: '${loginCount + 1}');
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeWorkerScreen()),
+        MaterialPageRoute(builder: (context) => const HomeWorkerScreen()),
       );
     }
   }
@@ -126,7 +118,7 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => SignupWorkerScreen()),
+                                  MaterialPageRoute(builder: (context) => const SignupWorkerScreen()),
                                 );
                               },
                               child: Text(
@@ -143,8 +135,10 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                               obscureText: false,
                               textEditingController: emailTextEditingController,
                               label: AppLocalizations.of(context)!.email,
-                              hintText: "Loisbakit@gmail.com",
-                              errorText: loginController.showErrorEmail ? loginController.errorEmailMessage : null,
+                              hintText: "worker@example.com",
+                              errorText: loginController.showErrorEmail
+                                  ? loginController.errorEmailMessage
+                                  : null,
                             );
                           },
                         ),
@@ -155,7 +149,6 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                               controller: passTextEditingController,
                               obscureText: loginController.obscureTextPassword,
                               decoration: InputDecoration(
-                               // filled: true,
                                 fillColor: isDark ? Colors.grey[800] : Colors.white,
                                 labelText: AppLocalizations.of(context)!.password,
                                 labelStyle: TextStyle(color: isDark ? Colors.white : null),
@@ -167,7 +160,9 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                                     color: isDark ? Colors.white : null,
                                   ),
                                 ),
-                                errorText: loginController.showErrorPassword ? loginController.errorPasswordMessage : null,
+                                errorText: loginController.showErrorPassword
+                                    ? loginController.errorPasswordMessage
+                                    : null,
                               ),
                               style: TextStyle(color: isDark ? Colors.white : Colors.black),
                             );
@@ -203,7 +198,7 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => ResetPasswordScreen()),
+                                  MaterialPageRoute(builder: (context) =>  ResetPasswordScreen()),
                                 );
                               },
                               child: Text(
@@ -216,8 +211,11 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                         const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () async {
-                            if (emailTextEditingController.text.isEmpty || passTextEditingController.text.isEmpty) {
-                              loginController.showCustomEmailError("Please enter both email and password");
+                            if (emailTextEditingController.text.isEmpty ||
+                                passTextEditingController.text.isEmpty) {
+                              loginController.showCustomEmailError(
+                                AppLocalizations.of(context)!.please_enter_email_and_password,
+                              );
                               return;
                             }
 
@@ -229,31 +227,10 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
 
                             if (loginController.showErrorEmail || loginController.showErrorPassword) return;
 
-                            // ✅✅ تم تعليق الاتصال الحقيقي وتفعيل تسجيل دخول وهمي
-                            /*
-                            Sign_Model signModel = Sign_Model(
-                              email: emailTextEditingController.text,
-                              password: passTextEditingController.text,
-                            );
-
-                            final authService = AuthenticationService();
-                            bool success = await authService.login(signModel);
-
-                            if (success) {
-                              await _saveCredentials(emailTextEditingController.text, "user_id_123");
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => HomeScreen()),
-                              );
-                            } else {
-                              loginController.showCustomEmailError("Login failed. Please check your credentials.");
-                            }
-                            */
-
                             await _saveCredentials(emailTextEditingController.text, "user_id_123");
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => HomeWorkerScreen()),
+                              MaterialPageRoute(builder: (context) => const HomeWorkerScreen()),
                             );
                           },
                           style: ElevatedButton.styleFrom(

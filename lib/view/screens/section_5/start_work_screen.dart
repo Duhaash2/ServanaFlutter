@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_3/home_client_screen.dart';
 import 'profile_screen.dart';
@@ -29,6 +30,7 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final local = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF3EEEC),
@@ -42,9 +44,9 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
           },
         ),
         centerTitle: true,
-        title: const Text(
-          'Job Details',
-          style: TextStyle(
+        title: Text(
+          local.jobDetails,
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 30,
             fontWeight: FontWeight.bold,
@@ -62,25 +64,25 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
             children: [
               BottonNavigationWidget(
                 icon: Icons.home_filled,
-                label: "Home",
+                label: local.bottomNavHome,
                 isSelected: selectedIndex == 0,
                 onTap: () => _navigate(0, const HomeScreen()),
               ),
               BottonNavigationWidget(
                 icon: Icons.wallet,
-                label: "Wallet",
+                label: local.bottomNavWallet,
                 isSelected: selectedIndex == 1,
                 onTap: () => onItemTapped(1),
               ),
               BottonNavigationWidget(
                 icon: Icons.history,
-                label: "History",
+                label: local.bottomNavHistory,
                 isSelected: selectedIndex == 2,
                 onTap: () => onItemTapped(2),
               ),
               BottonNavigationWidget(
                 icon: Icons.person,
-                label: "Profile",
+                label: local.bottomNavProfile,
                 isSelected: selectedIndex == 3,
                 onTap: () => _navigate(3, const ProfileScreen()),
               ),
@@ -99,16 +101,16 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Client Name',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
+              Text(
+                local.clientName,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
               ),
               const SizedBox(height: 4),
               const Text('John Smith', style: TextStyle(fontSize: 16, color: Colors.black)),
 
               const Divider(height: 50),
 
-              const Text('Location', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87)),
+              Text(local.location, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87)),
               const SizedBox(height: 15),
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
@@ -123,23 +125,23 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
               const SizedBox(height: 30),
               const Divider(),
 
-              const Text(
-                'Issue Description',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
+              Text(
+                local.issueDescription,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'Kitchen sink is leaking under the cabinet.\nWater is pooling inside the cabinet whenever the faucet is turned on.',
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+              Text(
+                local.issueText,
+                style: const TextStyle(fontSize: 14, color: Colors.grey),
               ),
 
               const Divider(height: 50),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Hourly Rate', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  Text('\$25.00/hr', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                children: [
+                  Text(local.hourlyRate, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  const Text('\$25.00/hr', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ],
               ),
 
@@ -157,9 +159,9 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 14),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   ),
-                  child: const Text(
-                    'Start Work',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  child: Text(
+                    local.startWork,
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
               ),

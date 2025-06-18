@@ -20,7 +20,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     final loginController = Provider.of<LoginController>(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final width = MediaQuery.of(context).size.width;
+    final local = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: Stack(
@@ -66,7 +66,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       Row(
                         children: [
                           Text(
-                            AppLocalizations.of(context)!.reset_password,
+                            local.reset_password,
                             style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
@@ -78,7 +78,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       Row(
                         children: [
                           Text(
-                            AppLocalizations.of(context)!.want_to_try_with_my_current_password,
+                            local.want_to_try_with_my_current_password,
                             style: TextStyle(
                               fontSize: 10,
                               color: isDark ? Colors.white70 : Colors.black54,
@@ -94,7 +94,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               );
                             },
                             child: Text(
-                              AppLocalizations.of(context)!.login,
+                              local.login,
                               style: TextStyle(
                                 color: Colors.blue[900],
                                 fontSize: 11,
@@ -109,7 +109,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
-                          label: Text(AppLocalizations.of(context)!.new_password),
+                          label: Text(local.new_password),
                           fillColor: isDark ? Colors.grey[850] : Colors.white,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(11),
@@ -123,7 +123,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: isDark ? Colors.grey[850] : Colors.white,
-                          labelText: AppLocalizations.of(context)!.confirm_new_password,
+                          labelText: local.confirm_new_password,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(11),
                           ),
@@ -134,12 +134,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         onPressed: () {
                           loginController.checkPassword(
                             password: newPassTextEditingController.text,
-                            email: "placeholder@email.com", // 💡 Email وهمي فقط
+                            email: "placeholder@email.com",
                           );
 
                           if (newPassTextEditingController.text != confirmPassTextEditingController.text) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Passwords do not match")),
+                              SnackBar(content: Text(local.passwords_do_not_match)),
                             );
                             return;
                           }
@@ -151,9 +151,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             return;
                           }
 
-                          // ✅✅ هذا الجزء مؤقت، المفروض هون يتم استدعاء API لتحديث كلمة المرور
-                          // await authService.resetPassword(...);
-                          // إذا نجح، ننتقل لصفحة التهنئة
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => const CongraScreen()),
@@ -167,7 +164,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           ),
                         ),
                         child: Text(
-                          AppLocalizations.of(context)!.update_password,
+                          local.update_password,
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

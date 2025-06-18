@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../../../controller/profile_controller.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_3/home_client_screen.dart';
 import '../section_4/wallet_screen.dart';
@@ -53,7 +54,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
         children: [
           ListTile(
             leading: const Icon(Icons.camera_alt),
-            title: const Text("Take from Camera"),
+            title: Text(AppLocalizations.of(context)!.take_from_camera),
             onTap: () async {
               Navigator.pop(context);
               final picked = await picker.pickImage(source: ImageSource.camera);
@@ -66,7 +67,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
           ),
           ListTile(
             leading: const Icon(Icons.photo_library),
-            title: const Text("Pick from Gallery"),
+            title: Text(AppLocalizations.of(context)!.pick_from_gallery),
             onTap: () async {
               Navigator.pop(context);
               final picked = await picker.pickImage(source: ImageSource.gallery);
@@ -92,23 +93,13 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
     super.dispose();
   }
 
-  void onItemTapped(int index) {
-    setState(() {
-      widget.selectedIndex = index;
-    });
-  }
-
-  void _navigate(int index, Widget screen) {
-    onItemTapped(index);
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => screen));
-  }
-
   @override
   Widget build(BuildContext context) {
     final profileController = Provider.of<ProfileController>(context);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    final loc = AppLocalizations.of(context)!;
 
     return Container(
       decoration: const BoxDecoration(
@@ -123,7 +114,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text('Profile', style: TextStyle(color: Colors.white)),
+          title: Text(loc.profile, style: const TextStyle(color: Colors.white)),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.pop(context),
@@ -160,15 +151,11 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
               ),
               SizedBox(height: height * 0.015),
               Text(profileController.username,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  )),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
               Text(profileController.email,
                   style: const TextStyle(fontSize: 14, color: Colors.white70)),
               SizedBox(height: height * 0.03),
-              _buildInfoCard(profileController, isDarkMode),
+              _buildInfoCard(profileController, isDarkMode, loc),
               SizedBox(height: height * 0.03),
               ElevatedButton(
                 onPressed: () {
@@ -181,11 +168,9 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
                     pricePerHour: _priceController.text,
                     profileImage: _profileImage,
                   );
-
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Profile updated successfully")),
+                    SnackBar(content: Text(loc.profile_updated_successfully)),
                   );
-
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (_) => const ProfileWorkerScreen()),
@@ -196,7 +181,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
                   foregroundColor: Colors.blue[900],
                   padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.015),
                 ),
-                child: const Text("Update"),
+                child: Text(loc.update),
               ),
             ],
           ),
@@ -205,7 +190,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
     );
   }
 
-  Widget _buildInfoCard(ProfileController controller, bool isDark) {
+  Widget _buildInfoCard(ProfileController controller, bool isDark, AppLocalizations loc) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -222,22 +207,19 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          _buildTextField("Username", _usernameController, controller.updateUsername),
-          _buildTextField("Email", _emailController, controller.updateEmail),
-          _buildTextField("Phone Number", _phoneController, controller.updatePhoneNumber),
-          _buildTextField("Password", _passwordController, controller.updatePassword, isPassword: true),
-          _buildTextField("Price Per Hour", _priceController, controller.updatePricePerHour),
+          _buildTextField(loc.username, _usernameController, controller.updateUsername),
+          _buildTextField(loc.email, _emailController, controller.updateEmail),
+          _buildTextField(loc.phone_number, _phoneController, controller.updatePhoneNumber),
+          _buildTextField(loc.password, _passwordController, controller.updatePassword, isPassword: true),
+          _buildTextField(loc.price_per_hour, _priceController, controller.updatePricePerHour),
         ],
       ),
     );
   }
 
-  Widget _buildTextField(
-      String label,
-      TextEditingController controller,
-      Function(String) onChanged, {
-        bool isPassword = false,
-      }) {
+  Widget _buildTextField(String label, TextEditingController controller, Function(String) onChanged, {
+    bool isPassword = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 7),
       child: TextField(

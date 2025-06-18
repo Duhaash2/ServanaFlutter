@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../../l10n/app_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:servana/view/screens/section_2/rest_password_screen.dart';
-import 'package:servana/view/screens/section_2/signup_client_screen.dart';
 import '../../../controller/login_controller.dart';
 import '../../../model/auth_model/sign_model.dart';
 import '../../../service/auth/authentication_service.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../widgets/input_widget.dart';
+import '../section_2/rest_password_screen.dart';
+import '../section_2/signup_client_screen.dart';
 import '../section_3/home_client_screen.dart';
 
 class LoginClientScreen extends StatefulWidget {
@@ -39,7 +39,7 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
       await secureStorage.write(key: 'rememberLoginCount', value: '${loginCount + 1}');
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     }
   }
@@ -115,12 +115,12 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => SignUpScreen()),
+                                  MaterialPageRoute(builder: (context) => const SignUpScreen()),
                                 );
                               },
-                              child: const Text(
-                                "Sign Up",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.sign_up,
+                                style: const TextStyle(
                                   color: Color(0xFF0D47A1),
                                   fontSize: 15,
                                 ),
@@ -185,13 +185,13 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                                         rememberMe = value!;
                                       });
                                     },
-                                    activeColor: Color(0xFF0D47A1),
+                                    activeColor: const Color(0xFF0D47A1),
                                   ),
                                 ),
                                 const SizedBox(width: 8),
-                                const Text(
-                                  "Remember Me",
-                                  style: TextStyle(fontSize: 14),
+                                Text(
+                                  AppLocalizations.of(context)!.remember_me,
+                                  style: const TextStyle(fontSize: 14),
                                 ),
                               ],
                             ),
@@ -199,12 +199,12 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => ResetPasswordScreen()),
+                                  MaterialPageRoute(builder: (context) =>  ResetPasswordScreen()),
                                 );
                               },
-                              child: const Text(
-                                "Forgot Password?",
-                                style: TextStyle(color: Color(0xFF0D47A1), fontSize: 14),
+                              child: Text(
+                                AppLocalizations.of(context)!.forgot_password,
+                                style: const TextStyle(color: Color(0xFF0D47A1), fontSize: 14),
                               ),
                             ),
                           ],
@@ -214,7 +214,9 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                           onPressed: () async {
                             if (emailTextEditingController.text.isEmpty ||
                                 passTextEditingController.text.isEmpty) {
-                              loginController.showCustomEmailError("Please enter both email and password");
+                              loginController.showCustomEmailError(
+                                AppLocalizations.of(context)!.please_enter_email_and_password,
+                              );
                               return;
                             }
 
@@ -226,32 +228,11 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
 
                             if (loginController.showErrorEmail || loginController.showErrorPassword) return;
 
-                            // ✅✅ تم تعطيل الكود الأصلي لتسجيل الدخول مؤقتًا لتجربة الواجهة بدون تحقق من السيرفر:
-                            /*
-                            Sign_Model signModel = Sign_Model(
-                              email: emailTextEditingController.text,
-                              password: passTextEditingController.text,
-                            );
-
-                            final authService = AuthenticationService();
-                            bool success = await authService.login(signModel);
-
-                            if (success) {
-                              await _saveCredentials(emailTextEditingController.text, "user_id_123");
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => HomeScreen()),
-                              );
-                            } else {
-                              loginController.showCustomEmailError("Login failed. Please check your credentials.");
-                            }
-                            */
-
-                            // ✅ تسجيل دخول وهمي بدون تحقق
+                            // Fake login for demo
                             await _saveCredentials(emailTextEditingController.text, "user_id_123");
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => HomeScreen()),
+                              MaterialPageRoute(builder: (context) => const HomeScreen()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
@@ -261,9 +242,9 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.login,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 16,

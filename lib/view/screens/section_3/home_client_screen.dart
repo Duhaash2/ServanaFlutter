@@ -41,9 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? Colors.black : Colors.white;
-    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -54,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Top Blue Container
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
                   decoration: BoxDecoration(
@@ -67,13 +66,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Header
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             "Servana",
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
@@ -83,23 +81,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => ClientNotificationScreen(),
-                                ),
+                                MaterialPageRoute(builder: (context) => ClientNotificationScreen()),
                               );
                             },
-                            icon: Icon(
-                              Icons.notifications,
-                              color: Colors.white,
-                              size: 28,
-                            ),
+                            icon: const Icon(Icons.notifications, color: Colors.white, size: 28),
                           ),
                         ],
                       ),
                       const SizedBox(height: 15),
-
-                      // Search
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -107,33 +96,23 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: TextField(
                           decoration: InputDecoration(
-                            hintText:
-                                AppLocalizations.of(
-                                  context,
-                                )!.search_service_workers_or_etc,
+                            hintText: local.search_service_workers_or_etc,
                             prefixIcon: const Icon(Icons.search),
                             border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 14,
-                            ),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 14),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 20,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Categories
                       Text(
-                        "Categories",
+                        local.categories,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 22,
@@ -146,71 +125,46 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                           children: [
                             CategoryButtonWidget(
-                              title: AppLocalizations.of(context)!.pluming,
+                              title: local.plumbing,
                               isSelected: selectedIndex == 0,
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => PlumingScreen(),
-                                  ),
-                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => PlumingScreen()));
                                 onItemTapped(0);
                               },
                               ImagePath: 'assets/images/plumingg.png',
                             ),
                             CategoryButtonWidget(
-                              title: AppLocalizations.of(context)!.electrical,
+                              title: local.electrical,
                               isSelected: selectedIndex == 1,
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => ElectricalScreen(),
-                                  ),
-                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => ElectricalScreen()));
                                 onItemTapped(1);
                               },
                               ImagePath: 'assets/images/Electricall.png',
                             ),
                             CategoryButtonWidget(
-                              title: AppLocalizations.of(context)!.gardner,
+                              title: local.gardner,
                               isSelected: selectedIndex == 2,
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => GardnerScreen(),
-                                  ),
-                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => GardnerScreen()));
                                 onItemTapped(2);
                               },
                               ImagePath: 'assets/images/gardnerr.png',
                             ),
                             CategoryButtonWidget(
-                              title: AppLocalizations.of(context)!.paint,
+                              title: local.paint,
                               isSelected: selectedIndex == 3,
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => PaintScreen(),
-                                  ),
-                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => PaintScreen()));
                                 onItemTapped(3);
                               },
                               ImagePath: 'assets/images/paintingg.png',
                             ),
                             CategoryButtonWidget(
-                              title: AppLocalizations.of(context)!.cleaning,
+                              title: local.cleaning,
                               isSelected: selectedIndex == 4,
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => PaintScreen(),
-                                  ),
-                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => PaintScreen()));
                                 onItemTapped(4);
                               },
                               ImagePath: 'assets/images/cleaningg.png',
@@ -218,31 +172,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-
                       const SizedBox(height: 26),
-
-                      // Top Rated
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Top Rated Workers",
+                            local.top_rated_workers,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
                               color: Colors.blue[900],
                             ),
                           ),
-
                           IconButton(
                             icon: Icon(Icons.tune, color: Colors.blue[900]),
                             onPressed: () {
                               showModalBottomSheet(
                                 context: context,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(25),
-                                  ),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
                                 ),
                                 builder: (context) => FilterBottomSheet(),
                               );
@@ -259,18 +207,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: "John Deo",
                               imagePath: "assets/images/man2.PNG",
                               rating: 4.5,
-                              subtitle: "24 Jobs",
-                              tag: "Top Rated",
+                              subtitle: "24 ${local.jobs}",
+                              tag: local.top_rated,
                               onPressed: () {},
-                              description: 'Plumbing',
+                              description: local.plumbing,
                             ),
                             TopRatedWidget(
                               title: "Emma Smith",
                               imagePath: "assets/images/girl2.PNG",
                               rating: 3.0,
-                              subtitle: "18 Jobs",
+                              subtitle: "18 ${local.jobs}",
                               onPressed: () {},
-                              description: 'Cleaning',
+                              description: local.cleaning,
                             ),
                           ],
                         ),
@@ -284,17 +232,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: "Clivia Brown",
                               imagePath: "assets/images/girl1.PNG",
                               rating: 4.0,
-                              subtitle: "10 Jobs",
+                              subtitle: "10 ${local.jobs}",
                               onPressed: () {},
-                              description: 'Paint',
+                              description: local.paint,
                             ),
                             TopRatedWidget(
                               title: "James Jonson",
                               imagePath: "assets/images/man1.PNG",
                               rating: 3.5,
-                              subtitle: "18 Jobs",
+                              subtitle: "18 ${local.jobs}",
                               onPressed: () {},
-                              description: 'Plumbing',
+                              description: local.plumbing,
                             ),
                           ],
                         ),
@@ -307,8 +255,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-
-      // Bottom Navigation
       bottomNavigationBar: BottomAppBar(
         color: bgColor,
         shape: const CircularNotchedRectangle(),
@@ -320,53 +266,38 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               BottonNavigationWidget(
                 icon: Icons.home_filled,
-                label: "Home",
+                label: local.bottomNavHome,
                 isSelected: selectedIndex2 == 0,
                 onTap: () {
                   onItemTapped2(0);
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const HomeScreen()),
-                  );
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.wallet,
-                label: "Wallet",
+                label: local.bottomNavWallet,
                 isSelected: selectedIndex2 == 1,
                 onTap: () {
                   onItemTapped2(1);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => WalletScreen()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => WalletScreen()));
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.history,
-                label: "History",
+                label: local.bottomNavHistory,
                 isSelected: selectedIndex2 == 2,
                 onTap: () {
                   onItemTapped2(2);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => HistoryScreen()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => HistoryScreen()));
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.person,
-                label: "Profile",
+                label: local.bottomNavProfile,
                 isSelected: selectedIndex2 == 3,
                 onTap: () {
                   onItemTapped2(3);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => ProfileScreen(),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => ProfileScreen()));
                 },
               ),
             ],
