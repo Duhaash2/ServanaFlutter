@@ -2,23 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:servana/view/screens/section_2/login_client_screen.dart';
 import 'package:servana/view/screens/section_2/login_worker_screen.dart';
 
-import '../../../l10n/app_localizations.dart';
-
 class LoginSelectionScreen extends StatelessWidget {
   const LoginSelectionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
+    final isDarkMode = theme.brightness == Brightness.dark;
     final isSmall = size.width < 400;
 
-    final local = AppLocalizations.of(context)!;
-
     return Scaffold(
-      backgroundColor: const Color(0xFFEAF6FF),
+      backgroundColor: isDarkMode ? theme.scaffoldBackgroundColor : const Color(0xFFEAF6FF),
       body: SafeArea(
         child: Column(
           children: [
+            // Top Illustration
             SizedBox(
               height: size.height * 0.4,
               width: double.infinity,
@@ -27,6 +26,8 @@ class LoginSelectionScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
+
+            // Bottom Container
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.only(bottom: 20),
@@ -36,18 +37,19 @@ class LoginSelectionScreen extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
+                      decoration: BoxDecoration(
+                        color: theme.cardColor,
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(35),
                           topRight: Radius.circular(35),
                         ),
                         boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10,
-                            offset: Offset(0, -4),
-                          ),
+                          if (!isDarkMode)
+                            const BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 10,
+                              offset: Offset(0, -4),
+                            ),
                         ],
                       ),
                       child: Column(
@@ -55,35 +57,40 @@ class LoginSelectionScreen extends StatelessWidget {
                         children: [
                           const SizedBox(height: 15),
                           Text(
-                            local.welcomeTitle,
-                            style: TextStyle(
+                            "Welcome! Are you a client or worker?",
+                            style: theme.textTheme.titleMedium!.copyWith(
                               fontSize: isSmall ? 20 : 22,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black87,
                             ),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            local.welcomeSubtitle,
-                            style: TextStyle(
+                            "Please choose one of the options below.",
+                            style: theme.textTheme.bodyMedium!.copyWith(
                               fontSize: isSmall ? 14 : 15,
-                              color: Colors.grey,
+                              color: isDarkMode ? Colors.grey[400] : Colors.grey[700],
                             ),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 35),
+
+                          // Client Button
                           ElevatedButton.icon(
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.person_outline,
-                              color: Colors.black87,
+                              color: isDarkMode ? Colors.white : Colors.black87,
                             ),
                             label: Text(
-                              local.loginAsClient,
-                              style: const TextStyle(fontSize: 16, color: Colors.black87),
+                              "Login as Client",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: isDarkMode ? Colors.white : Colors.black87,
+                              ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFDCEFFF),
+                              backgroundColor:
+                              isDarkMode ? Colors.blue[900]: const Color(0xFFDCEFFF),
                               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
@@ -98,17 +105,20 @@ class LoginSelectionScreen extends StatelessWidget {
                             },
                           ),
                           const SizedBox(height: 20),
+
+                          // Worker Button
                           ElevatedButton.icon(
                             icon: const Icon(
                               Icons.build_outlined,
                               color: Colors.white,
                             ),
-                            label: Text(
-                              local.loginAsWorker,
-                              style: const TextStyle(fontSize: 16, color: Colors.white),
+                            label: const Text(
+                              "Login as Worker",
+                              style: TextStyle(fontSize: 16, color: Colors.white),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orangeAccent,
+                              backgroundColor:
+                              isDarkMode ? Colors.orange[700] : Colors.orangeAccent,
                               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),

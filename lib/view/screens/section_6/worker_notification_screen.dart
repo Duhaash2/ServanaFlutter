@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import '../../../controller/notification_controller.dart';
-import '../../../l10n/app_localizations.dart';
-import 'package:servana/view/screens/section_3/home_client_screen.dart';
-import 'package:servana/view/screens/section_5/profile_screen.dart';
-import 'package:servana/view/widgets/botton_navigation_widget.dart';
-
 class WorkerNotificationScreen extends StatefulWidget {
-  const WorkerNotificationScreen({super.key});
+  final List<RemoteMessage>? fcmMessages;
+
+  const WorkerNotificationScreen({super.key, this.fcmMessages});
 
   @override
   State<WorkerNotificationScreen> createState() => _WorkerNotificationScreenState();
@@ -17,29 +12,14 @@ class WorkerNotificationScreen extends StatefulWidget {
 
 class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  int selectedIndex = 0;
+  late List<Map<String, dynamic>> notifications;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-  }
 
-  void onItemTapped(int index) {
-    setState(() => selectedIndex = index);
-  }
-
-  void _navigate(int index, Widget screen) {
-    setState(() => selectedIndex = index);
-    Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
-    final fcmMessages = Provider.of<NotificationController>(context).messages;
-
-    List<Map<String, dynamic>> notifications = fcmMessages.map((msg) {
+    notifications = widget.fcmMessages?.map((msg) {
       return {
         'icon': Icons.notifications,
         'title': msg.notification?.title ?? "No Title",
@@ -47,51 +27,85 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
         'time': 'Just now',
         'isRead': false,
       };
-    }).toList();
+    }).toList() ??
+        [
+          {
+            'icon': Icons.work,
+            'title': 'New job assigned',
+            'subtitle': 'You have accepted a new job',
+            'time': '1h ago',
+            'isRead': false,
+          },
+          {
+            'icon': Icons.timer,
+            'title': 'Job started',
+            'subtitle': 'You marked the job as started',
+            'time': '3h ago',
+            'isRead': true,
+          },
+          {
+            'icon': Icons.payment,
+            'title': 'Payment confirmed',
+            'subtitle': 'The client confirmed payment',
+            'time': 'Today',
+            'isRead': false,
+          },
+        ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bgColor = isDark ? const Color(0xFF121212) : Colors.white;
+    final tabColor = isDark ? Colors.white : Colors.blue[900];
+    final unselectedColor = isDark ? Colors.grey[500] : Colors.grey;
+    final titleColor = isDark ? Colors.white : Colors.black;
+    final subtitleColor = isDark ? Colors.white70 : Colors.black54;
+    final avatarBg = isDark ? Colors.grey : Colors.blue[100];
 
     List<Map<String, dynamic>> unread = notifications.where((n) => n['isRead'] == false).toList();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: bgColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: bgColor,
         elevation: 0,
         title: Text(
-          local.notifications,
-          style: const TextStyle(fontSize: 26, color: Colors.black, fontWeight: FontWeight.bold),
+          'Notifications',
+          style: TextStyle(
+            fontSize: 26,
+            color: titleColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Colors.blue[900],
-          labelColor: Colors.blue[900],
-          unselectedLabelColor: Colors.grey,
+          indicatorColor: tabColor,
+          labelColor: tabColor,
+          unselectedLabelColor: unselectedColor,
           labelStyle: const TextStyle(fontWeight: FontWeight.w500),
-          tabs: [
-            Tab(text: local.all),
-            Tab(text: local.unread),
+          tabs: const [
+            Tab(text: 'All'),
+            Tab(text: 'Unread'),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
-          _buildNotificationList(notifications, local),
-          _buildNotificationList(unread, local),
+          _buildNotificationList(notifications, titleColor, subtitleColor, avatarBg),
+          _buildNotificationList(unread, titleColor, subtitleColor, avatarBg),
         ],
       ),
     );
   }
 
-  Widget _buildNotificationList(List<Map<String, dynamic>> data, AppLocalizations local) {
-    if (data.isEmpty) {
-      return Center(
-        child: Text(
-          local.no_notifications,
-          style: const TextStyle(color: Colors.grey, fontSize: 16),
-        ),
-      );
-    }
-
+  Widget _buildNotificationList(
+      List<Map<String, dynamic>> data,
+      Color titleColor,
+      Color subtitleColor,
+      Color? avatarBg,
+      ) {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(vertical: 12),
       itemCount: data.length,
@@ -102,23 +116,30 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
           leading: Stack(
             children: [
               CircleAvatar(
-                backgroundColor: Colors.blue[100],
+                backgroundColor: avatarBg,
                 child: Icon(item['icon'], color: Colors.blue[900]),
               ),
               if (item['isRead'] == false)
-                const Positioned(
+                Positioned(
                   right: 0,
                   top: 0,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.red,
-                    radius: 5,
+                  child: Container(
+                    width: 10,
+                    height: 10,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
                   ),
                 ),
             ],
           ),
-          title: Text(item['title'], style: const TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(item['subtitle']),
-          trailing: Text(item['time'], style: const TextStyle(fontSize: 12, color: Colors.grey)),
+          title: Text(
+            item['title'],
+            style: TextStyle(fontWeight: FontWeight.bold, color: titleColor),
+          ),
+          subtitle: Text(item['subtitle'], style: TextStyle(color: subtitleColor)),
+          trailing: Text(item['time'], style: TextStyle(fontSize: 12, color: subtitleColor)),
         );
       },
     );

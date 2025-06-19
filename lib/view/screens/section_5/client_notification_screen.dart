@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 import '../../../controller/notification_controller.dart';
 import '../../../l10n/app_localizations.dart';
 import 'package:servana/view/screens/section_3/home_client_screen.dart';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:servana/view/screens/section_5/profile_screen.dart';
-import 'package:servana/view/screens/section_5/start_work_screen.dart';
+import 'package:servana/view/screens/section_3/home_client_screen.dart';
 import 'package:servana/view/widgets/botton_navigation_widget.dart';
 
 class ClientNotificationScreen extends StatefulWidget {
-  const ClientNotificationScreen({super.key});
+  final List<RemoteMessage>? fcmMessages;
+
+  const ClientNotificationScreen({super.key, this.fcmMessages});
 
   @override
   State<ClientNotificationScreen> createState() => _ClientNotificationScreenState();
@@ -18,71 +24,132 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int selectedIndex = 0;
+  late List<Map<String, dynamic>> notifications;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    if (widget.fcmMessages != null && widget.fcmMessages!.isNotEmpty) {
+      notifications = widget.fcmMessages!.map((msg) {
+        return {
+          'icon': Icons.notifications,
+          'title': msg.notification?.title ?? "No Title",
+          'subtitle': msg.notification?.body ?? "No Body",
+          'time': 'Just now',
+          'isRead': false,
+        };
+      }).toList();
+    } else {
+      notifications = [
+        {
+          'icon': Icons.check_circle,
+          'title': 'Your job has been completed',
+          'subtitle': 'The worker marked your job as completed',
+          'time': '2h ago',
+          'isRead': false,
+        },
+        {
+          'icon': Icons.payment,
+          'title': 'Payment received',
+          'subtitle': 'Your payment has been processed',
+          'time': '4h ago',
+          'isRead': true,
+        },
+        {
+          'icon': Icons.message,
+          'title': 'You have a new message',
+          'subtitle': 'The worker: Hello, I\'m on my way',
+          'time': 'Yesterday',
+          'isRead': false,
+        },
+        {
+          'icon': Icons.check_circle,
+          'title': 'Job started',
+          'subtitle': 'The worker started the job',
+          'time': 'Yesterday',
+          'isRead': true,
+        },
+        {
+          'icon': Icons.message,
+          'title': 'You have a new message',
+          'subtitle': 'The worker: I will arrive shortly',
+          'time': '2d ago',
+          'isRead': false,
+        },
+        {
+          'icon': Icons.check_circle,
+          'title': 'Job request accepted',
+          'subtitle': 'The worker accepted your request',
+          'time': '2d ago',
+          'isRead': true,
+        },
+        {
+          'icon': Icons.message,
+          'title': 'You have a new message',
+          'subtitle': 'The worker: I can come tomorrow',
+          'time': '3d ago',
+          'isRead': true,
+        },
+        {
+          'icon': Icons.close,
+          'title': 'Job request rejected',
+          'subtitle': 'The worker is not available at the moment',
+          'time': '3d ago',
+          'isRead': false,
+        },
+      ];
+    }
   }
 
   void onItemTapped(int index) {
-    setState(() => selectedIndex = index);
+    setState(() {
+      selectedIndex = index;
+    });
   }
 
   void _navigate(int index, Widget screen) {
-    setState(() => selectedIndex = index);
+    setState(() {
+      selectedIndex = index;
+    });
     Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
   }
 
   @override
   Widget build(BuildContext context) {
-    final fcmMessages = Provider.of<NotificationController>(context).messages;
-
-    List<Map<String, dynamic>> notifications = fcmMessages.map((msg) {
-      final status = msg.data['status'];
-      if (status == 'Accepted') {
-        Future.delayed(Duration.zero, () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const StartWorkScreen()),
-          );
-        });
-      }
-      return {
-        'icon': Icons.notifications,
-        'title': msg.notification?.title ?? "No Title",
-        'subtitle': msg.notification?.body ?? "No Body",
-        'time': 'Just now',
-        'isRead': false,
-        'status': status,
-      };
-    }).toList();
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDark ? const Color(0xFF121212) : Colors.white;
+    final iconBackground = isDark ? Colors.blueGrey[800] : Colors.blue[100];
+    final iconColor = isDark ? Colors.lightBlueAccent : Colors.blue[900];
+    final textColor = isDark ? Colors.white : Colors.black;
+    final subtitleColor = isDark ? Colors.white70 : Colors.black54;
 
     List<Map<String, dynamic>> unreadNotifications =
     notifications.where((n) => n['isRead'] == false).toList();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: backgroundColor,
         elevation: 0,
         title: Text(
-          AppLocalizations.of(context)!.notifications,
-          style: const TextStyle(
+          'Notifications',
+          style: TextStyle(
             fontSize: 26,
-            color: Colors.black,
+            color: textColor,
             fontWeight: FontWeight.bold,
           ),
         ),
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Colors.blue[900],
-          labelColor: Colors.blue[900],
+          indicatorColor: iconColor,
+          labelColor: iconColor,
           unselectedLabelColor: Colors.grey,
           labelStyle: const TextStyle(fontWeight: FontWeight.w500),
-          tabs: [
-            Tab(text: AppLocalizations.of(context)!.all),
-            Tab(text: AppLocalizations.of(context)!.unread),
+          tabs: const [
+            Tab(text: 'All'),
+            Tab(text: 'Unread'),
           ],
         ),
       ),
@@ -94,42 +161,31 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  _buildNotificationList(notifications),
-                  _buildNotificationList(unreadNotifications),
+                  _buildNotificationList(notifications, iconBackground, iconColor, textColor, subtitleColor),
+                  _buildNotificationList(unreadNotifications, iconBackground, iconColor, textColor, subtitleColor),
                 ],
               ),
             ),
           );
         },
       ),
-      bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
+      bottomNavigationBar: _buildBottomBar(),
     );
   }
 
-  Widget _buildNotificationList(List<Map<String, dynamic>> data) {
-    if (data.isEmpty) {
-      return Center(
-        child: Text(
-          AppLocalizations.of(context)!.no_notifications,
-          style: const TextStyle(color: Colors.grey, fontSize: 16),
-        ),
-      );
-    }
-
+  Widget _buildNotificationList(List<Map<String, dynamic>> data, Color? iconBg, Color? iconColor, Color textColor, Color subtitleColor) {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(vertical: 12),
       itemCount: data.length,
       separatorBuilder: (context, index) => const Divider(indent: 72, height: 0),
       itemBuilder: (context, index) {
         final item = data[index];
-        final isDeclined = item['status'] == 'Declined';
-
         return ListTile(
           leading: Stack(
             children: [
               CircleAvatar(
-                backgroundColor: Colors.blue[100],
-                child: Icon(item['icon'], color: Colors.blue[900]),
+                backgroundColor: iconBg,
+                child: Icon(item['icon'], color: iconColor),
               ),
               if (item['isRead'] == false)
                 Positioned(
@@ -146,25 +202,16 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
                 ),
             ],
           ),
-          title: Text(
-            item['title'],
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          subtitle: isDeclined
-              ? Text(
-            AppLocalizations.of(context)!.request_declined,
-            style: TextStyle(color: Colors.red[700], fontWeight: FontWeight.bold),
-          )
-              : Text(item['subtitle']),
-          trailing: Text(item['time'], style: const TextStyle(fontSize: 12, color: Colors.grey)),
+          title: Text(item['title'], style: TextStyle(fontWeight: FontWeight.bold, color: textColor)),
+          subtitle: Text(item['subtitle'], style: TextStyle(color: subtitleColor)),
+          trailing: Text(item['time'], style: TextStyle(fontSize: 12, color: subtitleColor)),
         );
       },
     );
   }
 
-  BottomAppBar _buildBottomBar(double width) {
+  BottomAppBar _buildBottomBar() {
     return BottomAppBar(
-      color: Colors.white,
       shape: const CircularNotchedRectangle(),
       notchMargin: 8,
       child: SizedBox(

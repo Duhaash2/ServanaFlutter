@@ -89,43 +89,73 @@ class PlumingWidget extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: scale * 6),
-                Row(
-                  children: [
-                    Text(
-                      'JD $price/hr',
-                      style: TextStyle(
-                        fontSize: scale * 17,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF0D47A1),
-                      ),
-                    ),
-                    SizedBox(width: scale * 80),
-                    TextButton(
-                      onPressed: onPressed,
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        minimumSize: Size(scale * 50, scale * 20),
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      child: Text(
-                        description,
-                        style: TextStyle(
-                          fontSize: scale * 13,
-                          color: const Color(0xFF0D47A1),
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
+                Text(
+                  'JD $price/hr',
+                  style: TextStyle(
+                    fontSize: scale * 17,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF0D47A1),
+                  ),
                 ),
               ],
             ),
           ),
-
+          SizedBox(width: scale * 10),
           Column(
             children: [
+              InkWell(
+                onTap: onPressed,
+                borderRadius: BorderRadius.circular(scale * 30),
+                child: Padding(
+                  padding: EdgeInsets.all(scale * 6.0),
+                  child: Icon(
+                    Icons.phone,
+                    color: Colors.green,
+                    size: scale * 28,
+                  ),
+                ),
+              ),
               SizedBox(height: scale * 6),
-
+              InkWell(
+                onTap: () async {
+                  if (whatsappNumber != null) {
+                    final url = Uri.parse("https://wa.me/$whatsappNumber");
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url, mode: LaunchMode.externalApplication);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Could not open WhatsApp")),
+                      );
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("WhatsApp number not available")),
+                    );
+                  }
+                },
+                child: Image.asset(
+                  'assets/images/whatsapp.jpg',
+                  width: scale * 28,
+                  height: scale * 28,
+                ),
+              ),
+              SizedBox(height: scale * 6),
+              TextButton(
+                onPressed: onPressed,
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  minimumSize: Size(scale * 50, scale * 20),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                child: Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: scale * 13,
+                    color: const Color(0xFF0D47A1),
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ],
           ),
         ],
