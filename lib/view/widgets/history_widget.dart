@@ -27,16 +27,23 @@ class HistoryWidget extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final responsiveFont = (double base) => width * base / 375;
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardColor = isDark ? Colors.grey[850] : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final subTextColor = isDark ? Colors.grey[400] : Colors.black87;
+    final fadedTextColor = isDark ? Colors.grey[500] : Colors.grey;
+   // final responsiveFont = (double base) => width * base / 375;
+
     return Container(
       width: width * 0.9,
       margin: const EdgeInsets.only(right: 10, bottom: 12),
       padding: EdgeInsets.all(responsiveFont(14)),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: isDark ? Colors.black.withOpacity(0.3) : Colors.black.withOpacity(0.05),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -57,25 +64,21 @@ class HistoryWidget extends StatelessWidget {
                   style: TextStyle(
                     fontSize: responsiveFont(20),
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xFF0D47A1),
+                    color:  Colors.white,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
-
                 SizedBox(height: responsiveFont(5)),
-
                 Text(
                   description1,
                   style: TextStyle(
                     fontSize: responsiveFont(16),
                     fontWeight: FontWeight.w400,
-                    color: Colors.black87,
+                    color: subTextColor,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
-
                 SizedBox(height: responsiveFont(25)),
-
                 Row(
                   children: [
                     Text(
@@ -83,7 +86,7 @@ class HistoryWidget extends StatelessWidget {
                       style: TextStyle(
                         fontSize: responsiveFont(13),
                         fontWeight: FontWeight.w400,
-                        color: Colors.grey,
+                        color: fadedTextColor,
                       ),
                     ),
                     SizedBox(width: responsiveFont(18)),
@@ -92,12 +95,11 @@ class HistoryWidget extends StatelessWidget {
                       style: TextStyle(
                         fontSize: responsiveFont(13),
                         fontWeight: FontWeight.w600,
-                        color: Colors.grey,
+                        color: fadedTextColor,
                       ),
                     ),
                   ],
                 ),
-
                 SizedBox(height: responsiveFont(8)),
               ],
             ),
@@ -129,15 +131,16 @@ class HistoryWidget extends StatelessWidget {
                   ),
                 ),
               ),
-
               SizedBox(height: responsiveFont(10)),
-
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFDAF6FF),
+                  backgroundColor: isDark ? Colors.grey[700] : const Color(0xFFDAF6FF),
                   elevation: 0,
-                  side: const BorderSide(color: Color(0xFFDAF6FF), width: 1),
+                  side: BorderSide(
+                    color: isDark ? Colors.grey[700]! : const Color(0xFFDAF6FF),
+                    width: 1,
+                  ),
                   minimumSize: Size(responsiveFont(100), responsiveFont(36)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -147,7 +150,7 @@ class HistoryWidget extends StatelessWidget {
                   description,
                   style: TextStyle(
                     fontSize: responsiveFont(14),
-                    color: Colors.black,
+                    color: textColor,
                   ),
                 ),
               ),
