@@ -314,6 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
+
               BottonNavigationWidget(
                 icon: Icons.wallet,
                 label: local.bottomNavWallet,
@@ -326,6 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
+
               BottonNavigationWidget(
                 icon: Icons.history,
                 label: local.my_requests,
@@ -350,10 +352,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
+
             ],
           ),
         ),
       ),
     );
   }
+
 }
