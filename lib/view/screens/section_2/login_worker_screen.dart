@@ -5,6 +5,8 @@ import 'package:servana/view/screens/section_2/signup_worker_screen.dart';
 import 'package:servana/view/screens/section_6/home_worker_screen.dart';
 import '../../../controller/login_controller.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../model/auth_model/sign_model.dart';
+import '../../../service/auth/authentication_service.dart';
 import '../../widgets/input_widget.dart';
 import 'rest_password_screen.dart';
 
@@ -58,49 +60,48 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
   Widget build(BuildContext context) {
     final loginController = Provider.of<LoginController>(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final topPadding = MediaQuery.of(context).size.height * 0.25;
 
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final topPadding = constraints.maxHeight * 0.25;
-
-          return Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/Servana_login.png"),
-                fit: BoxFit.cover,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              "assets/images/Servana_login.png",
+              fit: BoxFit.cover,
+            ),
+          ),
+          if (isDark)
+            Positioned.fill(
+              child: Container(
+                color: Colors.black.withOpacity(0.4),
               ),
             ),
+          Positioned.fill(
+            top: topPadding,
             child: SingleChildScrollView(
-              padding: EdgeInsets.only(top: topPadding, left: 20, right: 20, bottom: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Center(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 500),
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.grey[900]!.withOpacity(0.85) : Colors.white.withOpacity(0.85),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 10,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
+                      color: isDark
+                          ? Colors.grey[900]!.withOpacity(0.85)
+                          : Colors.white.withOpacity(0.88),
+                      borderRadius: BorderRadius.circular(24),
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           AppLocalizations.of(context)!.login,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 30,
                             fontWeight: FontWeight.w700,
-                            color: isDark ? Colors.white : Colors.black,
+                            color: Color(0xFF0D47A1),
                           ),
                         ),
                         Row(
@@ -108,11 +109,7 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                           children: [
                             Text(
                               AppLocalizations.of(context)!.dont_have_an_account,
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                color: isDark ? Colors.white : Colors.black,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15),
                             ),
                             TextButton(
                               onPressed: () {
@@ -121,9 +118,12 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                                   MaterialPageRoute(builder: (context) => const SignupWorkerScreen()),
                                 );
                               },
-                              child: Text(
-                                AppLocalizations.of(context)!.sign_up,
-                                style: TextStyle(color: Colors.blue[900], fontSize: 15),
+                              child: const Text(
+                                "Sign Up",
+                                style: TextStyle(
+                                  color: Color(0xFF0D47A1),
+                                  fontSize: 15,
+                                ),
                               ),
                             ),
                           ],
@@ -135,7 +135,7 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                               obscureText: false,
                               textEditingController: emailTextEditingController,
                               label: AppLocalizations.of(context)!.email,
-                              hintText: "worker@example.com",
+                              hintText: "you@example.com",
                               errorText: loginController.showErrorEmail
                                   ? loginController.errorEmailMessage
                                   : null,
@@ -149,22 +149,23 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                               controller: passTextEditingController,
                               obscureText: loginController.obscureTextPassword,
                               decoration: InputDecoration(
-                                fillColor: isDark ? Colors.grey[800] : Colors.white,
                                 labelText: AppLocalizations.of(context)!.password,
-                                labelStyle: TextStyle(color: isDark ? Colors.white : null),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
                                 suffixIcon: IconButton(
                                   onPressed: () => loginController.changeObscureTextPassword(),
                                   icon: Icon(
-                                    loginController.obscureTextPassword ? Icons.visibility : Icons.visibility_off,
-                                    color: isDark ? Colors.white : null,
+                                    loginController.obscureTextPassword
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.grey,
                                   ),
                                 ),
                                 errorText: loginController.showErrorPassword
                                     ? loginController.errorPasswordMessage
                                     : null,
                               ),
-                              style: TextStyle(color: isDark ? Colors.white : Colors.black),
                             );
                           },
                         ),
@@ -184,14 +185,11 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                                         rememberMe = value!;
                                       });
                                     },
-                                    activeColor: Colors.blue[900],
+                                    activeColor: const Color(0xFF0D47A1),
                                   ),
                                 ),
                                 const SizedBox(width: 8),
-                                Text(
-                                  AppLocalizations.of(context)!.remember_me,
-                                  style: TextStyle(color: isDark ? Colors.white : Colors.black, fontSize: 14),
-                                ),
+                                const Text("Remember Me", style: TextStyle(fontSize: 14)),
                               ],
                             ),
                             TextButton(
@@ -201,9 +199,9 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                                   MaterialPageRoute(builder: (context) =>  ResetPasswordScreen()),
                                 );
                               },
-                              child: Text(
-                                AppLocalizations.of(context)!.forgot_password,
-                                style: TextStyle(color: Colors.blue[900], fontSize: 14),
+                              child: const Text(
+                                "Forgot Password?",
+                                style: TextStyle(color: Color(0xFF0D47A1), fontSize: 14),
                               ),
                             ),
                           ],
@@ -213,9 +211,7 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                           onPressed: () async {
                             if (emailTextEditingController.text.isEmpty ||
                                 passTextEditingController.text.isEmpty) {
-                              loginController.showCustomEmailError(
-                                AppLocalizations.of(context)!.please_enter_email_and_password,
-                              );
+                              loginController.showCustomEmailError("Please enter both email and password");
                               return;
                             }
 
@@ -234,15 +230,15 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue[900],
+                            backgroundColor: const Color(0xFF0D47A1),
                             minimumSize: const Size(double.infinity, 45),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          child: Text(
-                            AppLocalizations.of(context)!.login,
-                            style: const TextStyle(
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -255,8 +251,8 @@ class _LoginWorkerScreenState extends State<LoginWorkerScreen> {
                 ),
               ),
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

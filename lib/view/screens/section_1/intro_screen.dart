@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../l10n/app_localizations.dart';
 import 'intro2_screen.dart';
 import 'intro4_location_screen.dart';
@@ -15,20 +14,6 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   final PageController _controller = PageController();
 
-  Future<void> setOnboardingSeen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
-
-  }
-
-  void goToNextScreen(Widget screen) async {
-    await setOnboardingSeen();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => screen),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -41,7 +26,7 @@ class _IntroScreenState extends State<IntroScreen> {
       backgroundColor: isDarkMode ? theme.scaffoldBackgroundColor : const Color(0xFFEAF6FF),
       body: Column(
         children: [
-          // 🔵 Top Image Section
+          // 🔵 Top Image Section (Responsive Height)
           SizedBox(
             height: height * 0.55,
             width: double.infinity,
@@ -79,7 +64,12 @@ class _IntroScreenState extends State<IntroScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => goToNextScreen(const Intro2Screen()),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const Intro2Screen()),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: isDarkMode ? Colors.blue[900] : Colors.blue[900],
                         padding: EdgeInsets.symmetric(
@@ -114,7 +104,12 @@ class _IntroScreenState extends State<IntroScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () => goToNextScreen(const Intro4LocationScreen()),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const Intro4LocationScreen()),
+                    );
+                  },
                   child: Text(
                     "Skip",
                     style: TextStyle(
@@ -138,7 +133,12 @@ class _IntroScreenState extends State<IntroScreen> {
                     color: isDarkMode ? Colors.blue[900] : Colors.blue[900],
                     size: width * 0.07,
                   ),
-                  onPressed: () => goToNextScreen(const Intro2Screen()),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const Intro2Screen()),
+                    );
+                  },
                 ),
               ],
             ),
