@@ -46,7 +46,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               icon: Icon(Icons.arrow_back, color: Colors.blue[900], size: 32),
             ),
             Text(
-              local.history,
+              local.my_requests,
               style: TextStyle(
                 color: Colors.blue[900],
                 fontSize: 28,
@@ -151,10 +151,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
               BottonNavigationWidget(
                 icon: Icons.wallet,
                 label: local.bottomNavWallet,
-                isSelected: selectedIndex2 == 1,
+                isSelected: selectedIndex2 == 2,
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) =>  WalletScreen()));
-                  onItemTapped2(1);
+                  onItemTapped2(2);
                 },
               ),
               BottonNavigationWidget(

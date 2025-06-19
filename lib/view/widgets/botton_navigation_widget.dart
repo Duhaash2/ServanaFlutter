@@ -23,7 +23,7 @@ class BottonNavigationWidget extends StatelessWidget {
     String localizedLabel = switch (label.toLowerCase()) {
       'home' => localizations.home,
       'wallet' => localizations.wallet,
-      'history' => localizations.history,
+      'my_requests' => localizations.my_requests,
       'profile' => localizations.profile,
       _ => label,
     };

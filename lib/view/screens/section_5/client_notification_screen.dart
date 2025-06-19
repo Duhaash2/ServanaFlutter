@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:servana/view/screens/section_5/profile_screen.dart';
-import 'package:servana/view/screens/section_3/home_client_screen.dart';
-import 'package:servana/view/widgets/botton_navigation_widget.dart';
-import 'package:servana/view/screens/section_6/worker_notification_screen.dart';
+
+import '../../../controller/notification_controller.dart';
 import '../../../l10n/app_localizations.dart';
+import 'package:servana/view/screens/section_3/home_client_screen.dart';
+import 'package:servana/view/screens/section_5/profile_screen.dart';
+import 'package:servana/view/screens/section_5/start_work_screen.dart';
+import 'package:servana/view/widgets/botton_navigation_widget.dart';
 
 class ClientNotificationScreen extends StatefulWidget {
-  final List<RemoteMessage>? fcmMessages;
-
-  const ClientNotificationScreen({super.key, this.fcmMessages});
+  const ClientNotificationScreen({super.key});
 
   @override
   State<ClientNotificationScreen> createState() => _ClientNotificationScreenState();
@@ -19,69 +20,11 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int selectedIndex = 0;
-  late List<Map<String, dynamic>> notifications;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-
-    if (widget.fcmMessages != null && widget.fcmMessages!.isNotEmpty) {
-      notifications = widget.fcmMessages!.map((msg) {
-        return {
-          'icon': Icons.notifications,
-          'title': msg.notification?.title ?? "No Title",
-          'subtitle': msg.notification?.body ?? "No Body",
-          'time': 'Just now',
-          'isRead': false,
-        };
-      }).toList();
-    } else {
-      notifications = [
-        {
-          'icon': Icons.check_circle,
-          'title': AppLocalizations.of(context)!.job_completed_title,
-          'subtitle': AppLocalizations.of(context)!.job_completed_body,
-          'time': '2h ago',
-          'isRead': false,
-        },
-        {
-          'icon': Icons.payment,
-          'title': AppLocalizations.of(context)!.payment_received_title,
-          'subtitle': AppLocalizations.of(context)!.payment_received_body,
-          'time': '4h ago',
-          'isRead': true,
-        },
-        {
-          'icon': Icons.message,
-          'title': AppLocalizations.of(context)!.new_message_title,
-          'subtitle': AppLocalizations.of(context)!.new_message_body_1,
-          'time': 'Yesterday',
-          'isRead': false,
-        },
-        {
-          'icon': Icons.check_circle,
-          'title': AppLocalizations.of(context)!.job_started_title,
-          'subtitle': AppLocalizations.of(context)!.job_started_body,
-          'time': 'Yesterday',
-          'isRead': true,
-        },
-        {
-          'icon': Icons.message,
-          'title': AppLocalizations.of(context)!.new_message_title,
-          'subtitle': AppLocalizations.of(context)!.new_message_body_2,
-          'time': '2d ago',
-          'isRead': false,
-        },
-        {
-          'icon': Icons.check_circle,
-          'title': AppLocalizations.of(context)!.job_request_accepted_title,
-          'subtitle': AppLocalizations.of(context)!.job_request_accepted_body,
-          'time': '2d ago',
-          'isRead': true,
-        },
-      ];
-    }
   }
 
   void onItemTapped(int index) {
@@ -95,6 +38,28 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
 
   @override
   Widget build(BuildContext context) {
+    final fcmMessages = Provider.of<NotificationController>(context).messages;
+
+    List<Map<String, dynamic>> notifications = fcmMessages.map((msg) {
+      final status = msg.data['status'];
+      if (status == 'Accepted') {
+        Future.delayed(Duration.zero, () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const StartWorkScreen()),
+          );
+        });
+      }
+      return {
+        'icon': Icons.notifications,
+        'title': msg.notification?.title ?? "No Title",
+        'subtitle': msg.notification?.body ?? "No Body",
+        'time': 'Just now',
+        'isRead': false,
+        'status': status,
+      };
+    }).toList();
+
     List<Map<String, dynamic>> unreadNotifications =
     notifications.where((n) => n['isRead'] == false).toList();
 
@@ -144,12 +109,23 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
   }
 
   Widget _buildNotificationList(List<Map<String, dynamic>> data) {
+    if (data.isEmpty) {
+      return Center(
+        child: Text(
+          AppLocalizations.of(context)!.no_notifications,
+          style: const TextStyle(color: Colors.grey, fontSize: 16),
+        ),
+      );
+    }
+
     return ListView.separated(
       padding: const EdgeInsets.symmetric(vertical: 12),
       itemCount: data.length,
       separatorBuilder: (context, index) => const Divider(indent: 72, height: 0),
       itemBuilder: (context, index) {
         final item = data[index];
+        final isDeclined = item['status'] == 'Declined';
+
         return ListTile(
           leading: Stack(
             children: [
@@ -172,8 +148,16 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
                 ),
             ],
           ),
-          title: Text(item['title'], style: const TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(item['subtitle']),
+          title: Text(
+            item['title'],
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          subtitle: isDeclined
+              ? Text(
+            AppLocalizations.of(context)!.request_declined,
+            style: TextStyle(color: Colors.red[700], fontWeight: FontWeight.bold),
+          )
+              : Text(item['subtitle']),
           trailing: Text(item['time'], style: const TextStyle(fontSize: 12, color: Colors.grey)),
         );
       },

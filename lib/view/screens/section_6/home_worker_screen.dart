@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:servana/view/screens/section_5/profile_worker_screen.dart';
 import 'package:servana/view/screens/section_6/end_work_w_screen.dart';
 import 'package:servana/view/screens/section_6/incoming_request_w_screen.dart';
+import 'package:servana/view/screens/section_6/wallet_worker_screen.dart';
 import 'package:servana/view/screens/section_6/worker_notification_screen.dart';
 import 'package:servana/view/widgets/home_worker_widget.dart';
 import '../../../l10n/app_localizations.dart';
@@ -157,6 +158,19 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => const EndWorkWScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      HomeWorkerWidget(
+                        title: local.wallet,
+                        description: local.wallet_sub,
+                        Icons: Icons.wallet,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WalletWorkerScreen(),
                             ),
                           );
                         },

@@ -274,7 +274,7 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
             ),
             BottonNavigationWidget(
               icon: Icons.history,
-              label: AppLocalizations.of(context)!.history,
+              label: AppLocalizations.of(context)!.my_requests,
               isSelected: widget.selectedIndex == 2,
               onTap: () => _navigate(2, const HistoryScreen()),
             ),

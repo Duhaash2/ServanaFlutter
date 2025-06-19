@@ -26,8 +26,8 @@ class HomeWorkerWidget extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          width: width * 0.95,
-          height: height * 0.15,
+          width: width * 0.85,
+          height: height * 0.12,
           margin: EdgeInsets.only(right: responsive(10), bottom: responsive(16)),
           padding: EdgeInsets.all(responsive(20)),
           decoration: BoxDecoration(

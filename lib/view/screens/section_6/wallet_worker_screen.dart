@@ -3,22 +3,16 @@ import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_3/home_client_screen.dart';
 import '../section_5/profile_screen.dart';
-import 'history_screen.dart';
 
-class WalletScreen extends StatefulWidget {
+
+class WalletWorkerScreen extends StatefulWidget {
   @override
-  State<WalletScreen> createState() => _WalletScreenState();
+  State<WalletWorkerScreen> createState() => _WalletWorkerScreenState();
 }
 
-class _WalletScreenState extends State<WalletScreen> {
+class _WalletWorkerScreenState extends State<WalletWorkerScreen> {
   final double walletBalance = 120.00;
-  int selectedIndex2 = 0;
 
-  void onItemTapped2(int index2) {
-    setState(() {
-      selectedIndex2 = index2;
-    });
-  }
   final List<Map<String, dynamic>> transactions = [
     {"id": "#1284", "amount": -30.0, "date": "10 June"},
     {"id": "#1233", "amount": 50.0, "date": "5 June"},
@@ -206,55 +200,7 @@ class _WalletScreenState extends State<WalletScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
 
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 8.0,
-        child: SizedBox(
-          height: 40,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              BottonNavigationWidget(
-                icon: Icons.home_filled,
-                label: local.bottomNavHome,
-                isSelected: selectedIndex2 == 2,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-                  onItemTapped2(2);
-                },
-              ),
-              BottonNavigationWidget(
-                icon: Icons.wallet,
-                label: local.bottomNavWallet,
-                isSelected: selectedIndex2 == 0,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) =>  WalletScreen()));
-                  onItemTapped2(0);
-                },
-              ),
-              BottonNavigationWidget(
-                icon: Icons.history,
-                label: local.bottomNavHistory,
-                isSelected: selectedIndex2 == 1,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryScreen()));
-                  onItemTapped2(1);
-                },
-              ),
-              BottonNavigationWidget(
-                icon: Icons.person,
-                label: local.bottomNavProfile,
-                isSelected: selectedIndex2 == 3,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileScreen()));
-                  onItemTapped2(3);
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

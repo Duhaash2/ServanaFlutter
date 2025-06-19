@@ -201,7 +201,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             BottonNavigationWidget(icon: Icons.home_filled, label: AppLocalizations.of(context)!.bottomNavHome, isSelected: selectedIndex == 0, onTap: () => _navigate(0, const HomeScreen())),
             BottonNavigationWidget(icon: Icons.wallet, label: AppLocalizations.of(context)!.bottomNavWallet, isSelected: selectedIndex == 1, onTap: () => _navigate(1,  WalletScreen())),
-            BottonNavigationWidget(icon: Icons.history, label: AppLocalizations.of(context)!.bottomNavHistory, isSelected: selectedIndex == 2, onTap: () => _navigate(2, const HistoryScreen())),
+            BottonNavigationWidget(icon: Icons.history, label: AppLocalizations.of(context)!.my_requests, isSelected: selectedIndex == 2, onTap: () => _navigate(2, const HistoryScreen())),
             BottonNavigationWidget(icon: Icons.person, label: AppLocalizations.of(context)!.bottomNavProfile, isSelected: selectedIndex == 3, onTap: () => _navigate(3, const ProfileScreen())),
           ],
         ),

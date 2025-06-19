@@ -208,6 +208,10 @@
   "profileSettings": "Profile Settings",
   "profileSettingsDesc": "Manage your personal and work details.",
   "verified": "Verified",
+  "jod": "JOD",
+  "my_requests": "My Requests ",
+  "wallet_sub": "Click It To See Your Wallet",
+  "no_notifications": "You have no notifications yet.",
   "passwords_do_not_match": "Passwords do not match",
   "please_enter_email_and_password": "Please enter both email and password"
 }

@@ -10,6 +10,8 @@ class TopRatedWidget extends StatelessWidget {
   final String? tag;       // "Top Rated", "Verified", etc.
   final String? subtitle;  // e.g. "Plumbing • 18 Jobs"
   final IconData? subtitleIcon;
+  final double? price;
+
 
   const TopRatedWidget({
     super.key,
@@ -20,7 +22,7 @@ class TopRatedWidget extends StatelessWidget {
     required this.onPressed,
     this.tag,
     this.subtitle,
-    this.subtitleIcon,
+    this.subtitleIcon, this.price,
   });
 
   @override
@@ -132,24 +134,38 @@ class TopRatedWidget extends StatelessWidget {
                   const SizedBox(height: 8),
                   if (subtitle != null)
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          subtitleIcon ?? Icons.work_outline,
-                          size: 16,
-                          color: Colors.teal,
+                        Row(
+                          children: [
+                            Icon(
+                              subtitleIcon ?? Icons.work_outline,
+                              size: 16,
+                              color: Colors.teal,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              subtitle!,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            subtitle!,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[700],
+                        if (price != null)
+                          Text(
+                            '${price!.toStringAsFixed(2)} JOD',
+                            style: const TextStyle(
+                              fontSize: 10,
+                             // fontWeight: FontWeight.bold,
+                              color: Colors.black87,
                             ),
                           ),
-                        ),
                       ],
                     ),
+
+
                 ],
               ),
             ),

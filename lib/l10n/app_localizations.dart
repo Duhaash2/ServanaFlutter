@@ -1356,6 +1356,30 @@ abstract class AppLocalizations {
   /// **'Verified'**
   String get verified;
 
+  /// No description provided for @jod.
+  ///
+  /// In en, this message translates to:
+  /// **'JOD'**
+  String get jod;
+
+  /// No description provided for @my_requests.
+  ///
+  /// In en, this message translates to:
+  /// **'My Requests '**
+  String get my_requests;
+
+  /// No description provided for @wallet_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Click It To See Your Wallet'**
+  String get wallet_sub;
+
+  /// No description provided for @no_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'You have no notifications yet.'**
+  String get no_notifications;
+
   /// No description provided for @passwords_do_not_match.
   ///
   /// In en, this message translates to:

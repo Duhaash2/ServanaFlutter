@@ -186,7 +186,7 @@ class _PaintScreenState extends State<PaintScreen> {
               ),
               BottonNavigationWidget(
                 icon: Icons.history,
-                label: AppLocalizations.of(context)!.history,
+                label: AppLocalizations.of(context)!.my_requests,
                 isSelected: selectedIndex2 == 2,
                 onTap: () {
                   onItemTapped2(2);

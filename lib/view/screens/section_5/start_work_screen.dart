@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_3/home_client_screen.dart';
@@ -31,6 +32,9 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final local = AppLocalizations.of(context)!;
+    double scale = MediaQuery.of(context).textScaleFactor;
+    const String whatsappNumber =
+        '962788888888'; // Replace this with actual number
 
     return Scaffold(
       backgroundColor: const Color(0xFFF3EEEC),
@@ -103,14 +107,28 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
             children: [
               Text(
                 local.clientName,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.black87,
+                ),
               ),
               const SizedBox(height: 4),
-              const Text('John Smith', style: TextStyle(fontSize: 16, color: Colors.black)),
+              const Text(
+                'John Smith',
+                style: TextStyle(fontSize: 16, color: Colors.black),
+              ),
 
               const Divider(height: 50),
 
-              Text(local.location, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87)),
+              Text(
+                local.location,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.black87,
+                ),
+              ),
               const SizedBox(height: 15),
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
@@ -127,7 +145,11 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
 
               Text(
                 local.issueDescription,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.black87,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
@@ -140,12 +162,79 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(local.hourlyRate, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  const Text('\$25.00/hr', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(
+                    local.hourlyRate,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(
+                    '\$25.00/hr',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
 
-              const Spacer(),
+             // const SizedBox(height: 20),
+              const Divider(height: 50),
+              /// ✅ Contact Section
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Contact Worker",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  SizedBox(width: 122),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          // Replace with actual phone logic
+                        },
+                        borderRadius: BorderRadius.circular(scale * 30),
+                        child: Padding(
+                          padding: EdgeInsets.all(scale * 6.0),
+                          child: Icon(
+                            Icons.phone,
+                            color: Colors.green,
+                            size: scale * 28,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: scale * 16),
+                      InkWell(
+                        onTap: () async {
+                          final url = Uri.parse(
+                            "https://wa.me/$whatsappNumber",
+                          );
+                          if (await canLaunchUrl(url)) {
+                            await launchUrl(
+                              url,
+                              mode: LaunchMode.externalApplication,
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Could not open WhatsApp"),
+                              ),
+                            );
+                          }
+                        },
+                        child: Image.asset(
+                          'assets/images/whatsApp.png',
+                          width: scale * 28,
+                          height: scale * 28,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 40),
 
               Center(
                 child: ElevatedButton(
@@ -156,8 +245,13 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
                     backgroundColor: Colors.blue[900],
                     elevation: 3,
                     shadowColor: Colors.black26,
-                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 14),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 50,
+                      vertical: 14,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                   child: Text(
                     local.startWork,

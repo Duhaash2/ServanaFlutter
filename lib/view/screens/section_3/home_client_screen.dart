@@ -81,10 +81,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ClientNotificationScreen()),
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => ClientNotificationScreen(),
+                                ),
                               );
                             },
-                            icon: const Icon(Icons.notifications, color: Colors.white, size: 28),
+                            icon: const Icon(
+                              Icons.notifications,
+                              color: Colors.white,
+                              size: 28,
+                            ),
                           ),
                         ],
                       ),
@@ -99,7 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             hintText: local.search_service_workers_or_etc,
                             prefixIcon: const Icon(Icons.search),
                             border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 14,
+                            ),
                           ),
                         ),
                       ),
@@ -107,7 +116,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -128,7 +140,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: local.plumbing,
                               isSelected: selectedIndex == 0,
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (_) => PlumingScreen()));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => PlumingScreen(),
+                                  ),
+                                );
                                 onItemTapped(0);
                               },
                               ImagePath: 'assets/images/plumingg.png',
@@ -137,7 +154,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: local.electrical,
                               isSelected: selectedIndex == 1,
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (_) => ElectricalScreen()));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => ElectricalScreen(),
+                                  ),
+                                );
                                 onItemTapped(1);
                               },
                               ImagePath: 'assets/images/Electricall.png',
@@ -146,7 +168,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: local.gardner,
                               isSelected: selectedIndex == 2,
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (_) => GardnerScreen()));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => GardnerScreen(),
+                                  ),
+                                );
                                 onItemTapped(2);
                               },
                               ImagePath: 'assets/images/gardnerr.png',
@@ -155,7 +182,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: local.paint,
                               isSelected: selectedIndex == 3,
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (_) => PaintScreen()));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => PaintScreen(),
+                                  ),
+                                );
                                 onItemTapped(3);
                               },
                               ImagePath: 'assets/images/paintingg.png',
@@ -164,7 +196,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: local.cleaning,
                               isSelected: selectedIndex == 4,
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (_) => PaintScreen()));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => PaintScreen(),
+                                  ),
+                                );
                                 onItemTapped(4);
                               },
                               ImagePath: 'assets/images/cleaningg.png',
@@ -190,7 +227,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               showModalBottomSheet(
                                 context: context,
                                 shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(25),
+                                  ),
                                 ),
                                 builder: (context) => FilterBottomSheet(),
                               );
@@ -199,53 +238,52 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       const SizedBox(height: 15),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            TopRatedWidget(
-                              title: "John Deo",
-                              imagePath: "assets/images/man2.PNG",
-                              rating: 4.5,
-                              subtitle: "24 ${local.jobs}",
-                              tag: local.top_rated,
-                              onPressed: () {},
-                              description: local.plumbing,
-                            ),
-                            TopRatedWidget(
-                              title: "Emma Smith",
-                              imagePath: "assets/images/girl2.PNG",
-                              rating: 3.0,
-                              subtitle: "18 ${local.jobs}",
-                              onPressed: () {},
-                              description: local.cleaning,
-                            ),
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          TopRatedWidget(
+                            title: "John Deo",
+                            imagePath: "assets/images/man2.PNG",
+                            rating: 4.5,
+                            price: 17,
+                            subtitle: "24 ${local.jobs}",
+                            tag: local.top_rated,
+                            onPressed: () {},
+                            description: local.plumbing,
+                          ),
+                          TopRatedWidget(
+                            title: "Emma Smith",
+                            imagePath: "assets/images/girl2.PNG",
+                            rating: 3.0,
+                            price: 10,
+                            subtitle: "18 ${local.jobs}",
+                            onPressed: () {},
+                            description: local.cleaning,
+                          ),
+                        ],
                       ),
+
                       const SizedBox(height: 11),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            TopRatedWidget(
-                              title: "Clivia Brown",
-                              imagePath: "assets/images/girl1.PNG",
-                              rating: 4.0,
-                              subtitle: "10 ${local.jobs}",
-                              onPressed: () {},
-                              description: local.paint,
-                            ),
-                            TopRatedWidget(
-                              title: "James Jonson",
-                              imagePath: "assets/images/man1.PNG",
-                              rating: 3.5,
-                              subtitle: "18 ${local.jobs}",
-                              onPressed: () {},
-                              description: local.plumbing,
-                            ),
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          TopRatedWidget(
+                            title: "Clivia Brown",
+                            imagePath: "assets/images/girl1.PNG",
+                            rating: 4.0,
+                            price: 15,
+                            subtitle: "10 ${local.jobs}",
+                            onPressed: () {},
+                            description: local.paint,
+                          ),
+                          TopRatedWidget(
+                            title: "James Jonson",
+                            imagePath: "assets/images/man1.PNG",
+                            rating: 3.5,
+                            price: 13,
+                            subtitle: "18 ${local.jobs}",
+                            onPressed: () {},
+                            description: local.plumbing,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -270,7 +308,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 isSelected: selectedIndex2 == 0,
                 onTap: () {
                   onItemTapped2(0);
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => const HomeScreen()),
+                  );
                 },
               ),
               BottonNavigationWidget(
@@ -279,16 +320,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 isSelected: selectedIndex2 == 1,
                 onTap: () {
                   onItemTapped2(1);
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => WalletScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => WalletScreen()),
+                  );
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.history,
-                label: local.bottomNavHistory,
+                label: local.my_requests,
                 isSelected: selectedIndex2 == 2,
                 onTap: () {
                   onItemTapped2(2);
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => HistoryScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => HistoryScreen()),
+                  );
                 },
               ),
               BottonNavigationWidget(
@@ -297,7 +344,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 isSelected: selectedIndex2 == 3,
                 onTap: () {
                   onItemTapped2(3);
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => ProfileScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ProfileScreen()),
+                  );
                 },
               ),
             ],

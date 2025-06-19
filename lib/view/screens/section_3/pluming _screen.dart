@@ -193,7 +193,7 @@ class _PlumingScreenState extends State<PlumingScreen> {
               ),
               BottonNavigationWidget(
                 icon: Icons.history,
-                label: AppLocalizations.of(context)!.history, // ✅ localized
+                label: AppLocalizations.of(context)!.my_requests, // ✅ localized
                 isSelected: selectedIndex2 == 2,
                 onTap: () {
                   onItemTapped2(2);
