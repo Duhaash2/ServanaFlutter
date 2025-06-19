@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:servana/view/screens/section_2/login_selection_screen.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -39,15 +38,6 @@ class _Intro4LocationScreenState extends State<Intro4LocationScreen> {
 
       print("✅ Latitude: ${position.latitude}");
       print("✅ Longitude: ${position.longitude}");
-
-      // ✅ Save onboarding complete
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isFirstTime', false);
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const LoginSelectionScreen()),
-      );
     } else if (permission == PermissionStatus.denied) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("❌ Location permission denied.")),
@@ -60,16 +50,6 @@ class _Intro4LocationScreenState extends State<Intro4LocationScreen> {
       );
       await openAppSettings();
     }
-  }
-
-  Future<void> _skipIntro(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isFirstTime', false);
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const LoginSelectionScreen()),
-    );
   }
 
   @override
@@ -120,7 +100,9 @@ class _Intro4LocationScreenState extends State<Intro4LocationScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: height * 0.02),
+                    padding: EdgeInsets.symmetric(
+                      vertical: height * 0.02,
+                    ),
                   ),
                   child: Text(
                     AppLocalizations.of(context)!.yes_turn_it_on,
@@ -136,7 +118,12 @@ class _Intro4LocationScreenState extends State<Intro4LocationScreen> {
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
-                  onPressed: () => _skipIntro(context),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const LoginSelectionScreen()),
+                    );
+                  },
                   style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
@@ -144,7 +131,9 @@ class _Intro4LocationScreenState extends State<Intro4LocationScreen> {
                     side: BorderSide(
                       color: isDarkMode ? Colors.grey[600]! : Colors.grey[400]!,
                     ),
-                    padding: EdgeInsets.symmetric(vertical: height * 0.02),
+                    padding: EdgeInsets.symmetric(
+                      vertical: height * 0.02,
+                    ),
                   ),
                   child: Text(
                     AppLocalizations.of(context)!.btn_cancel,

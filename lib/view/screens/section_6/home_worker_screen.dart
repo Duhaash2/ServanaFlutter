@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:servana/view/screens/section_5/profile_worker_screen.dart';
+import 'package:servana/view/screens/section_6/profile_worker_screen.dart';
 import 'package:servana/view/screens/section_6/end_work_w_screen.dart';
 import 'package:servana/view/screens/section_6/incoming_request_w_screen.dart';
-import 'package:servana/view/screens/section_6/wallet_worker_screen.dart';
 import 'package:servana/view/screens/section_6/worker_notification_screen.dart';
 import 'package:servana/view/widgets/home_worker_widget.dart';
-import '../../../l10n/app_localizations.dart';
 
 class HomeWorkerScreen extends StatefulWidget {
   const HomeWorkerScreen({super.key});
@@ -17,10 +15,10 @@ class HomeWorkerScreen extends StatefulWidget {
 
 class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
   final List<List<Color>> gradientColors = [
-    [const Color(0xFFB3E5FC), const Color(0xFF81D4FA)],
-    [const Color(0xFF81D4FA), const Color(0xFF4FC3F7)],
-    [const Color(0xFF4FC3F7), const Color(0xFF29B6F6)],
-    [const Color(0xFF29B6F6), const Color(0xFF03A9F4)],
+    [Color(0xFFB3E5FC), Color(0xFF81D4FA)],
+    [Color(0xFF81D4FA), Color(0xFF4FC3F7)],
+    [Color(0xFF4FC3F7), Color(0xFF29B6F6)],
+    [Color(0xFF29B6F6), Color(0xFF03A9F4)],
   ];
 
   int currentIndex = 0;
@@ -49,10 +47,11 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final local = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.blue[900];
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: isDark ? Colors.white : Colors.transparent,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -62,10 +61,10 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              local.worker_title,
+              " Worker",
               style: TextStyle(
-                color: Colors.blue[900],
-                fontSize: size.width < 400 ? 22 : 28,
+                color: textColor,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -73,14 +72,12 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const WorkerNotificationScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) => WorkerNotificationScreen()),
                 );
               },
               icon: Icon(
                 Icons.notifications,
-                color: Colors.blue[900],
+                color: textColor,
                 size: 30,
               ),
             ),
@@ -89,17 +86,29 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
       ),
       body: Stack(
         children: [
-          AnimatedContainer(
-            duration: const Duration(seconds: 2),
-            curve: Curves.easeInOut,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: gradientColors[currentIndex],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+          if (!isDark)
+            AnimatedContainer(
+              duration: const Duration(seconds: 2),
+              curve: Curves.easeInOut,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: gradientColors[currentIndex],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+            )
+          else
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFF0F2027), Color(0xFF203A43), Color(0xFF2C5364)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
             ),
-          ),
+
           SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -108,83 +117,62 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                 children: [
                   const SizedBox(height: 30),
                   Text(
-                    local.welcome_text,
+                    "Welcome ",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue[900],
+                      color: textColor,
                       fontSize: 30,
                     ),
                   ),
                   Text(
-                    local.search_for_tasks,
-                    style: TextStyle(color: Colors.blue[900], fontSize: 26),
+                    "Search for tasks and jobs",
+                    style: TextStyle(color: textColor, fontSize: 26),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 50),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       HomeWorkerWidget(
-                        title: local.notification_card_title,
-                        description: local.notification_card_sub,
+                        title: "Notification",
+                        description: "You Have A New Notification!",
                         Icons: Icons.notifications,
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => const WorkerNotificationScreen(),
-                            ),
+                            MaterialPageRoute(builder: (context) => const WorkerNotificationScreen()),
                           );
                         },
                       ),
                       HomeWorkerWidget(
-                        title: local.job_request_title,
-                        description: local.job_request_sub,
+                        title: "Job Request",
+                        description: "Click On It To See Requests",
                         Icons: Icons.next_week_rounded,
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => const IncomingRequestWScreen(),
-                            ),
+                            MaterialPageRoute(builder: (context) => const IncomingRequestWScreen()),
                           );
                         },
                       ),
                       HomeWorkerWidget(
-                        title: local.end_work_title,
-                        description: local.end_work_sub,
+                        title: "End Work",
+                        description: "Click On It To End Work",
                         Icons: Icons.check_circle_outline,
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => const EndWorkWScreen(),
-                            ),
+                            MaterialPageRoute(builder: (context) => const EndWorkWScreen()),
                           );
                         },
                       ),
                       HomeWorkerWidget(
-                        title: local.wallet,
-                        description: local.wallet_sub,
-                        Icons: Icons.wallet,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => WalletWorkerScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                      HomeWorkerWidget(
-                        title: local.profile_title,
-                        description: local.profile_sub,
+                        title: "Profile",
+                        description: "See Your Profile",
                         Icons: Icons.person,
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => ProfileWorkerScreen(),
-                            ),
+                            MaterialPageRoute(builder: (context) => ProfileWorkerScreen()),
                           );
                         },
                       ),

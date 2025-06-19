@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:servana/l10n/app_localizations.dart';
 
 class TopRatedWidget extends StatelessWidget {
   final String title;
@@ -7,11 +6,9 @@ class TopRatedWidget extends StatelessWidget {
   final String imagePath;
   final double rating;
   final VoidCallback onPressed;
-  final String? tag;       // "Top Rated", "Verified", etc.
-  final String? subtitle;  // e.g. "Plumbing • 18 Jobs"
+  final String? tag;
+  final String? subtitle;
   final IconData? subtitleIcon;
-  final double? price;
-
 
   const TopRatedWidget({
     super.key,
@@ -22,12 +19,18 @@ class TopRatedWidget extends StatelessWidget {
     required this.onPressed,
     this.tag,
     this.subtitle,
-    this.subtitleIcon, this.price,
+    this.subtitleIcon,
   });
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final backgroundColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final secondaryTextColor = isDark ? Colors.grey[300] : Colors.black87;
+    final subtitleColor = isDark ? Colors.grey[400] : Colors.grey[700];
+    final borderColor = isDark ? Colors.grey[700]! : Colors.grey.shade200;
 
     return GestureDetector(
       onTap: onPressed,
@@ -35,12 +38,12 @@ class TopRatedWidget extends StatelessWidget {
         width: 170,
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: Colors.grey.shade200),
+          border: Border.all(color: borderColor),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color: isDark ? Colors.black.withOpacity(0.2) : Colors.black.withOpacity(0.03),
               blurRadius: 6,
               offset: const Offset(0, 4),
             ),
@@ -70,15 +73,15 @@ class TopRatedWidget extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: tag == local.verified
-                            ? Colors.grey[800]
+                        color: tag == "Verified"
+                            ? (isDark ? Colors.teal[700] : Colors.grey[800])
                             : Colors.amber.shade600,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
                         children: [
                           Icon(
-                            tag == local.verified ? Icons.verified : Icons.star,
+                            tag == "Verified" ? Icons.verified : Icons.star,
                             color: Colors.white,
                             size: 14,
                           ),
@@ -97,6 +100,7 @@ class TopRatedWidget extends StatelessWidget {
                   ),
               ],
             ),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               child: Column(
@@ -104,9 +108,10 @@ class TopRatedWidget extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: textColor,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -116,17 +121,18 @@ class TopRatedWidget extends StatelessWidget {
                       const SizedBox(width: 3),
                       Text(
                         rating.toStringAsFixed(1),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
+                          color: textColor,
                         ),
                       ),
                       const SizedBox(width: 5),
                       Text(
                         description,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
-                          color: Colors.black87,
+                          color: secondaryTextColor,
                         ),
                       ),
                     ],
@@ -134,38 +140,24 @@ class TopRatedWidget extends StatelessWidget {
                   const SizedBox(height: 8),
                   if (subtitle != null)
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Icon(
-                              subtitleIcon ?? Icons.work_outline,
-                              size: 16,
-                              color: Colors.teal,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              subtitle!,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey[700],
-                              ),
-                            ),
-                          ],
+                        Icon(
+                          subtitleIcon ?? Icons.work_outline,
+                          size: 16,
+                          color: isDark ? Colors.tealAccent : Colors.teal,
                         ),
-                        if (price != null)
-                          Text(
-                            '${price!.toStringAsFixed(2)} JOD',
-                            style: const TextStyle(
-                              fontSize: 10,
-                             // fontWeight: FontWeight.bold,
-                              color: Colors.black87,
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            subtitle!,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: subtitleColor,
                             ),
                           ),
+                        ),
                       ],
                     ),
-
-
                 ],
               ),
             ),

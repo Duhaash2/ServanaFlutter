@@ -1,29 +1,24 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'firebase_options.dart';
-
+import 'package:servana/firebase_options.dart';
+import 'package:servana/service/auth/authentication_service.dart';
+import 'package:servana/view/screens/section_1/splash_screen.dart';
+import 'package:servana/view/screens/section_5/client_notification_screen.dart';
+import 'package:servana/view/screens/section_6/worker_notification_screen.dart';
 import 'controller/lang_controller.dart';
 import 'controller/login_controller.dart';
 import 'controller/profile_controller.dart';
 import 'controller/signup_controller.dart';
-import 'controller/notification_controller.dart';
-import 'service/auth/authentication_service.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_provider.dart';
+import '../../../l10n/app_localizations.dart';
 
-import 'view/screens/section_1/splash_screen.dart';
-import 'view/screens/section_5/client_notification_screen.dart';
-import 'view/screens/section_6/worker_notification_screen.dart';
-import 'view/screens/section_5/start_work_screen.dart';
-
-import '../l10n/app_localizations.dart';
-
+// ✅ Override SSL for development
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -32,13 +27,18 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
-
+// ✅ Background handler
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   print("🔔 Background message: ${message.messageId}");
 }
+
+// 🔔 Local notifications plugin
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+
+// 🔔 Store notifications (replace with Provider later)
+final List<RemoteMessage> notificationMessages = [];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,17 +46,17 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
-  const initSettings = InitializationSettings(android: androidSettings);
+  // 🔔 Init local notification plugin
+  const AndroidInitializationSettings androidSettings =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+  const InitializationSettings initSettings =
+  InitializationSettings(android: androidSettings);
   await flutterLocalNotificationsPlugin.initialize(initSettings);
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   final themeProvider = ThemeProvider();
   await themeProvider.loadTheme();
-
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
 
   runApp(
     MultiProvider(
@@ -67,17 +67,14 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthenticationService()),
         ChangeNotifierProvider(create: (_) => LangController()),
         ChangeNotifierProvider(create: (_) => ProfileController()),
-        ChangeNotifierProvider(create: (_) => NotificationController()),
       ],
-      child: MyApp(isFirstTime: isFirstTime),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
-  final bool isFirstTime;
-  const MyApp({super.key, required this.isFirstTime});
-
+  const MyApp({super.key});
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -93,63 +90,64 @@ class _MyAppState extends State<MyApp> {
     String? token = await FirebaseMessaging.instance.getToken();
     print("📲 Firebase Token: $token");
 
-    await FirebaseMessaging.instance.requestPermission(alert: true, badge: true, sound: true);
+    // ✅ Request permission (Android 13+)
+    NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    print('🔐 Permission granted: ${settings.authorizationStatus}');
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("📩 Foreground: ${message.data}");
-      _handleIncomingMessage(message);
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print("🔁 OpenedApp: ${message.data}");
-      _handleIncomingMessage(message, openScreen: true);
-    });
-
+    // ✅ Handle terminated state (cold start)
     RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) {
-      print("🟢 Initial Message: ${initialMessage.data}");
-      _handleIncomingMessage(initialMessage, openScreen: true);
-    }
-  }
-
-  void _handleIncomingMessage(RemoteMessage message, {bool openScreen = false}) {
-    final notificationController = Provider.of<NotificationController>(context, listen: false);
-    notificationController.addMessage(message);
-
-    final notification = message.notification;
-    final android = message.notification?.android;
-
-    if (notification != null && android != null) {
-      flutterLocalNotificationsPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            'servana_channel',
-            'Servana Notifications',
-            importance: Importance.max,
-            priority: Priority.high,
-            showWhen: true,
-            icon: '@mipmap/ic_launcher',
-          ),
-        ),
-      );
-    }
-
-    if (openScreen) {
+      notificationMessages.add(initialMessage);
       _navigateToNotificationScreen();
     }
+
+    // ✅ Foreground messages
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      notificationMessages.add(message);
+
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              'servana_channel',
+              'Servana Notifications',
+              importance: Importance.max,
+              priority: Priority.high,
+              showWhen: true,
+              icon: '@mipmap/ic_launcher',
+            ),
+          ),
+        );
+      }
+    });
+
+    // ✅ When app is resumed from background via tap
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      notificationMessages.add(message);
+      _navigateToNotificationScreen();
+    });
   }
 
+  // ✅ Navigate based on role (replace isWorker with real logic later)
   void _navigateToNotificationScreen() {
-    bool isWorker = false; // 🔄 بدّلها حسب نوع المستخدم من SharedPreferences أو Provider
+    bool isWorker = true; // replace with ProfileController logic or SharedPreferences
+
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => isWorker
-            ? const WorkerNotificationScreen()
-            : const ClientNotificationScreen(),
+            ? WorkerNotificationScreen(fcmMessages: notificationMessages)
+            : ClientNotificationScreen(fcmMessages: notificationMessages),
       ),
     );
   }
@@ -157,7 +155,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Consumer2<LangController, ThemeProvider>(
-      builder: (context, langController, themeProvider, _) {
+      builder: (context, langController, themeProvider, child) {
         return MaterialApp(
           title: 'Servana',
           debugShowCheckedModeBanner: false,
@@ -172,7 +170,7 @@ class _MyAppState extends State<MyApp> {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: themeProvider.themeMode,
-          home: const SplashScreen(), // 🔁 Splash أولاً دائماً
+          home:  SplashScreen(),
         );
       },
     );
