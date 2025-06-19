@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/app_localizations.dart';
 
 class FilterBottomSheet extends StatelessWidget {
   @override
@@ -7,18 +8,20 @@ class FilterBottomSheet extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final padding = screenWidth * 0.05; // ≈ 20 on 400px width
-    final titleFontSize = screenWidth * 0.045; // ≈ 18 on 400px width
-    final iconSize = screenWidth * 0.06; // ≈ 24 on 400px width
+    final padding = screenWidth * 0.05;
+    final titleFontSize = screenWidth * 0.045;
+    final iconSize = screenWidth * 0.06;
+
+    final local = AppLocalizations.of(context)!;
 
     return Container(
       padding: EdgeInsets.all(padding),
-      height: screenHeight * 0.3, // ≈ 250 on 800px height
+      height: screenHeight * 0.3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Filter By",
+            local.filterBy,
             style: TextStyle(
               fontSize: titleFontSize,
               fontWeight: FontWeight.bold,
@@ -26,9 +29,9 @@ class FilterBottomSheet extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.trending_up, color: Colors.green, size: iconSize),
+            leading: Icon(Icons.trending_down, color: Colors.red, size: iconSize),
             title: Text(
-              "Lower Price",
+              local.lowerPrice,
               style: TextStyle(fontSize: screenWidth * 0.04),
             ),
             onTap: () {
@@ -36,9 +39,9 @@ class FilterBottomSheet extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.trending_down, color: Colors.red, size: iconSize),
+            leading: Icon(Icons.trending_up, color: Colors.green, size: iconSize),
             title: Text(
-              "Higher Price",
+              local.higherPrice,
               style: TextStyle(fontSize: screenWidth * 0.04),
             ),
             onTap: () {
@@ -48,7 +51,7 @@ class FilterBottomSheet extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.star, color: Colors.amber, size: iconSize),
             title: Text(
-              "Top Rated",
+              local.topRated,
               style: TextStyle(fontSize: screenWidth * 0.04),
             ),
             onTap: () {

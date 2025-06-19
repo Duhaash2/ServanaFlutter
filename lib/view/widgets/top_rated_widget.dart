@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servana/l10n/app_localizations.dart';
 
 class TopRatedWidget extends StatelessWidget {
   final String title;
@@ -9,6 +10,8 @@ class TopRatedWidget extends StatelessWidget {
   final String? tag;       // "Top Rated", "Verified", etc.
   final String? subtitle;  // e.g. "Plumbing • 18 Jobs"
   final IconData? subtitleIcon;
+  final double? price;
+
 
   const TopRatedWidget({
     super.key,
@@ -19,11 +22,13 @@ class TopRatedWidget extends StatelessWidget {
     required this.onPressed,
     this.tag,
     this.subtitle,
-    this.subtitleIcon,
+    this.subtitleIcon, this.price,
   });
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -44,7 +49,6 @@ class TopRatedWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image with badge inside bottom right
             Stack(
               children: [
                 ClipRRect(
@@ -66,7 +70,7 @@ class TopRatedWidget extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: tag == "Verified"
+                        color: tag == local.verified
                             ? Colors.grey[800]
                             : Colors.amber.shade600,
                         borderRadius: BorderRadius.circular(12),
@@ -74,7 +78,7 @@ class TopRatedWidget extends StatelessWidget {
                       child: Row(
                         children: [
                           Icon(
-                            tag == "Verified" ? Icons.verified : Icons.star,
+                            tag == local.verified ? Icons.verified : Icons.star,
                             color: Colors.white,
                             size: 14,
                           ),
@@ -93,13 +97,11 @@ class TopRatedWidget extends StatelessWidget {
                   ),
               ],
             ),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Name
                   Text(
                     title,
                     style: const TextStyle(
@@ -108,8 +110,6 @@ class TopRatedWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 6),
-
-                  // Rating & Role
                   Row(
                     children: [
                       const Icon(Icons.star, color: Colors.orange, size: 18),
@@ -131,30 +131,41 @@ class TopRatedWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 8),
-
-                  // Subtitle with icon
                   if (subtitle != null)
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          subtitleIcon ?? Icons.work_outline,
-                          size: 16,
-                          color: Colors.teal,
+                        Row(
+                          children: [
+                            Icon(
+                              subtitleIcon ?? Icons.work_outline,
+                              size: 16,
+                              color: Colors.teal,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              subtitle!,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            subtitle!,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[700],
+                        if (price != null)
+                          Text(
+                            '${price!.toStringAsFixed(2)} JOD',
+                            style: const TextStyle(
+                              fontSize: 10,
+                             // fontWeight: FontWeight.bold,
+                              color: Colors.black87,
                             ),
                           ),
-                        ),
                       ],
                     ),
+
+
                 ],
               ),
             ),

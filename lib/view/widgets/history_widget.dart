@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:servana/view/screens/section_4/rating_screen.dart';
 
+import '../../l10n/app_localizations.dart';
+
 class HistoryWidget extends StatelessWidget {
   final String title;
   final String description;
@@ -21,8 +23,9 @@ class HistoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     final width = MediaQuery.of(context).size.width;
-    final responsiveFont = (double base) => width * base / 375; // base from iPhone 11
+    final responsiveFont = (double base) => width * base / 375;
 
     return Container(
       width: width * 0.9,
@@ -44,7 +47,7 @@ class HistoryWidget extends StatelessWidget {
         children: [
           SizedBox(width: responsiveFont(12)),
 
-          // 📋 Info Section
+          // Info Section
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +88,7 @@ class HistoryWidget extends StatelessWidget {
                     ),
                     SizedBox(width: responsiveFont(18)),
                     Text(
-                      'JD $price/hr',
+                      '${local.jd} $price/${local.hr}',
                       style: TextStyle(
                         fontSize: responsiveFont(13),
                         fontWeight: FontWeight.w600,
@@ -108,7 +111,7 @@ class HistoryWidget extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) =>  RatingScreen()),
+                    MaterialPageRoute(builder: (context) => RatingScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -119,7 +122,7 @@ class HistoryWidget extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  "Rate Worker",
+                  local.rateWorker,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: responsiveFont(14),

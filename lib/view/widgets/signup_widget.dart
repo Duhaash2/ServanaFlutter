@@ -4,7 +4,7 @@ import '../../../l10n/app_localizations.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
-  final String labelText;
+  final String labelText; // Pass localized text here
   final TextInputType keyboardType;
   final bool isPassword;
   final bool readOnly;
@@ -37,7 +37,7 @@ class CustomTextField extends StatelessWidget {
         onTap: onTap,
         style: TextStyle(fontSize: scale * 14),
         decoration: InputDecoration(
-          labelText: labelText,
+          labelText: labelText, // Already localized from caller
           labelStyle: TextStyle(fontSize: scale * 14),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(scale * 12),
@@ -59,12 +59,14 @@ class PhoneInputField extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final scale = width / 375;
 
+    final local = AppLocalizations.of(context)!;
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: scale * 8.0),
       child: IntlPhoneField(
         controller: controller,
         decoration: InputDecoration(
-          labelText: AppLocalizations.of(context)!.phone_number,
+          labelText: local.phone_number,
           labelStyle: TextStyle(fontSize: scale * 14),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(scale * 12),

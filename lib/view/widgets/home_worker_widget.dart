@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/app_localizations.dart';
 
 class HomeWorkerWidget extends StatelessWidget {
   final String title;
@@ -16,16 +17,17 @@ class HomeWorkerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    final responsive = (double base) => width * base / 375; // scale based on 375 width design
+    final responsive = (double base) => width * base / 375;
 
     return Center(
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          width: width * 0.95, // responsive width
-          height: height * 0.15, // responsive height (≈ 120)
+          width: width * 0.85,
+          height: height * 0.12,
           margin: EdgeInsets.only(right: responsive(10), bottom: responsive(16)),
           padding: EdgeInsets.all(responsive(20)),
           decoration: BoxDecoration(
@@ -58,7 +60,7 @@ class HomeWorkerWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                    title,
                       style: TextStyle(
                         fontSize: responsive(22),
                         fontWeight: FontWeight.bold,
@@ -68,7 +70,7 @@ class HomeWorkerWidget extends StatelessWidget {
                     ),
                     SizedBox(height: responsive(8)),
                     Text(
-                      description,
+                     description,
                       style: TextStyle(
                         fontSize: responsive(14),
                         color: Colors.black54,

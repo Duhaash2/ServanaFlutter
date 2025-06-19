@@ -175,39 +175,47 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         keyboardType: TextInputType.emailAddress,
                         suffixIcon: const Icon(Icons.email),
                       ),
-                      SizedBox(height: width * 0.02),
+                      SizedBox(height: width * 0.01),
                       Text(
                         AppLocalizations.of(context)!.gender,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: RadioListTile<Gender>(
-                              title: Text(AppLocalizations.of(context)!.male),
-                              value: Gender.male,
-                              groupValue: _selectedGender,
-                              onChanged: (Gender? value) {
-                                setState(() {
-                                  _selectedGender = value;
-                                });
-                              },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 8.0), // spacing between the two radios
+                              child: RadioListTile<Gender>(
+                                title: Text(AppLocalizations.of(context)!.male),
+                                value: Gender.male,
+                                groupValue: _selectedGender,
+                                onChanged: (Gender? value) {
+                                  setState(() {
+                                    _selectedGender = value;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                           Expanded(
-                            child: RadioListTile<Gender>(
-                              title: Text(AppLocalizations.of(context)!.female),
-                              value: Gender.female,
-                              groupValue: _selectedGender,
-                              onChanged: (Gender? value) {
-                                setState(() {
-                                  _selectedGender = value;
-                                });
-                              },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: RadioListTile<Gender>(
+                                title: Text(AppLocalizations.of(context)!.female),
+                                value: Gender.female,
+                                groupValue: _selectedGender,
+                                onChanged: (Gender? value) {
+                                  setState(() {
+                                    _selectedGender = value;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ],
                       ),
+
                       PhoneInputField(controller: _phoneController),
                       CustomTextField(
                         controller: _passwordController,

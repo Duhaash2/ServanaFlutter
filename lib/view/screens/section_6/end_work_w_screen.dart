@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_3/home_client_screen.dart';
 import '../section_5/profile_screen.dart';
@@ -29,6 +30,8 @@ class _EndWorkWScreenState extends State<EndWorkWScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -41,9 +44,9 @@ class _EndWorkWScreenState extends State<EndWorkWScreen> {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
-          'Job In Progress',
-          style: TextStyle(
+        title: Text(
+          local.job_in_progress,
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Colors.black,
@@ -54,30 +57,26 @@ class _EndWorkWScreenState extends State<EndWorkWScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            _infoCard("CLIENT NAME", "John Doe", Icons.person),
+            _infoCard(local.client_name, "John Doe", Icons.person),
             const SizedBox(height: 16),
-            _infoCard("LOCATION", "123 Main St", Icons.location_on),
+            _infoCard(local.location, "123 Main St", Icons.location_on),
             const SizedBox(height: 16),
-            _infoCard(
-              "ISSUE",
-              "Leaking faucet in kitchen",
-              Icons.warning_amber_rounded,
-            ),
+            _infoCard(local.issue, "Leaking faucet in kitchen", Icons.warning_amber_rounded),
             const SizedBox(height: 16),
-            _infoCard("DURATION", "01:25:30", Icons.timer),
+            _infoCard(local.duration, "01:25:30", Icons.timer),
             const SizedBox(height: 16),
-            _infoCard("STATUS", "Working", Icons.work_outline),
-            SizedBox(height: 20),
+            _infoCard(local.status, local.working_status, Icons.work_outline),
+            const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: const Text("Ended Work Successfully  "),
+                      content: Text(local.end_work_success),
                       backgroundColor: Colors.blue[400],
                       behavior: SnackBarBehavior.floating,
-                      duration: Duration(seconds: 2),
+                      duration: const Duration(seconds: 2),
                     ),
                   );
 
@@ -92,17 +91,14 @@ class _EndWorkWScreenState extends State<EndWorkWScreen> {
                   backgroundColor: Colors.blue[900],
                   elevation: 5,
                   shadowColor: Colors.black26,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 50,
-                    vertical: 16,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                child: const Text(
-                  'End Work',
-                  style: TextStyle(
+                child: Text(
+                  local.end_work,
+                  style: const TextStyle(
                     fontSize: 18,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

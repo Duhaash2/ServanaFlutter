@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import '../../../l10n/app_localizations.dart';
 import 'login_client_screen.dart';
@@ -27,6 +26,7 @@ class _CongraScreenState extends State<CongraScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmall = screenWidth < 400;
 
@@ -60,7 +60,7 @@ class _CongraScreenState extends State<CongraScreen> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        AppLocalizations.of(context)!.congratulations,
+                        local.congratulations,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: isSmall ? 24 : 32,
@@ -70,7 +70,7 @@ class _CongraScreenState extends State<CongraScreen> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        AppLocalizations.of(context)!.password_reset_successfully,
+                        local.password_reset_successfully,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: isSmall ? 16 : 20,
@@ -78,25 +78,6 @@ class _CongraScreenState extends State<CongraScreen> {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      // Uncomment below if you want a manual login button instead of auto redirect
-                      /*
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => const LoginClientScreen()),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 12),
-                        ),
-                        child: const Text(
-                          "Back to Login",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                      ),
-                      */
                     ],
                   ),
                 ),

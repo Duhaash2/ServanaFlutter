@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../../../controller/profile_controller.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_3/home_client_screen.dart';
 import '../section_4/wallet_screen.dart';
@@ -53,30 +54,26 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
         children: [
           ListTile(
             leading: const Icon(Icons.camera_alt),
-            title: const Text("Take from Camera"),
+            title: Text(AppLocalizations.of(context)!.take_from_camera),
             onTap: () async {
               Navigator.pop(context);
               final picked = await picker.pickImage(source: ImageSource.camera);
               if (picked != null) {
                 final imageFile = File(picked.path);
-                setState(() {
-                  _profileImage = imageFile;
-                });
+                setState(() => _profileImage = imageFile);
                 Provider.of<ProfileController>(context, listen: false).updateProfileImage(imageFile);
               }
             },
           ),
           ListTile(
             leading: const Icon(Icons.photo_library),
-            title: const Text("Pick from Gallery"),
+            title: Text(AppLocalizations.of(context)!.pick_from_gallery),
             onTap: () async {
               Navigator.pop(context);
               final picked = await picker.pickImage(source: ImageSource.gallery);
               if (picked != null) {
                 final imageFile = File(picked.path);
-                setState(() {
-                  _profileImage = imageFile;
-                });
+                setState(() => _profileImage = imageFile);
                 Provider.of<ProfileController>(context, listen: false).updateProfileImage(imageFile);
               }
             },
@@ -96,11 +93,7 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
     super.dispose();
   }
 
-  void onItemTapped(int index) {
-    setState(() {
-      widget.selectedIndex = index;
-    });
-  }
+  void onItemTapped(int index) => setState(() => widget.selectedIndex = index);
 
   void _navigate(int index, Widget screen) {
     onItemTapped(index);
@@ -128,7 +121,7 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
-              title: const Text('Profile', style: TextStyle(color: Colors.white)),
+              title: Text(AppLocalizations.of(context)!.profile, style: const TextStyle(color: Colors.white)),
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Navigator.pop(context),
@@ -185,15 +178,16 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
                             profileImage: _profileImage,
                           );
                           ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Profile updated successfully")));
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                            SnackBar(content: Text(AppLocalizations.of(context)!.profile_updated_successfully)),
+                          );
+                          Navigator.pushReplacement(
+                              context, MaterialPageRoute(builder: (_) => const ProfileScreen()));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue[900],
                           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                         ),
-                        child: const Text("Update", style: TextStyle(color: Colors.white)),
+                        child: Text(AppLocalizations.of(context)!.update, style: const TextStyle(color: Colors.white)),
                       ),
                     ],
                   ),
@@ -224,11 +218,11 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          _buildTextField("Username", _usernameController, controller.updateUsername, isDarkMode: isDark),
-          _buildTextField("Email", _emailController, controller.updateEmail, isDarkMode: isDark),
-          _buildTextField("Phone Number", _phoneController, controller.updatePhoneNumber, isDarkMode: isDark),
-          _buildTextField("Password", _passwordController, controller.updatePassword, isPassword: true, isDarkMode: isDark),
-          _buildTextField("Address", _addressController, controller.updateAddress, isDarkMode: isDark),
+          _buildTextField(AppLocalizations.of(context)!.username, _usernameController, controller.updateUsername, isDarkMode: isDark),
+          _buildTextField(AppLocalizations.of(context)!.email, _emailController, controller.updateEmail, isDarkMode: isDark),
+          _buildTextField(AppLocalizations.of(context)!.phone_number, _phoneController, controller.updatePhoneNumber, isDarkMode: isDark),
+          _buildTextField(AppLocalizations.of(context)!.password, _passwordController, controller.updatePassword, isPassword: true, isDarkMode: isDark),
+          _buildTextField(AppLocalizations.of(context)!.address, _addressController, controller.updateAddress, isDarkMode: isDark),
         ],
       ),
     );
@@ -268,25 +262,25 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
           children: [
             BottonNavigationWidget(
               icon: Icons.home_filled,
-              label: "Home",
+              label: AppLocalizations.of(context)!.home,
               isSelected: widget.selectedIndex == 3,
-              onTap: () => _navigate(3, HomeScreen()),
+              onTap: () => _navigate(3, const HomeScreen()),
             ),
             BottonNavigationWidget(
               icon: Icons.wallet,
-              label: "Wallet",
+              label: AppLocalizations.of(context)!.wallet,
               isSelected: widget.selectedIndex == 1,
-              onTap: () => _navigate(1, WalletScreen()),
+              onTap: () => _navigate(1,  WalletScreen()),
             ),
             BottonNavigationWidget(
               icon: Icons.history,
-              label: "History",
+              label: AppLocalizations.of(context)!.my_requests,
               isSelected: widget.selectedIndex == 2,
               onTap: () => _navigate(2, const HistoryScreen()),
             ),
             BottonNavigationWidget(
               icon: Icons.person,
-              label: "Profile",
+              label: AppLocalizations.of(context)!.profile,
               isSelected: widget.selectedIndex == 0,
               onTap: () => _navigate(0, const ProfileScreen()),
             ),

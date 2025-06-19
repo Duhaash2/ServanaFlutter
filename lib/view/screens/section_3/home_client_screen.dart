@@ -41,9 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? Colors.black : Colors.white;
-    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -54,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Top Blue Container
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
                   decoration: BoxDecoration(
@@ -67,13 +66,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Header
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             "Servana",
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
@@ -89,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               );
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.notifications,
                               color: Colors.white,
                               size: 28,
@@ -98,8 +96,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       const SizedBox(height: 15),
-
-                      // Search
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -107,10 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: TextField(
                           decoration: InputDecoration(
-                            hintText:
-                                AppLocalizations.of(
-                                  context,
-                                )!.search_service_workers_or_etc,
+                            hintText: local.search_service_workers_or_etc,
                             prefixIcon: const Icon(Icons.search),
                             border: InputBorder.none,
                             contentPadding: const EdgeInsets.symmetric(
@@ -122,7 +115,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
@@ -131,9 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Categories
                       Text(
-                        "Categories",
+                        local.categories,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 22,
@@ -146,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                           children: [
                             CategoryButtonWidget(
-                              title: AppLocalizations.of(context)!.pluming,
+                              title: local.plumbing,
                               isSelected: selectedIndex == 0,
                               onPressed: () {
                                 Navigator.push(
@@ -160,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ImagePath: 'assets/images/plumingg.png',
                             ),
                             CategoryButtonWidget(
-                              title: AppLocalizations.of(context)!.electrical,
+                              title: local.electrical,
                               isSelected: selectedIndex == 1,
                               onPressed: () {
                                 Navigator.push(
@@ -174,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ImagePath: 'assets/images/Electricall.png',
                             ),
                             CategoryButtonWidget(
-                              title: AppLocalizations.of(context)!.gardner,
+                              title: local.gardner,
                               isSelected: selectedIndex == 2,
                               onPressed: () {
                                 Navigator.push(
@@ -188,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ImagePath: 'assets/images/gardnerr.png',
                             ),
                             CategoryButtonWidget(
-                              title: AppLocalizations.of(context)!.paint,
+                              title: local.paint,
                               isSelected: selectedIndex == 3,
                               onPressed: () {
                                 Navigator.push(
@@ -202,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ImagePath: 'assets/images/paintingg.png',
                             ),
                             CategoryButtonWidget(
-                              title: AppLocalizations.of(context)!.cleaning,
+                              title: local.cleaning,
                               isSelected: selectedIndex == 4,
                               onPressed: () {
                                 Navigator.push(
@@ -218,28 +209,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-
                       const SizedBox(height: 26),
-
-                      // Top Rated
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Top Rated Workers",
+                            local.top_rated_workers,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
                               color: Colors.blue[900],
                             ),
                           ),
-
                           IconButton(
                             icon: Icon(Icons.tune, color: Colors.blue[900]),
                             onPressed: () {
                               showModalBottomSheet(
                                 context: context,
-                                shape: RoundedRectangleBorder(
+                                shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(25),
                                   ),
@@ -251,53 +238,52 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       const SizedBox(height: 15),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            TopRatedWidget(
-                              title: "John Deo",
-                              imagePath: "assets/images/man2.PNG",
-                              rating: 4.5,
-                              subtitle: "24 Jobs",
-                              tag: "Top Rated",
-                              onPressed: () {},
-                              description: 'Plumbing',
-                            ),
-                            TopRatedWidget(
-                              title: "Emma Smith",
-                              imagePath: "assets/images/girl2.PNG",
-                              rating: 3.0,
-                              subtitle: "18 Jobs",
-                              onPressed: () {},
-                              description: 'Cleaning',
-                            ),
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          TopRatedWidget(
+                            title: "John Deo",
+                            imagePath: "assets/images/man2.PNG",
+                            rating: 4.5,
+                            price: 17,
+                            subtitle: "24 ${local.jobs}",
+                            tag: local.top_rated,
+                            onPressed: () {},
+                            description: local.plumbing,
+                          ),
+                          TopRatedWidget(
+                            title: "Emma Smith",
+                            imagePath: "assets/images/girl2.PNG",
+                            rating: 3.0,
+                            price: 10,
+                            subtitle: "18 ${local.jobs}",
+                            onPressed: () {},
+                            description: local.cleaning,
+                          ),
+                        ],
                       ),
+
                       const SizedBox(height: 11),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            TopRatedWidget(
-                              title: "Clivia Brown",
-                              imagePath: "assets/images/girl1.PNG",
-                              rating: 4.0,
-                              subtitle: "10 Jobs",
-                              onPressed: () {},
-                              description: 'Paint',
-                            ),
-                            TopRatedWidget(
-                              title: "James Jonson",
-                              imagePath: "assets/images/man1.PNG",
-                              rating: 3.5,
-                              subtitle: "18 Jobs",
-                              onPressed: () {},
-                              description: 'Plumbing',
-                            ),
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          TopRatedWidget(
+                            title: "Clivia Brown",
+                            imagePath: "assets/images/girl1.PNG",
+                            rating: 4.0,
+                            price: 15,
+                            subtitle: "10 ${local.jobs}",
+                            onPressed: () {},
+                            description: local.paint,
+                          ),
+                          TopRatedWidget(
+                            title: "James Jonson",
+                            imagePath: "assets/images/man1.PNG",
+                            rating: 3.5,
+                            price: 13,
+                            subtitle: "18 ${local.jobs}",
+                            onPressed: () {},
+                            description: local.plumbing,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -307,8 +293,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-
-      // Bottom Navigation
       bottomNavigationBar: BottomAppBar(
         color: bgColor,
         shape: const CircularNotchedRectangle(),
@@ -320,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               BottonNavigationWidget(
                 icon: Icons.home_filled,
-                label: "Home",
+                label: local.bottomNavHome,
                 isSelected: selectedIndex2 == 0,
                 onTap: () {
                   onItemTapped2(0);
@@ -332,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               BottonNavigationWidget(
                 icon: Icons.wallet,
-                label: "Wallet",
+                label: local.bottomNavWallet,
                 isSelected: selectedIndex2 == 1,
                 onTap: () {
                   onItemTapped2(1);
@@ -344,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               BottonNavigationWidget(
                 icon: Icons.history,
-                label: "History",
+                label: local.my_requests,
                 isSelected: selectedIndex2 == 2,
                 onTap: () {
                   onItemTapped2(2);
@@ -356,16 +340,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               BottonNavigationWidget(
                 icon: Icons.person,
-                label: "Profile",
+                label: local.bottomNavProfile,
                 isSelected: selectedIndex2 == 3,
                 onTap: () {
                   onItemTapped2(3);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => ProfileScreen(),
-                    ),
+                    MaterialPageRoute(builder: (_) => ProfileScreen()),
                   );
                 },
               ),

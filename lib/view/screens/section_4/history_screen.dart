@@ -28,11 +28,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? Colors.black : Colors.white;
+    final local = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF3EEEC),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F5DC),
+        backgroundColor: const Color(0xFFF3EEEC),
         elevation: 0,
         automaticallyImplyLeading: false,
         title: Row(
@@ -45,7 +46,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               icon: Icon(Icons.arrow_back, color: Colors.blue[900], size: 32),
             ),
             Text(
-              "History ",
+              local.my_requests,
               style: TextStyle(
                 color: Colors.blue[900],
                 fontSize: 28,
@@ -54,12 +55,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             IconButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder:
-                          (context) => ClientNotificationScreen()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ClientNotificationScreen()));
               },
               icon: Icon(Icons.notifications, color: Colors.blue[900], size: 32),
             ),
@@ -79,7 +75,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     children: [
                       TextFormField(
                         decoration: InputDecoration(
-                          hintText: AppLocalizations.of(context)!.search_service_workers_or_etc,
+                          hintText: local.search_workers,
                           prefixIcon: const Icon(Icons.search),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
@@ -103,7 +99,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           SizedBox(height: 7),
                           HistoryWidget(
                             title: "Amanda Wood",
-                            description: " Completed",
+                            description: "Completed",
                             price: "30",
                             description1: 'Gardner',
                             date: '10/4/2025',
@@ -114,7 +110,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             description: "Completed",
                             price: "35",
                             description1: 'Painter',
-                            description2: '',
                             date: '10/5/2025',
                           ),
                           SizedBox(height: 7),
@@ -123,7 +118,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             description: "Completed",
                             price: "40",
                             description1: 'Electrician',
-                            description2: '',
                             date: '22/7/2025',
                           ),
                         ],
@@ -147,44 +141,39 @@ class _HistoryScreenState extends State<HistoryScreen> {
             children: [
               BottonNavigationWidget(
                 icon: Icons.home_filled,
-                label: "Home",
+                label: local.bottomNavHome,
                 isSelected: selectedIndex2 == 1,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) =>  HomeScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
                   onItemTapped2(1);
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.wallet,
-                label: "Wallet",
-                isSelected: selectedIndex2 == 1,
+                label: local.bottomNavWallet,
+                isSelected: selectedIndex2 == 2,
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) =>  WalletScreen()));
-                  onItemTapped2(1);
+                  onItemTapped2(2);
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.history,
-                label: "History",
+                label: local.bottomNavHistory,
                 isSelected: selectedIndex2 == 0,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) =>  HistoryScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryScreen()));
                   onItemTapped2(0);
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.person,
-                label: "Profile",
+                label: local.bottomNavProfile,
                 isSelected: selectedIndex2 == 3,
-                onTap: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder:
-                            (context) => ProfileScreen()),
-                  ),
-
-                  onItemTapped2(3)},
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                  onItemTapped2(3);
+                },
               ),
             ],
           ),

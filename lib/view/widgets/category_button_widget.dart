@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/app_localizations.dart';
 
 class CategoryButtonWidget extends StatelessWidget {
   final String title;
@@ -21,9 +22,19 @@ class CategoryButtonWidget extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? Colors.black : Colors.white;
     final textColor = isDark ? Colors.white : Colors.black;
+    final imageSize = screenWidth * 0.19;
+    final fontSize = screenWidth * 0.04;
 
-    final imageSize = screenWidth * 0.19; // ~76px on 400px width
-    final fontSize = screenWidth * 0.04; // ~16px on 400px width
+    // 🔤 Localization
+    final localizations = AppLocalizations.of(context)!;
+
+    String localizedTitle = switch (title.toLowerCase()) {
+      'plumbing' => localizations.plumbing,
+      'electrical' => localizations.electrical,
+      'cleaning' => localizations.cleaning,
+      'hvac' => localizations.hvac,
+      _ => title,
+    };
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
@@ -43,13 +54,11 @@ class CategoryButtonWidget extends StatelessWidget {
             ),
             SizedBox(height: screenWidth * 0.015),
             Text(
-              title,
+              localizedTitle,
               style: TextStyle(
                 fontSize: fontSize,
                 fontWeight: FontWeight.w500,
-                color: isSelected
-                    ? Colors.orange
-                    : textColor,
+                color: isSelected ? Colors.orange : textColor,
               ),
             ),
           ],

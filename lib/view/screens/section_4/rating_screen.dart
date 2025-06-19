@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:servana/view/screens/section_3/home_client_screen.dart';
 import 'package:servana/view/screens/section_4/wallet_screen.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_5/client_notification_screen.dart';
 import '../section_5/profile_screen.dart';
@@ -52,9 +53,9 @@ class _RatingScreenState extends State<RatingScreen> {
                 },
                 icon: const Icon(Icons.arrow_back, color: Color(0xFF0D47A1), size: 32),
               ),
-              const Text(
-                "Servana ",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.servana,
+                style: const TextStyle(
                   color: Color(0xFF0D47A1),
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -64,9 +65,7 @@ class _RatingScreenState extends State<RatingScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder:
-                            (context) => ClientNotificationScreen()),
+                    MaterialPageRoute(builder: (context) => const ClientNotificationScreen()),
                   );
                 },
                 icon: const Icon(Icons.notifications, color: Color(0xFF0D47A1), size: 32),
@@ -97,9 +96,9 @@ class _RatingScreenState extends State<RatingScreen> {
                       ),
                       child: Column(
                         children: [
-                          const Text(
-                            "Rate Your Experience ",
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.rate_experience,
+                            style: const TextStyle(
                               fontSize: 25,
                               color: Color(0xFF0D47A1),
                               fontWeight: FontWeight.bold,
@@ -131,7 +130,7 @@ class _RatingScreenState extends State<RatingScreen> {
                             maxLines: 10,
                             style: const TextStyle(fontSize: 14),
                             decoration: InputDecoration(
-                              hintText: "Leave A Review (Optional)",
+                              hintText: AppLocalizations.of(context)!.leave_review,
                               hintStyle: TextStyle(color: Colors.grey[600]),
                               filled: true,
                               fillColor: Colors.grey[100],
@@ -148,7 +147,21 @@ class _RatingScreenState extends State<RatingScreen> {
                           ),
                           const SizedBox(height: 20),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(AppLocalizations.of(context)!.rating_submitted),
+                                  backgroundColor: Colors.blueAccent,
+                                  duration: const Duration(seconds: 2),
+                                ),
+                              );
+                              Future.delayed(const Duration(seconds: 2), () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (_) => const HomeScreen()),
+                                );
+                              });
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF0D47A1),
                               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 7),
@@ -156,29 +169,12 @@ class _RatingScreenState extends State<RatingScreen> {
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
-                            child: TextButton(
-                              onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Rating Submitted Successfully!"),
-                                    backgroundColor: Colors.blueAccent,
-                                    duration: Duration(seconds: 2),
-                                  ),
-                                );
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (_) => const HomeScreen()),
-                                  );
-                                });
-                              },
-                              child: const Text(
-                                "Submit Rating",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                            child: Text(
+                              AppLocalizations.of(context)!.submit_rating,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -244,10 +240,7 @@ class _RatingScreenState extends State<RatingScreen> {
                     onItemTapped2(3);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder:
-                            (context) => ProfileScreen(),
-                      ),
+                      MaterialPageRoute(builder: (_) => ProfileScreen()),
                     );
                   },
                 ),
@@ -255,7 +248,6 @@ class _RatingScreenState extends State<RatingScreen> {
             ),
           ),
         ),
-
       ),
     );
   }
