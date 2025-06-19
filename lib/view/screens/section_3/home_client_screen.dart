@@ -282,6 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
                 },
               ),
+
               BottonNavigationWidget(
                 icon: Icons.wallet,
                 label: "Wallet",
@@ -291,6 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => WalletScreen()));
                 },
               ),
+
               BottonNavigationWidget(
                 icon: Icons.history,
                 label: "History",
@@ -309,10 +311,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => ProfileScreen()));
                 },
               ),
+
             ],
           ),
         ),
       ),
     );
   }
+
 }
