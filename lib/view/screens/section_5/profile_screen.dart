@@ -87,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         SizedBox(height: height * .02),
                         Text(
-                          profileController.username.isNotEmpty ? profileController.username : local.username,
+                          profileController.fullname.isNotEmpty ? profileController.fullname : local.username,
                           style: TextStyle(fontSize: width * .045, fontWeight: FontWeight.bold, color: Colors.black),
                         ),
                         Text(
