@@ -144,4 +144,5 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
       },
     );
   }
+
 }
