@@ -72,7 +72,7 @@ class _Intro2ScreenState extends State<Intro2Screen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Intro4LocationScreen(),
+                            builder: (context) => const Intro4LocationScreen(),
                           ),
                         );
                       },
@@ -109,7 +109,7 @@ class _Intro2ScreenState extends State<Intro2Screen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Intro4LocationScreen(),
+                        builder: (context) => const Intro4LocationScreen(),
                       ),
                     );
                   },
@@ -140,7 +140,7 @@ class _Intro2ScreenState extends State<Intro2Screen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Intro4LocationScreen(),
+                        builder: (context) => const Intro4LocationScreen(),
                       ),
                     );
                   },

@@ -3,6 +3,7 @@ import 'package:servana/view/screens/section_3/home_client_screen.dart';
 import 'package:servana/view/screens/section_4/wallet_screen.dart';
 import 'package:servana/view/screens/section_5/profile_screen.dart';
 import 'package:servana/view/widgets/history_widget.dart';
+
 import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_5/client_notification_screen.dart';
@@ -26,13 +27,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? const Color(0xFF121212) : const Color(0xFFF3EEEC);
-    final textColor = isDark ? Colors.white : Colors.black;
+    final bgColor = isDark ? Colors.black : Colors.white;
+    final local = AppLocalizations.of(context)!;
 
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: const Color(0xFFF3EEEC),
       appBar: AppBar(
-        backgroundColor: bgColor,
+        backgroundColor: const Color(0xFFF3EEEC),
         elevation: 0,
         automaticallyImplyLeading: false,
         title: Row(
@@ -45,7 +46,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               icon: Icon(Icons.arrow_back, color: Colors.blue[900], size: 32),
             ),
             Text(
-              "History",
+              local.my_requests,
               style: TextStyle(
                 color: Colors.blue[900],
                 fontSize: 28,
@@ -54,10 +55,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             IconButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const ClientNotificationScreen()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ClientNotificationScreen()));
               },
               icon: Icon(Icons.notifications, color: Colors.blue[900], size: 32),
             ),
@@ -76,11 +74,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextFormField(
-                        style: TextStyle(color: textColor),
                         decoration: InputDecoration(
-                          hintText: AppLocalizations.of(context)!.search_service_workers_or_etc,
-                          hintStyle: TextStyle(color: isDark ? Colors.white70 : Colors.grey),
-                          prefixIcon: Icon(Icons.search, color: isDark ? Colors.white70 : Colors.grey),
+                          hintText: local.search_workers,
+                          prefixIcon: const Icon(Icons.search),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                             borderSide: BorderSide.none,
@@ -135,44 +131,44 @@ class _HistoryScreenState extends State<HistoryScreen> {
         },
       ),
       bottomNavigationBar: BottomAppBar(
-        color: isDark ? Colors.grey[900] : Colors.white,
+        color: bgColor,
         shape: const CircularNotchedRectangle(),
         notchMargin: 8.0,
         child: SizedBox(
-          height: 50,
+          height: 40,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               BottonNavigationWidget(
                 icon: Icons.home_filled,
-                label: "Home",
-                isSelected: selectedIndex2 == 0,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-                  onItemTapped2(0);
-                },
-              ),
-              BottonNavigationWidget(
-                icon: Icons.wallet,
-                label: "Wallet",
+                label: local.bottomNavHome,
                 isSelected: selectedIndex2 == 1,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) =>  WalletScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
                   onItemTapped2(1);
                 },
               ),
               BottonNavigationWidget(
-                icon: Icons.history,
-                label: "History",
+                icon: Icons.wallet,
+                label: local.bottomNavWallet,
                 isSelected: selectedIndex2 == 2,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) =>  WalletScreen()));
                   onItemTapped2(2);
                 },
               ),
               BottonNavigationWidget(
+                icon: Icons.history,
+                label: local.bottomNavHistory,
+                isSelected: selectedIndex2 == 0,
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryScreen()));
+                  onItemTapped2(0);
+                },
+              ),
+              BottonNavigationWidget(
                 icon: Icons.person,
-                label: "Profile",
+                label: local.bottomNavProfile,
                 isSelected: selectedIndex2 == 3,
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileScreen()));
