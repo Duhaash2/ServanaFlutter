@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:servana/view/screens/section_5/profile_worker_screen.dart';
+import 'package:servana/view/screens/section_6/profile_worker_screen.dart';
 import 'package:servana/view/screens/section_6/end_work_w_screen.dart';
 import 'package:servana/view/screens/section_6/incoming_request_w_screen.dart';
 import 'package:servana/view/screens/section_6/worker_notification_screen.dart';
@@ -47,9 +47,11 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.blue[900];
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: isDark ? Colors.white : Colors.transparent,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -61,8 +63,8 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
             Text(
               " Worker",
               style: TextStyle(
-                color: Colors.blue[900],
-                fontSize: size.width < 400 ? 22 : 28,
+                color: textColor,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -70,14 +72,12 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) =>  WorkerNotificationScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) => WorkerNotificationScreen()),
                 );
               },
               icon: Icon(
                 Icons.notifications,
-                color: Colors.blue[900],
+                color: textColor,
                 size: 30,
               ),
             ),
@@ -86,17 +86,29 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
       ),
       body: Stack(
         children: [
-          AnimatedContainer(
-            duration: const Duration(seconds: 2),
-            curve: Curves.easeInOut,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: gradientColors[currentIndex],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+          if (!isDark)
+            AnimatedContainer(
+              duration: const Duration(seconds: 2),
+              curve: Curves.easeInOut,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: gradientColors[currentIndex],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+            )
+          else
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFF0F2027), Color(0xFF203A43), Color(0xFF2C5364)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
             ),
-          ),
+
           SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -108,13 +120,13 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                     "Welcome ",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue[900],
+                      color: textColor,
                       fontSize: 30,
                     ),
                   ),
                   Text(
                     "Search for tasks and jobs",
-                    style: TextStyle(color: Colors.blue[900], fontSize: 26),
+                    style: TextStyle(color: textColor, fontSize: 26),
                   ),
                   const SizedBox(height: 50),
                   Column(
@@ -127,9 +139,7 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => const WorkerNotificationScreen(),
-                            ),
+                            MaterialPageRoute(builder: (context) => const WorkerNotificationScreen()),
                           );
                         },
                       ),
@@ -140,9 +150,7 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => const IncomingRequestWScreen(),
-                            ),
+                            MaterialPageRoute(builder: (context) => const IncomingRequestWScreen()),
                           );
                         },
                       ),
@@ -153,9 +161,7 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => const EndWorkWScreen(),
-                            ),
+                            MaterialPageRoute(builder: (context) => const EndWorkWScreen()),
                           );
                         },
                       ),
@@ -166,10 +172,9 @@ class _HomeWorkerScreenState extends State<HomeWorkerScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder:
-                                    (context) => ProfileWorkerScreen()),
-                          );                        },
+                            MaterialPageRoute(builder: (context) => ProfileWorkerScreen()),
+                          );
+                        },
                       ),
                     ],
                   ),

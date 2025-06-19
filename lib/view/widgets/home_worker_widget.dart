@@ -18,25 +18,35 @@ class HomeWorkerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    final responsive = (double base) => width * base / 375; // scale based on 375 width design
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final responsive = (double base) => width * base / 375;
+
+    // 🎨 Dark and Light Theme Colors
+    final boxColor = isDark ? Colors.grey[500] : Colors.blue[50];
+    final iconBgColor = isDark ? Colors.white38 : Colors.blue[100];
+    final iconColor = isDark ? Color(0xFF203A43) : Colors.blue[100];
+    final titleColor = isDark ? Colors.black87 : Colors.black87;
+    final descColor = isDark ? Colors.black87 : Colors.black54;
 
     return Center(
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          width: width * 0.95, // responsive width
-          height: height * 0.15, // responsive height (≈ 120)
+          width: width * 0.95,
+          height: height * 0.15,
           margin: EdgeInsets.only(right: responsive(10), bottom: responsive(16)),
           padding: EdgeInsets.all(responsive(20)),
           decoration: BoxDecoration(
-            color: Colors.blue[50],
+            color: boxColor,
             borderRadius: BorderRadius.circular(responsive(24)),
             boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: responsive(12),
-                offset: Offset(0, responsive(6)),
-              ),
+              if (!isDark)
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: responsive(12),
+                  offset: Offset(0, responsive(6)),
+                ),
             ],
           ),
           child: Row(
@@ -44,11 +54,11 @@ class HomeWorkerWidget extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: responsive(38),
-                backgroundColor: Colors.blue[100],
+                backgroundColor: iconBgColor,
                 child: Icon(
                   Icons,
                   size: responsive(36),
-                  color: Colors.blue[900],
+                  color: iconColor,
                 ),
               ),
               SizedBox(width: responsive(16)),
@@ -62,7 +72,7 @@ class HomeWorkerWidget extends StatelessWidget {
                       style: TextStyle(
                         fontSize: responsive(22),
                         fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                        color: titleColor,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -71,7 +81,7 @@ class HomeWorkerWidget extends StatelessWidget {
                       description,
                       style: TextStyle(
                         fontSize: responsive(14),
-                        color: Colors.black54,
+                        color: descColor,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),

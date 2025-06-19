@@ -39,7 +39,7 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
       await secureStorage.write(key: 'rememberLoginCount', value: '${loginCount + 1}');
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     }
   }
@@ -59,38 +59,37 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
   Widget build(BuildContext context) {
     final loginController = Provider.of<LoginController>(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final topPadding = MediaQuery.of(context).size.height * 0.25;
 
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final topPadding = constraints.maxHeight * 0.3;
-
-          return Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/Servana_login.png"),
-                fit: BoxFit.cover,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              "assets/images/Servana_login.png",
+              fit: BoxFit.cover,
+            ),
+          ),
+          if (isDark)
+            Positioned.fill(
+              child: Container(
+                color: Colors.black.withOpacity(0.4),
               ),
             ),
+          Positioned.fill(
+            top: topPadding,
             child: SingleChildScrollView(
-              padding: EdgeInsets.only(top: topPadding, left: 20, right: 20, bottom: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Center(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 500),
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.83),
+                      color: isDark
+                          ? Colors.grey[900]!.withOpacity(0.85)
+                          : Colors.white.withOpacity(0.88),
                       borderRadius: BorderRadius.circular(24),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 10,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -109,13 +108,13 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                           children: [
                             Text(
                               AppLocalizations.of(context)!.dont_have_an_account,
-                              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15),
                             ),
                             TextButton(
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => SignUpScreen()),
+                                  MaterialPageRoute(builder: (context) => const SignUpScreen()),
                                 );
                               },
                               child: const Text(
@@ -185,14 +184,11 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                                         rememberMe = value!;
                                       });
                                     },
-                                    activeColor: Color(0xFF0D47A1),
+                                    activeColor: const Color(0xFF0D47A1),
                                   ),
                                 ),
                                 const SizedBox(width: 8),
-                                const Text(
-                                  "Remember Me",
-                                  style: TextStyle(fontSize: 14),
-                                ),
+                                const Text("Remember Me", style: TextStyle(fontSize: 14)),
                               ],
                             ),
                             TextButton(
@@ -226,32 +222,10 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
 
                             if (loginController.showErrorEmail || loginController.showErrorPassword) return;
 
-                            // ✅✅ تم تعطيل الكود الأصلي لتسجيل الدخول مؤقتًا لتجربة الواجهة بدون تحقق من السيرفر:
-                            /*
-                            Sign_Model signModel = Sign_Model(
-                              email: emailTextEditingController.text,
-                              password: passTextEditingController.text,
-                            );
-
-                            final authService = AuthenticationService();
-                            bool success = await authService.login(signModel);
-
-                            if (success) {
-                              await _saveCredentials(emailTextEditingController.text, "user_id_123");
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => HomeScreen()),
-                              );
-                            } else {
-                              loginController.showCustomEmailError("Login failed. Please check your credentials.");
-                            }
-                            */
-
-                            // ✅ تسجيل دخول وهمي بدون تحقق
                             await _saveCredentials(emailTextEditingController.text, "user_id_123");
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => HomeScreen()),
+                              MaterialPageRoute(builder: (context) => const HomeScreen()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
@@ -276,8 +250,8 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                 ),
               ),
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'package:servana/view/screens/section_3/home_client_screen.dart';
 import 'package:servana/view/screens/section_4/wallet_screen.dart';
 import 'package:servana/view/screens/section_5/profile_screen.dart';
 import 'package:servana/view/widgets/history_widget.dart';
-
 import '../../../l10n/app_localizations.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_5/client_notification_screen.dart';
@@ -27,12 +26,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? Colors.black : Colors.white;
+    final bgColor = isDark ? const Color(0xFF121212) : const Color(0xFFF3EEEC);
+    final textColor = isDark ? Colors.white : Colors.black;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF3EEEC),
+      backgroundColor: bgColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F5DC),
+        backgroundColor: bgColor,
         elevation: 0,
         automaticallyImplyLeading: false,
         title: Row(
@@ -45,7 +45,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               icon: Icon(Icons.arrow_back, color: Colors.blue[900], size: 32),
             ),
             Text(
-              "History ",
+              "History",
               style: TextStyle(
                 color: Colors.blue[900],
                 fontSize: 28,
@@ -56,9 +56,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder:
-                          (context) => ClientNotificationScreen()),
+                  MaterialPageRoute(builder: (_) => const ClientNotificationScreen()),
                 );
               },
               icon: Icon(Icons.notifications, color: Colors.blue[900], size: 32),
@@ -78,9 +76,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextFormField(
+                        style: TextStyle(color: textColor),
                         decoration: InputDecoration(
                           hintText: AppLocalizations.of(context)!.search_service_workers_or_etc,
-                          prefixIcon: const Icon(Icons.search),
+                          hintStyle: TextStyle(color: isDark ? Colors.white70 : Colors.grey),
+                          prefixIcon: Icon(Icons.search, color: isDark ? Colors.white70 : Colors.grey),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                             borderSide: BorderSide.none,
@@ -103,7 +103,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           SizedBox(height: 7),
                           HistoryWidget(
                             title: "Amanda Wood",
-                            description: " Completed",
+                            description: "Completed",
                             price: "30",
                             description1: 'Gardner',
                             date: '10/4/2025',
@@ -114,7 +114,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             description: "Completed",
                             price: "35",
                             description1: 'Painter',
-                            description2: '',
                             date: '10/5/2025',
                           ),
                           SizedBox(height: 7),
@@ -123,7 +122,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             description: "Completed",
                             price: "40",
                             description1: 'Electrician',
-                            description2: '',
                             date: '22/7/2025',
                           ),
                         ],
@@ -137,21 +135,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
         },
       ),
       bottomNavigationBar: BottomAppBar(
-        color: bgColor,
+        color: isDark ? Colors.grey[900] : Colors.white,
         shape: const CircularNotchedRectangle(),
         notchMargin: 8.0,
         child: SizedBox(
-          height: 40,
+          height: 50,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               BottonNavigationWidget(
                 icon: Icons.home_filled,
                 label: "Home",
-                isSelected: selectedIndex2 == 1,
+                isSelected: selectedIndex2 == 0,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) =>  HomeScreen()));
-                  onItemTapped2(1);
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+                  onItemTapped2(0);
                 },
               ),
               BottonNavigationWidget(
@@ -166,25 +164,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
               BottonNavigationWidget(
                 icon: Icons.history,
                 label: "History",
-                isSelected: selectedIndex2 == 0,
+                isSelected: selectedIndex2 == 2,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) =>  HistoryScreen()));
-                  onItemTapped2(0);
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HistoryScreen()));
+                  onItemTapped2(2);
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.person,
                 label: "Profile",
                 isSelected: selectedIndex2 == 3,
-                onTap: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder:
-                            (context) => ProfileScreen()),
-                  ),
-
-                  onItemTapped2(3)},
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                  onItemTapped2(3);
+                },
               ),
             ],
           ),

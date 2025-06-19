@@ -24,7 +24,6 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
 
-    // Convert FCM messages if provided, otherwise use mock data
     if (widget.fcmMessages != null && widget.fcmMessages!.isNotEmpty) {
       notifications = widget.fcmMessages!.map((msg) {
         return {
@@ -112,26 +111,33 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDark ? const Color(0xFF121212) : Colors.white;
+    final iconBackground = isDark ? Colors.blueGrey[800] : Colors.blue[100];
+    final iconColor = isDark ? Colors.lightBlueAccent : Colors.blue[900];
+    final textColor = isDark ? Colors.white : Colors.black;
+    final subtitleColor = isDark ? Colors.white70 : Colors.black54;
+
     List<Map<String, dynamic>> unreadNotifications =
     notifications.where((n) => n['isRead'] == false).toList();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: backgroundColor,
         elevation: 0,
-        title: const Text(
+        title: Text(
           'Notifications',
           style: TextStyle(
             fontSize: 26,
-            color: Colors.black,
+            color: textColor,
             fontWeight: FontWeight.bold,
           ),
         ),
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Colors.blue[900],
-          labelColor: Colors.blue[900],
+          indicatorColor: iconColor,
+          labelColor: iconColor,
           unselectedLabelColor: Colors.grey,
           labelStyle: const TextStyle(fontWeight: FontWeight.w500),
           tabs: const [
@@ -148,19 +154,19 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  _buildNotificationList(notifications),
-                  _buildNotificationList(unreadNotifications),
+                  _buildNotificationList(notifications, iconBackground, iconColor, textColor, subtitleColor),
+                  _buildNotificationList(unreadNotifications, iconBackground, iconColor, textColor, subtitleColor),
                 ],
               ),
             ),
           );
         },
       ),
-      bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
+      bottomNavigationBar: _buildBottomBar(),
     );
   }
 
-  Widget _buildNotificationList(List<Map<String, dynamic>> data) {
+  Widget _buildNotificationList(List<Map<String, dynamic>> data, Color? iconBg, Color? iconColor, Color textColor, Color subtitleColor) {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(vertical: 12),
       itemCount: data.length,
@@ -171,8 +177,8 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
           leading: Stack(
             children: [
               CircleAvatar(
-                backgroundColor: Colors.blue[100],
-                child: Icon(item['icon'], color: Colors.blue[900]),
+                backgroundColor: iconBg,
+                child: Icon(item['icon'], color: iconColor),
               ),
               if (item['isRead'] == false)
                 Positioned(
@@ -189,19 +195,16 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
                 ),
             ],
           ),
-          title: Text(item['title'],
-              style: const TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(item['subtitle']),
-          trailing: Text(item['time'],
-              style: const TextStyle(fontSize: 12, color: Colors.grey)),
+          title: Text(item['title'], style: TextStyle(fontWeight: FontWeight.bold, color: textColor)),
+          subtitle: Text(item['subtitle'], style: TextStyle(color: subtitleColor)),
+          trailing: Text(item['time'], style: TextStyle(fontSize: 12, color: subtitleColor)),
         );
       },
     );
   }
 
-  BottomAppBar _buildBottomBar(double width) {
+  BottomAppBar _buildBottomBar() {
     return BottomAppBar(
-      color: Colors.white,
       shape: const CircularNotchedRectangle(),
       notchMargin: 8,
       child: SizedBox(

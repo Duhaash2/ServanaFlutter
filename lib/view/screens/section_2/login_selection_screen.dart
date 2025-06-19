@@ -7,11 +7,13 @@ class LoginSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
+    final isDarkMode = theme.brightness == Brightness.dark;
     final isSmall = size.width < 400;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFEAF6FF),
+      backgroundColor: isDarkMode ? theme.scaffoldBackgroundColor : const Color(0xFFEAF6FF),
       body: SafeArea(
         child: Column(
           children: [
@@ -35,39 +37,39 @@ class LoginSelectionScreen extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
+                      decoration: BoxDecoration(
+                        color: theme.cardColor,
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(35),
                           topRight: Radius.circular(35),
                         ),
                         boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10,
-                            offset: Offset(0, -4),
-                          ),
+                          if (!isDarkMode)
+                            const BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 10,
+                              offset: Offset(0, -4),
+                            ),
                         ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(height: 15,),
+                          const SizedBox(height: 15),
                           Text(
                             "Welcome! Are you a client or worker?",
-                            style: TextStyle(
+                            style: theme.textTheme.titleMedium!.copyWith(
                               fontSize: isSmall ? 20 : 22,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black87,
                             ),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 12),
                           Text(
                             "Please choose one of the options below.",
-                            style: TextStyle(
+                            style: theme.textTheme.bodyMedium!.copyWith(
                               fontSize: isSmall ? 14 : 15,
-                              color: Colors.grey,
+                              color: isDarkMode ? Colors.grey[400] : Colors.grey[700],
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -75,20 +77,21 @@ class LoginSelectionScreen extends StatelessWidget {
 
                           // Client Button
                           ElevatedButton.icon(
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.person_outline,
-                              color: Colors.black87,
+                              color: isDarkMode ? Colors.white : Colors.black87,
                             ),
-                            label: const Text(
+                            label: Text(
                               "Login as Client",
-                              style: TextStyle(fontSize: 16, color: Colors.black87),
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: isDarkMode ? Colors.white : Colors.black87,
+                              ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFDCEFFF),
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 14,
-                                horizontal: 20,
-                              ),
+                              backgroundColor:
+                              isDarkMode ? Colors.blue[900]: const Color(0xFFDCEFFF),
+                              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
@@ -114,11 +117,9 @@ class LoginSelectionScreen extends StatelessWidget {
                               style: TextStyle(fontSize: 16, color: Colors.white),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orangeAccent,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 14,
-                                horizontal: 20,
-                              ),
+                              backgroundColor:
+                              isDarkMode ? Colors.orange[700] : Colors.orangeAccent,
+                              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),

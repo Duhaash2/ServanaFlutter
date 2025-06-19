@@ -28,22 +28,21 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex2 = 0;
 
   void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+    setState(() => selectedIndex = index);
   }
 
   void onItemTapped2(int index2) {
-    setState(() {
-      selectedIndex2 = index2;
-    });
+    setState(() => selectedIndex2 = index2);
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? Colors.black : Colors.white;
-    final size = MediaQuery.of(context).size;
+    final bgColor = Theme.of(context).scaffoldBackgroundColor;
+    final cardColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final hintTextColor = isDark ? Colors.grey[400] : Colors.grey[700];
+    final iconColor = isDark ? Colors.white : Colors.black;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -54,11 +53,16 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Top Blue Container
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
                   decoration: BoxDecoration(
-                    color: Colors.blue[900],
+                    gradient: LinearGradient(
+                      colors: isDark
+                          ? [Color(0xFF0F2027), Color(0xFF203A43), Color(0xFF2C5364)]
+                          : [Colors.blue.shade900, Colors.lightBlue.shade100],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30),
@@ -67,7 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Header
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -84,60 +87,45 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder:
-                                      (context) => ClientNotificationScreen(),
+                                  builder: (context) => ClientNotificationScreen(),
                                 ),
                               );
                             },
-                            icon: Icon(
-                              Icons.notifications,
-                              color: Colors.white,
-                              size: 28,
-                            ),
+                            icon: Icon(Icons.notifications, color: Colors.white, size: 28),
                           ),
                         ],
                       ),
                       const SizedBox(height: 15),
-
-                      // Search
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: cardColor,
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: TextField(
+                          style: TextStyle(color: textColor),
                           decoration: InputDecoration(
-                            hintText:
-                                AppLocalizations.of(
-                                  context,
-                                )!.search_service_workers_or_etc,
-                            prefixIcon: const Icon(Icons.search),
+                            hintText: AppLocalizations.of(context)!.search_service_workers_or_etc,
+                            hintStyle: TextStyle(color: hintTextColor),
+                            prefixIcon: Icon(Icons.search, color: iconColor),
                             border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 14,
-                            ),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 14),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 20,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Categories
                       Text(
                         "Categories",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 22,
-                          color: Colors.blue[900],
+                          color: isDark ? Colors.white : Colors.blue[900],
                         ),
                       ),
                       const SizedBox(height: 13),
@@ -149,12 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: AppLocalizations.of(context)!.pluming,
                               isSelected: selectedIndex == 0,
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => PlumingScreen(),
-                                  ),
-                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => PlumingScreen()));
                                 onItemTapped(0);
                               },
                               ImagePath: 'assets/images/plumingg.png',
@@ -163,12 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: AppLocalizations.of(context)!.electrical,
                               isSelected: selectedIndex == 1,
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => ElectricalScreen(),
-                                  ),
-                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => ElectricalScreen()));
                                 onItemTapped(1);
                               },
                               ImagePath: 'assets/images/Electricall.png',
@@ -177,12 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: AppLocalizations.of(context)!.gardner,
                               isSelected: selectedIndex == 2,
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => GardnerScreen(),
-                                  ),
-                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => GardnerScreen()));
                                 onItemTapped(2);
                               },
                               ImagePath: 'assets/images/gardnerr.png',
@@ -191,12 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: AppLocalizations.of(context)!.paint,
                               isSelected: selectedIndex == 3,
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => PaintScreen(),
-                                  ),
-                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => PaintScreen()));
                                 onItemTapped(3);
                               },
                               ImagePath: 'assets/images/paintingg.png',
@@ -205,12 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: AppLocalizations.of(context)!.cleaning,
                               isSelected: selectedIndex == 4,
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => PaintScreen(),
-                                  ),
-                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => PaintScreen()));
                                 onItemTapped(4);
                               },
                               ImagePath: 'assets/images/cleaningg.png',
@@ -218,10 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-
                       const SizedBox(height: 26),
-
-                      // Top Rated
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -230,19 +190,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
-                              color: Colors.blue[900],
+                              color: isDark ? Colors.white : Colors.blue[900],
                             ),
                           ),
-
                           IconButton(
-                            icon: Icon(Icons.tune, color: Colors.blue[900]),
+                            icon: Icon(Icons.tune, color: isDark ? Colors.white : Colors.blue[900]),
                             onPressed: () {
                               showModalBottomSheet(
                                 context: context,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(25),
-                                  ),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
                                 ),
                                 builder: (context) => FilterBottomSheet(),
                               );
@@ -307,8 +264,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-
-      // Bottom Navigation
       bottomNavigationBar: BottomAppBar(
         color: bgColor,
         shape: const CircularNotchedRectangle(),
@@ -324,10 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 isSelected: selectedIndex2 == 0,
                 onTap: () {
                   onItemTapped2(0);
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const HomeScreen()),
-                  );
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
                 },
               ),
               BottonNavigationWidget(
@@ -336,10 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 isSelected: selectedIndex2 == 1,
                 onTap: () {
                   onItemTapped2(1);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => WalletScreen()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => WalletScreen()));
                 },
               ),
               BottonNavigationWidget(
@@ -348,10 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 isSelected: selectedIndex2 == 2,
                 onTap: () {
                   onItemTapped2(2);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => HistoryScreen()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => HistoryScreen()));
                 },
               ),
               BottonNavigationWidget(
@@ -360,13 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 isSelected: selectedIndex2 == 3,
                 onTap: () {
                   onItemTapped2(3);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => ProfileScreen(),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => ProfileScreen()));
                 },
               ),
             ],
