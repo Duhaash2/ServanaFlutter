@@ -79,7 +79,6 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
           _buildNotificationList(unread, local),
         ],
       ),
-      bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width, local),
     );
   }
 
@@ -125,43 +124,4 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
     );
   }
 
-  BottomAppBar _buildBottomBar(double width, AppLocalizations local) {
-    return BottomAppBar(
-      color: Colors.white,
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 8,
-      child: SizedBox(
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            BottonNavigationWidget(
-              icon: Icons.home_filled,
-              label: local.bottomNavHome,
-              isSelected: selectedIndex == 0,
-              onTap: () => _navigate(0, const HomeScreen()),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.wallet,
-              label: local.bottomNavWallet,
-              isSelected: selectedIndex == 1,
-              onTap: () => onItemTapped(1),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.history,
-              label: local.bottomNavHistory,
-              isSelected: selectedIndex == 2,
-              onTap: () => onItemTapped(2),
-            ),
-            BottonNavigationWidget(
-              icon: Icons.person,
-              label: local.bottomNavProfile,
-              isSelected: selectedIndex == 3,
-              onTap: () => _navigate(3, const ProfileScreen()),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
