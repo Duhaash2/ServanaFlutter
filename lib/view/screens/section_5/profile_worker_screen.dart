@@ -48,7 +48,7 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeWorkerScreen())),
         ),
-        title: Text(
+        title:Text(
           AppLocalizations.of(context)!.profile,
           style: TextStyle(
             fontSize: width * .06,

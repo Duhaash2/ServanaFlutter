@@ -63,7 +63,7 @@ import 'app_localizations_en.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -72,7 +72,7 @@ abstract class AppLocalizations {
   }
 
   static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -85,12 +85,12 @@ abstract class AppLocalizations {
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
@@ -611,6 +611,786 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Paint'**
   String get paint;
+
+  /// No description provided for @welcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome! Are you a client or worker?'**
+  String get welcomeTitle;
+
+  /// No description provided for @welcomeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please choose one of the options below.'**
+  String get welcomeSubtitle;
+
+  /// No description provided for @loginAsClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Login as Client'**
+  String get loginAsClient;
+
+  /// No description provided for @loginAsWorker.
+  ///
+  /// In en, this message translates to:
+  /// **'Login as Worker'**
+  String get loginAsWorker;
+
+  /// No description provided for @jobDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Job Details'**
+  String get jobDetails;
+
+  /// No description provided for @clientName.
+  ///
+  /// In en, this message translates to:
+  /// **'Client Name'**
+  String get clientName;
+
+  /// No description provided for @location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get location;
+
+  /// No description provided for @issueDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue Description'**
+  String get issueDescription;
+
+  /// No description provided for @issueText.
+  ///
+  /// In en, this message translates to:
+  /// **'Kitchen sink is leaking under the cabinet.\nWater is pooling inside the cabinet whenever the faucet is turned on.'**
+  String get issueText;
+
+  /// No description provided for @hourlyRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly Rate'**
+  String get hourlyRate;
+
+  /// No description provided for @startWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Work'**
+  String get startWork;
+
+  /// No description provided for @bottomNavHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get bottomNavHome;
+
+  /// No description provided for @bottomNavWallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet'**
+  String get bottomNavWallet;
+
+  /// No description provided for @bottomNavHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get bottomNavHistory;
+
+  /// No description provided for @bottomNavProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get bottomNavProfile;
+
+  /// No description provided for @profession.
+  ///
+  /// In en, this message translates to:
+  /// **'Profession'**
+  String get profession;
+
+  /// No description provided for @select_profession.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your profession'**
+  String get select_profession;
+
+  /// No description provided for @plumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Plumber'**
+  String get plumber;
+
+  /// No description provided for @electrician.
+  ///
+  /// In en, this message translates to:
+  /// **'Electrician'**
+  String get electrician;
+
+  /// No description provided for @painter.
+  ///
+  /// In en, this message translates to:
+  /// **'Painter'**
+  String get painter;
+
+  /// No description provided for @error_fill_fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in all required fields and select gender and profession'**
+  String get error_fill_fields;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get username;
+
+  /// No description provided for @personal_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get personal_info;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Out'**
+  String get logout;
+
+  /// No description provided for @history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get history;
+
+  /// No description provided for @rate_worker.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Worker'**
+  String get rate_worker;
+
+  /// No description provided for @completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completed;
+
+  /// No description provided for @search_workers.
+  ///
+  /// In en, this message translates to:
+  /// **'Search workers, etc'**
+  String get search_workers;
+
+  /// No description provided for @categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get categories;
+
+  /// No description provided for @top_rated_workers.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Rated Workers'**
+  String get top_rated_workers;
+
+  /// No description provided for @jobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Jobs'**
+  String get jobs;
+
+  /// No description provided for @plumbing.
+  ///
+  /// In en, this message translates to:
+  /// **'Plumbing'**
+  String get plumbing;
+
+  /// No description provided for @wallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet'**
+  String get wallet;
+
+  /// No description provided for @your_balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Balance'**
+  String get your_balance;
+
+  /// No description provided for @add_money.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Money'**
+  String get add_money;
+
+  /// No description provided for @withdraw.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get withdraw;
+
+  /// No description provided for @transaction_history.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction History'**
+  String get transaction_history;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @job_completed_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your job has been completed'**
+  String get job_completed_title;
+
+  /// No description provided for @job_completed_body.
+  ///
+  /// In en, this message translates to:
+  /// **'The worker marked your job as completed'**
+  String get job_completed_body;
+
+  /// No description provided for @payment_received_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment received'**
+  String get payment_received_title;
+
+  /// No description provided for @payment_received_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Your payment has been processed'**
+  String get payment_received_body;
+
+  /// No description provided for @new_message_title.
+  ///
+  /// In en, this message translates to:
+  /// **'You have a new message'**
+  String get new_message_title;
+
+  /// No description provided for @new_message_body_1.
+  ///
+  /// In en, this message translates to:
+  /// **'The worker: Hello, I\'m on my way'**
+  String get new_message_body_1;
+
+  /// No description provided for @new_message_body_2.
+  ///
+  /// In en, this message translates to:
+  /// **'The worker: I will arrive shortly'**
+  String get new_message_body_2;
+
+  /// No description provided for @job_started_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Job started'**
+  String get job_started_title;
+
+  /// No description provided for @job_started_body.
+  ///
+  /// In en, this message translates to:
+  /// **'The worker started the job'**
+  String get job_started_body;
+
+  /// No description provided for @job_request_accepted_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Job request accepted'**
+  String get job_request_accepted_title;
+
+  /// No description provided for @job_request_accepted_body.
+  ///
+  /// In en, this message translates to:
+  /// **'The worker accepted your request'**
+  String get job_request_accepted_body;
+
+  /// No description provided for @plumbers.
+  ///
+  /// In en, this message translates to:
+  /// **'Plumbers'**
+  String get plumbers;
+
+  /// No description provided for @request.
+  ///
+  /// In en, this message translates to:
+  /// **'Request?'**
+  String get request;
+
+  /// No description provided for @jd_per_hour.
+  ///
+  /// In en, this message translates to:
+  /// **'JD {price}/hr'**
+  String jd_per_hour(Object price);
+
+  /// No description provided for @request_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Request?'**
+  String get request_question;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @request_service_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Request a Service'**
+  String get request_service_title;
+
+  /// No description provided for @describe_issue_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the issue you need help with'**
+  String get describe_issue_hint;
+
+  /// No description provided for @submit_request_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Service'**
+  String get submit_request_button;
+
+  /// No description provided for @request_success_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Request A Service Submitted Successfully!'**
+  String get request_success_message;
+
+  /// No description provided for @servana.
+  ///
+  /// In en, this message translates to:
+  /// **'Servana'**
+  String get servana;
+
+  /// No description provided for @rate_experience.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Your Experience'**
+  String get rate_experience;
+
+  /// No description provided for @leave_review.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave A Review (Optional)'**
+  String get leave_review;
+
+  /// No description provided for @rating_submitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating Submitted Successfully!'**
+  String get rating_submitted;
+
+  /// No description provided for @submit_rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Rating'**
+  String get submit_rating;
+
+  /// No description provided for @rating_submitted_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating Submitted Successfully!'**
+  String get rating_submitted_successfully;
+
+  /// No description provided for @new_job_assigned.
+  ///
+  /// In en, this message translates to:
+  /// **'New job assigned'**
+  String get new_job_assigned;
+
+  /// No description provided for @you_accepted_job.
+  ///
+  /// In en, this message translates to:
+  /// **'You have accepted a new job'**
+  String get you_accepted_job;
+
+  /// No description provided for @job_started.
+  ///
+  /// In en, this message translates to:
+  /// **'Job started'**
+  String get job_started;
+
+  /// No description provided for @you_started_job.
+  ///
+  /// In en, this message translates to:
+  /// **'You marked the job as started'**
+  String get you_started_job;
+
+  /// No description provided for @payment_confirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment confirmed'**
+  String get payment_confirmed;
+
+  /// No description provided for @client_confirmed_payment.
+  ///
+  /// In en, this message translates to:
+  /// **'The client confirmed payment'**
+  String get client_confirmed_payment;
+
+  /// No description provided for @new_message_from_client.
+  ///
+  /// In en, this message translates to:
+  /// **'New message from client'**
+  String get new_message_from_client;
+
+  /// No description provided for @job_completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Job completed'**
+  String get job_completed;
+
+  /// No description provided for @you_completed_job.
+  ///
+  /// In en, this message translates to:
+  /// **'You marked the job as done'**
+  String get you_completed_job;
+
+  /// No description provided for @job_cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Job cancelled'**
+  String get job_cancelled;
+
+  /// No description provided for @client_cancelled_request.
+  ///
+  /// In en, this message translates to:
+  /// **'The client cancelled the request'**
+  String get client_cancelled_request;
+
+  /// No description provided for @worker_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Worker'**
+  String get worker_title;
+
+  /// No description provided for @welcome_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get welcome_text;
+
+  /// No description provided for @search_for_tasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for tasks and jobs'**
+  String get search_for_tasks;
+
+  /// No description provided for @notification_card_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification'**
+  String get notification_card_title;
+
+  /// No description provided for @notification_card_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'You Have A New Notification'**
+  String get notification_card_sub;
+
+  /// No description provided for @job_request_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Job Request'**
+  String get job_request_title;
+
+  /// No description provided for @job_request_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Click On It To See Requests'**
+  String get job_request_sub;
+
+  /// No description provided for @end_work_title.
+  ///
+  /// In en, this message translates to:
+  /// **'End Work'**
+  String get end_work_title;
+
+  /// No description provided for @end_work_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Click On It To End Work'**
+  String get end_work_sub;
+
+  /// No description provided for @profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile_title;
+
+  /// No description provided for @profile_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'See Your Profile'**
+  String get profile_sub;
+
+  /// No description provided for @your_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Name'**
+  String get your_name;
+
+  /// No description provided for @your_email.
+  ///
+  /// In en, this message translates to:
+  /// **'your@email.com'**
+  String get your_email;
+
+  /// No description provided for @take_from_camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Take from Camera'**
+  String get take_from_camera;
+
+  /// No description provided for @price_per_hour.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Per Hour'**
+  String get price_per_hour;
+
+  /// No description provided for @profile_updated_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get profile_updated_successfully;
+
+  /// No description provided for @pick_from_gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick from Gallery'**
+  String get pick_from_gallery;
+
+  /// No description provided for @job_in_progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Job In Progress'**
+  String get job_in_progress;
+
+  /// No description provided for @client_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Client Name'**
+  String get client_name;
+
+  /// No description provided for @issue.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue'**
+  String get issue;
+
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// No description provided for @working_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Working'**
+  String get working_status;
+
+  /// No description provided for @end_work.
+  ///
+  /// In en, this message translates to:
+  /// **'End Work'**
+  String get end_work;
+
+  /// No description provided for @end_work_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Ended Work Successfully'**
+  String get end_work_success;
+
+  /// No description provided for @incoming_requests.
+  ///
+  /// In en, this message translates to:
+  /// **'Incoming Requests'**
+  String get incoming_requests;
+
+  /// No description provided for @view_details.
+  ///
+  /// In en, this message translates to:
+  /// **'View Details'**
+  String get view_details;
+
+  /// No description provided for @accept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get accept;
+
+  /// No description provided for @decline.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get decline;
+
+  /// No description provided for @request_accepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Accepted'**
+  String get request_accepted;
+
+  /// No description provided for @request_declined.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Declined'**
+  String get request_declined;
+
+  /// No description provided for @service.
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get service;
+
+  /// No description provided for @hvac.
+  ///
+  /// In en, this message translates to:
+  /// **'HVAC'**
+  String get hvac;
+
+  /// No description provided for @filterBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter By'**
+  String get filterBy;
+
+  /// No description provided for @lowerPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Lower Price'**
+  String get lowerPrice;
+
+  /// No description provided for @higherPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Higher Price'**
+  String get higherPrice;
+
+  /// No description provided for @topRated.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Rated'**
+  String get topRated;
+
+  /// No description provided for @rateWorker.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Worker'**
+  String get rateWorker;
+
+  /// No description provided for @jd.
+  ///
+  /// In en, this message translates to:
+  /// **'JD'**
+  String get jd;
+
+  /// No description provided for @hr.
+  ///
+  /// In en, this message translates to:
+  /// **'hr'**
+  String get hr;
+
+  /// No description provided for @incomingRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Incoming Requests'**
+  String get incomingRequests;
+
+  /// No description provided for @incomingRequestsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'View all new job requests from clients.'**
+  String get incomingRequestsDesc;
+
+  /// No description provided for @profileSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Settings'**
+  String get profileSettings;
+
+  /// No description provided for @profileSettingsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your personal and work details.'**
+  String get profileSettingsDesc;
+
+  /// No description provided for @verified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get verified;
+
+  /// No description provided for @jod.
+  ///
+  /// In en, this message translates to:
+  /// **'JOD'**
+  String get jod;
+
+  /// No description provided for @my_requests.
+  ///
+  /// In en, this message translates to:
+  /// **'My Requests '**
+  String get my_requests;
+
+  /// No description provided for @wallet_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Click It To See Your Wallet'**
+  String get wallet_sub;
+
+  /// No description provided for @no_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'You have no notifications yet.'**
+  String get no_notifications;
+
+  /// No description provided for @passwords_do_not_match.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwords_do_not_match;
+
+  /// No description provided for @please_enter_email_and_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter both email and password'**
+  String get please_enter_email_and_password;
 }
 
 class _AppLocalizationsDelegate
@@ -641,8 +1421,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
+        'an issue with the localizations generation tool. Please file an issue '
+        'on GitHub with a reproducible sample app and the gen-l10n configuration '
+        'that was used.',
   );
 }
