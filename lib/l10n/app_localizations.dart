@@ -63,7 +63,7 @@ import 'app_localizations_en.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -72,7 +72,7 @@ abstract class AppLocalizations {
   }
 
   static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -85,12 +85,12 @@ abstract class AppLocalizations {
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
@@ -1326,6 +1326,12 @@ abstract class AppLocalizations {
   /// **'hr'**
   String get hr;
 
+  /// No description provided for @hourUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'hours'**
+  String get hourUnit;
+
   /// No description provided for @incomingRequests.
   ///
   /// In en, this message translates to:
@@ -1355,6 +1361,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Verified'**
   String get verified;
+
+  /// No description provided for @no_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications available'**
+  String get no_notifications;
+
+  /// No description provided for @paymentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PAYMENT'**
+  String get paymentTitle;
+
+  /// No description provided for @cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get cash;
+
+  /// No description provided for @hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours'**
+  String get hours;
+
+  /// No description provided for @serviceFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Fee'**
+  String get serviceFee;
+
+  /// No description provided for @totalPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Price'**
+  String get totalPrice;
+
+  /// No description provided for @payForJob.
+  ///
+  /// In en, this message translates to:
+  /// **'PAY FOR JOB'**
+  String get payForJob;
 
   /// No description provided for @passwords_do_not_match.
   ///
@@ -1397,8 +1445,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
+        'an issue with the localizations generation tool. Please file an issue '
+        'on GitHub with a reproducible sample app and the gen-l10n configuration '
+        'that was used.',
   );
 }

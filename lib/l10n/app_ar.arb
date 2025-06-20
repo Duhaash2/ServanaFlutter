@@ -204,6 +204,16 @@
   "profileSettings": "إعدادات الملف الشخصي",
   "profileSettingsDesc": "إدارة بياناتك الشخصية والمهنية.",
   "verified": "موثوق",
+  "no_notifications": "لا توجد إشعارات",
+  "paymentTitle": "الدفع",
+  "cash": "نقداً",
+  "client_request_title": "طلب العميل",
+  "client_request_sub": "انقر لرؤية طلبات العمل من العميل",
+  "hours": "عدد الساعات",
+  "hourUnit": "ساعات",
+  "serviceFee": "رسوم الخدمة",
+  "totalPrice": "السعر الإجمالي",
+  "payForJob": "ادفع للعمل",
   "passwords_do_not_match": "كلمات المرور غير متطابقة",
   "please_enter_email_and_password": "يرجى إدخال البريد وكلمة المرور"
 }

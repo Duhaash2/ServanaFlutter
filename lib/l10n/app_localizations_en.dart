@@ -639,6 +639,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hr => 'hr';
 
   @override
+  String get hourUnit => 'hours';
+
+  @override
   String get incomingRequests => 'Incoming Requests';
 
   @override
@@ -654,9 +657,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get verified => 'Verified';
 
   @override
+  String get no_notifications => 'No notifications available';
+
+  @override
+  String get paymentTitle => 'PAYMENT';
+
+  @override
+  String get cash => 'Cash';
+
+  @override
+  String get hours => 'Hours';
+
+  @override
+  String get serviceFee => 'Service Fee';
+
+  @override
+  String get totalPrice => 'Total Price';
+
+  @override
+  String get payForJob => 'PAY FOR JOB';
+
+  @override
   String get passwords_do_not_match => 'Passwords do not match';
 
   @override
   String get please_enter_email_and_password =>
       'Please enter both email and password';
+  @override
+  String get client_request_title => 'Client Request';
+
+  @override
+  String get client_request_sub => 'Click to view client request details';
+
 }

@@ -12,6 +12,7 @@ import 'package:servana/view/widgets/category_button_widget.dart';
 import 'package:servana/view/widgets/top_rated_widget.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../widgets/filter_bottom_sheet.dart';
+import '../section_5/start_work_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final double? latitude;
@@ -117,10 +118,46 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: isDark ? Color(0xFF1E1E1E) : Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 8,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.blue[700],
+                              child: Icon(Icons.build, color: Colors.white),
+                            ),
+                            title: Text(
+                              'Incoming Request',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text('Plumber needed at 3:00 PM today.'),
+                            trailing: Icon(Icons.chevron_right),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => StartWorkScreen()),
+                              );
+                            },
+
+                          ),
+                        ),
+                      ),
+
                       Text(
                         local.categories,
                         style: TextStyle(
