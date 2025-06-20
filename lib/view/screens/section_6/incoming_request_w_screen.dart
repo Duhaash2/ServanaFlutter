@@ -29,21 +29,29 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDark ? const Color(0xFF121212) : const Color(0xFFF3EEEC);
+    final cardColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+    final titleColor = isDark ? Colors.white : Colors.black;
+    final subtitleColor = isDark ? Colors.white70 : Colors.grey[700];
+    final declineButtonColor = isDark ? Colors.grey[800] : Colors.blue[50];
+
     final local = AppLocalizations.of(context)!;
     return Scaffold(
-      backgroundColor: const Color(0xFFF3EEEC),
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         title: Text(
           local.incoming_requests,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: titleColor,
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
+        iconTheme: IconThemeData(color: titleColor),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -52,6 +60,10 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
             name: 'Alice Smith',
             service: 'Plumbing - Leaky Faucet',
             address: '123 Mani St. Anytown',
+            cardColor: cardColor,
+            titleColor: titleColor,
+            subtitleColor: subtitleColor!,
+            declineButtonColor: declineButtonColor!,
             onTap: () => _navigate(0, const JobDetailScreen()),
             local: local,
           ),
@@ -59,6 +71,10 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
             name: 'Dayid Johnson',
             service: 'Electrical - Light Fixture',
             address: '45 Ehn St. Anytown',
+            cardColor: cardColor,
+            titleColor: titleColor,
+            subtitleColor: subtitleColor!,
+            declineButtonColor: declineButtonColor!,
             onTap: () => _navigate(0, const JobDetailScreen()),
             local: local,
           ),
@@ -68,11 +84,19 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
             address: '55 Gan St. Anytown',
             onTap: () => _navigate(0, const JobDetailScreen()),
             local: local,
+            cardColor: cardColor,
+            titleColor: titleColor,
+            subtitleColor: subtitleColor!,
+            declineButtonColor: declineButtonColor!,
           ),
           _buildRequestCard(
             name: 'Jakob Alice',
             service: 'HVAC - Amotallation',
             address: '123 Mani St. Anytown',
+            cardColor: cardColor,
+            titleColor: titleColor,
+            subtitleColor: subtitleColor!,
+            declineButtonColor: declineButtonColor!,
             onTap: () => _navigate(0, const JobDetailScreen()),
             local: local,
           ),
@@ -87,12 +111,16 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
     required String address,
     required VoidCallback onTap,
     required AppLocalizations local,
+    required Color cardColor,
+    required Color titleColor,
+    required Color subtitleColor,
+    required Color declineButtonColor,
   }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [
           BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
@@ -101,18 +129,21 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(name, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 4),
-          Text(service, style: const TextStyle(fontSize: 14)),
-          const SizedBox(height: 2),
-          Text(address, style: const TextStyle(fontSize: 13, color: Colors.grey)),
+          Text(name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: titleColor)),
+          Text(service, style: TextStyle(fontSize: 14, color: subtitleColor)),
+          Text(address, style: TextStyle(fontSize: 13, color: subtitleColor)),
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
-              onPressed: onTap,
-              child: Text(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const JobDetailScreen()),
+                );
+              },
+              child:  Text(
                 local.view_details,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   decoration: TextDecoration.underline,
                   color: Colors.blue,
@@ -160,11 +191,11 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[50],
+                  backgroundColor: declineButtonColor,
                   padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: Text(local.decline, style: const TextStyle(color: Colors.black)),
+                child: Text(local.decline, style: TextStyle(color: titleColor)),
               ),
             ],
           ),

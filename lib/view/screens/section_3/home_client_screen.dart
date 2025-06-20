@@ -28,22 +28,22 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex2 = 0;
 
   void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+    setState(() => selectedIndex = index);
   }
 
   void onItemTapped2(int index2) {
-    setState(() {
-      selectedIndex2 = index2;
-    });
+    setState(() => selectedIndex2 = index2);
   }
 
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? Colors.black : Colors.white;
+    final bgColor = Theme.of(context).scaffoldBackgroundColor;
+    final cardColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final hintTextColor = isDark ? Colors.grey[400] : Colors.grey[700];
+    final iconColor = isDark ? Colors.white : Colors.black;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -57,7 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
                   decoration: BoxDecoration(
-                    color: Colors.blue[900],
+                    gradient: LinearGradient(
+                      colors: isDark
+                          ? [Color(0xFF0F2027), Color(0xFF203A43), Color(0xFF2C5364)]
+                          : [Colors.blue.shade900, Colors.lightBlue.shade100],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30),
@@ -82,22 +88,26 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => ClientNotificationScreen()),
+
                               );
                             },
-                            icon: const Icon(Icons.notifications, color: Colors.white, size: 28),
+                            icon: Icon(Icons.notifications, color: Colors.white, size: 28),
                           ),
                         ],
                       ),
                       const SizedBox(height: 15),
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: cardColor,
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: TextField(
+                          style: TextStyle(color: textColor),
                           decoration: InputDecoration(
                             hintText: local.search_service_workers_or_etc,
                             prefixIcon: const Icon(Icons.search),
+                            hintStyle: TextStyle(color: hintTextColor),
+
                             border: InputBorder.none,
                             contentPadding: const EdgeInsets.symmetric(vertical: 14),
                           ),
@@ -116,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 22,
-                          color: Colors.blue[900],
+                          color: isDark ? Colors.white : Colors.blue[900],
                         ),
                       ),
                       const SizedBox(height: 13),
@@ -181,11 +191,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
-                              color: Colors.blue[900],
+                              color: isDark ? Colors.white : Colors.blue[900],
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.tune, color: Colors.blue[900]),
+                            icon: Icon(Icons.tune, color: isDark ? Colors.white : Colors.blue[900]),
                             onPressed: () {
                               showModalBottomSheet(
                                 context: context,

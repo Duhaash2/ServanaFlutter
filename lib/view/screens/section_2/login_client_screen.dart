@@ -18,8 +18,10 @@ class LoginClientScreen extends StatefulWidget {
 }
 
 class _LoginClientScreenState extends State<LoginClientScreen> {
-  final TextEditingController emailTextEditingController = TextEditingController();
-  final TextEditingController passTextEditingController = TextEditingController();
+  final TextEditingController emailTextEditingController =
+      TextEditingController();
+  final TextEditingController passTextEditingController =
+      TextEditingController();
   bool rememberMe = false;
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
@@ -36,7 +38,10 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
     int loginCount = int.tryParse(loginCountStr ?? '0') ?? 0;
 
     if (remember == 'true' && userId != null && loginCount < 2) {
-      await secureStorage.write(key: 'rememberLoginCount', value: '${loginCount + 1}');
+      await secureStorage.write(
+        key: 'rememberLoginCount',
+        value: '${loginCount + 1}',
+      );
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
@@ -59,38 +64,36 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
   Widget build(BuildContext context) {
     final loginController = Provider.of<LoginController>(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final topPadding = MediaQuery.of(context).size.height * 0.25;
 
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final topPadding = constraints.maxHeight * 0.3;
-
-          return Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/Servana_login.png"),
-                fit: BoxFit.cover,
-              ),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              "assets/images/Servana_login.png",
+              fit: BoxFit.cover,
             ),
+          ),
+          if (isDark)
+            Positioned.fill(
+              child: Container(color: Colors.black.withOpacity(0.4)),
+            ),
+          Positioned.fill(
+            top: topPadding,
             child: SingleChildScrollView(
-              padding: EdgeInsets.only(top: topPadding, left: 20, right: 20, bottom: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Center(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 500),
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.83),
+                      color:
+                          isDark
+                              ? Colors.grey[900]!.withOpacity(0.85)
+                              : Colors.white.withOpacity(0.88),
                       borderRadius: BorderRadius.circular(24),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 10,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -108,14 +111,20 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              AppLocalizations.of(context)!.dont_have_an_account,
-                              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                              AppLocalizations.of(
+                                context,
+                              )!.dont_have_an_account,
+                              style: Theme.of(
+                                context,
+                              ).textTheme.bodyMedium!.copyWith(fontSize: 15),
                             ),
                             TextButton(
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignUpScreen(),
+                                  ),
                                 );
                               },
                               child: Text(
@@ -136,9 +145,10 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                               textEditingController: emailTextEditingController,
                               label: AppLocalizations.of(context)!.email,
                               hintText: "you@example.com",
-                              errorText: loginController.showErrorEmail
-                                  ? loginController.errorEmailMessage
-                                  : null,
+                              errorText:
+                                  loginController.showErrorEmail
+                                      ? loginController.errorEmailMessage
+                                      : null,
                             );
                           },
                         ),
@@ -149,12 +159,16 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                               controller: passTextEditingController,
                               obscureText: loginController.obscureTextPassword,
                               decoration: InputDecoration(
-                                labelText: AppLocalizations.of(context)!.password,
+                                labelText:
+                                    AppLocalizations.of(context)!.password,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 suffixIcon: IconButton(
-                                  onPressed: () => loginController.changeObscureTextPassword(),
+                                  onPressed:
+                                      () =>
+                                          loginController
+                                              .changeObscureTextPassword(),
                                   icon: Icon(
                                     loginController.obscureTextPassword
                                         ? Icons.visibility
@@ -162,9 +176,10 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                                     color: Colors.grey,
                                   ),
                                 ),
-                                errorText: loginController.showErrorPassword
-                                    ? loginController.errorPasswordMessage
-                                    : null,
+                                errorText:
+                                    loginController.showErrorPassword
+                                        ? loginController.errorPasswordMessage
+                                        : null,
                               ),
                             );
                           },
@@ -199,12 +214,17 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) =>  ResetPasswordScreen()),
+                                  MaterialPageRoute(
+                                    builder: (context) => ResetPasswordScreen(),
+                                  ),
                                 );
                               },
                               child: Text(
                                 AppLocalizations.of(context)!.forgot_password,
-                                style: const TextStyle(color: Color(0xFF0D47A1), fontSize: 14),
+                                style: const TextStyle(
+                                  color: Color(0xFF0D47A1),
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
                           ],
@@ -215,24 +235,56 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                             if (emailTextEditingController.text.isEmpty ||
                                 passTextEditingController.text.isEmpty) {
                               loginController.showCustomEmailError(
-                                AppLocalizations.of(context)!.please_enter_email_and_password,
+                                AppLocalizations.of(
+                                  context,
+                                )!.please_enter_email_and_password,
                               );
                               return;
                             }
 
-                            loginController.checkEmail(email: emailTextEditingController.text);
+                            loginController.checkEmail(
+                              email: emailTextEditingController.text,
+                            );
                             loginController.checkPassword(
                               password: passTextEditingController.text,
                               email: emailTextEditingController.text,
                             );
 
-                            if (loginController.showErrorEmail || loginController.showErrorPassword) return;
+                            if (loginController.showErrorEmail ||
+                                loginController.showErrorPassword)
+                              return;
 
-                            // Fake login for demo
-                            await _saveCredentials(emailTextEditingController.text, "user_id_123");
+                            // ✅✅ تم تعطيل الكود الأصلي لتسجيل الدخول مؤقتًا لتجربة الواجهة بدون تحقق من السيرفر:
+                            /*
+                            Sign_Model signModel = Sign_Model(
+                              email: emailTextEditingController.text,
+                              password: passTextEditingController.text,
+                            );
+
+                            final authService = AuthenticationService();
+                            bool success = await authService.login(signModel);
+
+                            if (success) {
+                              await _saveCredentials(emailTextEditingController.text, "user_id_123");
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => HomeScreen()),
+                              );
+                            } else {
+                              loginController.showCustomEmailError("Login failed. Please check your credentials.");
+                            }
+                            */
+
+                            // ✅ تسجيل دخول وهمي بدون تحقق
+                            await _saveCredentials(
+                              emailTextEditingController.text,
+                              "user_id_123",
+                            );
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => const HomeScreen()),
+                              MaterialPageRoute(
+                                builder: (context) => const HomeScreen(),
+                              ),
                             );
                           },
                           style: ElevatedButton.styleFrom(
@@ -257,8 +309,8 @@ class _LoginClientScreenState extends State<LoginClientScreen> {
                 ),
               ),
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

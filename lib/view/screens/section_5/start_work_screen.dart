@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_3/home_client_screen.dart';
 import 'profile_screen.dart';
@@ -27,34 +28,44 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
     });
   }
 
+  Future<void> _openMapLink() async {
+    final url = Uri.parse('https://maps.app.goo.gl/Zh26qhtLt2GWUMQZA');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Could not open the map link")),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final local = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF3EEEC),
+      backgroundColor: isDark ? const Color(0xFF121212) : const Color(0xFFF3EEEC),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          icon: Icon(Icons.arrow_back_ios_new, color: isDark ? Colors.white : Colors.black),
+          onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
         title: Text(
           local.jobDetails,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 30,
+          style: TextStyle(
+            color: isDark ? Colors.white : Colors.black,
+            fontSize: 26,
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
+        color: isDark ? Colors.grey[900] : Colors.white,
         shape: const CircularNotchedRectangle(),
         notchMargin: 8,
         child: SizedBox(
@@ -95,44 +106,46 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: isDark ? Colors.grey[850] : Colors.white,
             borderRadius: BorderRadius.circular(18),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                local.clientName,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
-              ),
+              Text( local.clientName,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20, color: isDark ? Colors.white : Colors.black87)),
               const SizedBox(height: 4),
-              const Text('John Smith', style: TextStyle(fontSize: 16, color: Colors.black)),
+              Text('John Smith', style: TextStyle(fontSize: 16, color: isDark ? Colors.white70 : Colors.black)),
 
               const Divider(height: 50),
 
-              Text(local.location, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87)),
+              Text(local.location,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20, color: isDark ? Colors.white : Colors.black87)),
               const SizedBox(height: 15),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  'assets/images/map.png',
-                  height: 120,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+              GestureDetector(
+                onTap: _openMapLink,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(
+                    'assets/images/map.png',
+                    height: 120,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
 
               const SizedBox(height: 30),
               const Divider(),
 
-              Text(
-                local.issueDescription,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
-              ),
+              Text(  local.issueDescription,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20, color: isDark ? Colors.white : Colors.black87)),
               const SizedBox(height: 8),
               Text(
-                local.issueText,
-                style: const TextStyle(fontSize: 14, color: Colors.grey),
+                local.issueText,                style: TextStyle(fontSize: 14, color: isDark ? Colors.grey[300] : Colors.grey[700]),
               ),
 
               const Divider(height: 50),
@@ -140,8 +153,10 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(local.hourlyRate, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  const Text('\$25.00/hr', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(local.hourlyRate,
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: isDark ? Colors.white : Colors.black)),
+                  Text('\$25.00/hr',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: isDark ? Colors.white : Colors.black)),
                 ],
               ),
 
@@ -150,7 +165,7 @@ class _StartWorkScreenState extends State<StartWorkScreen> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    // Start work action here
+                    // Start work action
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue[900],

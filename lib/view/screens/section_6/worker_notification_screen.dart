@@ -18,8 +18,6 @@ class WorkerNotificationScreen extends StatefulWidget {
 
 class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  int selectedIndex = 0;
-
   late List<Map<String, dynamic>> notifications;
 
   @override
@@ -85,18 +83,18 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
     }
   }
 
-  void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
-  void _navigate(int index, Widget screen) {
-    setState(() {
-      selectedIndex = index;
-    });
-    Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
-  }
+  // void onItemTapped(int index) {
+  //   setState(() {
+  //     selectedIndex = index;
+  //   });
+  // }
+  //
+  // void _navigate(int index, Widget screen) {
+  //   setState(() {
+  //     selectedIndex = index;
+  //   });
+  //   Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
+  // }
 
   void _navigateToNotificationScreen() {
     bool isWorker = true;
@@ -112,22 +110,37 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bgColor = isDark ? const Color(0xFF121212) : Colors.white;
+    final tabColor = isDark ? Colors.white : Colors.blue[900];
+    final unselectedColor = isDark ? Colors.grey[500] : Colors.grey;
+    final titleColor = isDark ? Colors.white : Colors.black;
+    final subtitleColor = isDark ? Colors.white70 : Colors.black54;
+    final avatarBg = isDark ? Colors.grey : Colors.blue[100];
+
     List<Map<String, dynamic>> unread = notifications.where((n) => n['isRead'] == false).toList();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: bgColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: bgColor,
         elevation: 0,
         title: Text(
           AppLocalizations.of(context)!.notifications,
           style: const TextStyle(fontSize: 26, color: Colors.black, fontWeight: FontWeight.bold),
+        title: Text(
+    AppLocalizations.of(context)!.notifications,
+          style: TextStyle(
+            fontSize: 26,
+            color: titleColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Colors.blue[900],
-          labelColor: Colors.blue[900],
-          unselectedLabelColor: Colors.grey,
+          indicatorColor: tabColor,
+          labelColor: tabColor,
+          unselectedLabelColor: unselectedColor,
           labelStyle: const TextStyle(fontWeight: FontWeight.w500),
           tabs: [
             Tab(text: AppLocalizations.of(context)!.all),
@@ -138,14 +151,19 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
       body: TabBarView(
         controller: _tabController,
         children: [
-          _buildNotificationList(notifications),
-          _buildNotificationList(unread),
+          _buildNotificationList(notifications, titleColor, subtitleColor, avatarBg),
+          _buildNotificationList(unread, titleColor, subtitleColor, avatarBg),
         ],
       ),
     );
   }
 
-  Widget _buildNotificationList(List<Map<String, dynamic>> data) {
+  Widget _buildNotificationList(
+      List<Map<String, dynamic>> data,
+      Color titleColor,
+      Color subtitleColor,
+      Color? avatarBg,
+      ) {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(vertical: 12),
       itemCount: data.length,
@@ -156,7 +174,7 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
           leading: Stack(
             children: [
               CircleAvatar(
-                backgroundColor: Colors.blue[100],
+                backgroundColor: avatarBg,
                 child: Icon(item['icon'], color: Colors.blue[900]),
               ),
               if (item['isRead'] == false)
@@ -174,9 +192,12 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
                 ),
             ],
           ),
-          title: Text(item['title'], style: const TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(item['subtitle']),
-          trailing: Text(item['time'], style: const TextStyle(fontSize: 12, color: Colors.grey)),
+          title: Text(
+            item['title'],
+            style: TextStyle(fontWeight: FontWeight.bold, color: titleColor),
+          ),
+          subtitle: Text(item['subtitle'], style: TextStyle(color: subtitleColor)),
+          trailing: Text(item['time'], style: TextStyle(fontSize: 12, color: subtitleColor)),
         );
       },
     );
