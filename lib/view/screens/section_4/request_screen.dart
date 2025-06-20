@@ -21,6 +21,7 @@ class _RequestScreenState extends State<RequestScreen> {
     final Color buttonColor = const Color(0xFF0D47A1);
     final Color snackBg = isDark ? Colors.grey[800]! : const Color(0xFFEAF6FF);
     final Color snackText = isDark ? Colors.white : Colors.black87;
+    final local = AppLocalizations.of(context)!;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -53,7 +54,7 @@ class _RequestScreenState extends State<RequestScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.request_service_title,
+                      local.request_service_title,
                       style: TextStyle(
                         fontSize: 26,
                         color: textColor,
@@ -82,7 +83,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         maxLines: 7,
                         style: TextStyle(color: textColor, fontSize: 16),
                         decoration: InputDecoration.collapsed(
-                          hintText: AppLocalizations.of(context)!.describe_issue_hint,
+                          hintText: local.describe_issue_hint,
                           hintStyle: TextStyle(color: hintColor, fontSize: 16),
                         ),
                       ),
@@ -93,7 +94,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              AppLocalizations.of(context)!.request_success_message,
+                          local.request_success_message,
                               style: TextStyle(color: snackText),
                             ),
                             backgroundColor: snackBg,
@@ -115,7 +116,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         ),
                       ),
                       child: Text(
-                        AppLocalizations.of(context)!.submit_request_button,
+                       local.submit_request_button,
                         style: const TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),

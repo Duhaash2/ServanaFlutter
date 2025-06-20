@@ -35,7 +35,10 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
 
   @override
   Widget build(BuildContext context) {
+
+
     final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final fcmMessages = Provider.of<NotificationController>(context).messages;
 
     List<Map<String, dynamic>> notifications = fcmMessages.map((msg) {
@@ -61,16 +64,21 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
     List<Map<String, dynamic>> unreadNotifications = notifications.where((n) => n['isRead'] == false).toList();
 
     return Scaffold(
+
+
       backgroundColor: isDark ? Colors.grey[900] : Colors.white,
       appBar: AppBar(
         backgroundColor: isDark ? Colors.grey[900] : Colors.white,
+
         elevation: 0,
         iconTheme: IconThemeData(color: isDark ? Colors.white : Colors.black),
         title: Text(
           AppLocalizations.of(context)!.notifications,
+
           style: TextStyle(
             fontSize: 26,
             color: isDark ? Colors.white : Colors.black,
+
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -78,7 +86,9 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
           controller: _tabController,
           indicatorColor: Colors.blue[900],
           labelColor: Colors.blue[900],
+
           unselectedLabelColor: isDark ? Colors.white60 : Colors.grey,
+
           labelStyle: const TextStyle(fontWeight: FontWeight.w500),
           tabs: [
             Tab(text: AppLocalizations.of(context)!.all),
@@ -94,6 +104,21 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
               child: TabBarView(
                 controller: _tabController,
                 children: [
+<<<<<<< duha
+                  _buildNotificationList(notifications),
+                  _buildNotificationList(unreadNotifications),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
+    );
+  }
+
+  Widget _buildNotificationList(List<Map<String, dynamic>> data) {
+=======
                   _buildNotificationList(notifications, isDark),
                   _buildNotificationList(unreadNotifications, isDark),
                 ],
@@ -107,11 +132,16 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
   }
 
   Widget _buildNotificationList(List<Map<String, dynamic>> data, bool isDark) {
+>>>>>>> master
     if (data.isEmpty) {
       return Center(
         child: Text(
           AppLocalizations.of(context)!.no_notifications,
+<<<<<<< duha
+          style: const TextStyle(color: Colors.grey, fontSize: 16),
+=======
           style: TextStyle(color: isDark ? Colors.white60 : Colors.grey, fontSize: 16),
+>>>>>>> master
         ),
       );
     }
@@ -148,14 +178,19 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
           ),
           title: Text(
             item['title'],
+
+
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: isDark ? Colors.white : Colors.black,
             ),
+
           ),
           subtitle: isDeclined
               ? Text(
             AppLocalizations.of(context)!.request_declined,
+
+
             style: TextStyle(
               color: Colors.red[700],
               fontWeight: FontWeight.bold,
@@ -177,6 +212,7 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
   BottomAppBar _buildBottomBar(double width, bool isDark) {
     return BottomAppBar(
       color: isDark ? Colors.grey[900] : Colors.white,
+
       shape: const CircularNotchedRectangle(),
       notchMargin: 8,
       child: SizedBox(

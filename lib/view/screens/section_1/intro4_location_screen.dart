@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:servana/view/screens/section_2/login_selection_screen.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -12,6 +13,17 @@ class Intro4LocationScreen extends StatefulWidget {
 }
 
 class _Intro4LocationScreenState extends State<Intro4LocationScreen> {
+  Future<void> _saveIntroSeenAndNavigate() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('seenIntro', true);
+
+    if (!mounted) return;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const LoginSelectionScreen()),
+    );
+  }
+
   Future<void> _enableLocation(BuildContext context) async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
@@ -38,6 +50,8 @@ class _Intro4LocationScreenState extends State<Intro4LocationScreen> {
 
       print("✅ Latitude: ${position.latitude}");
       print("✅ Longitude: ${position.longitude}");
+
+      await _saveIntroSeenAndNavigate(); // ✅ after success
     } else if (permission == PermissionStatus.denied) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("❌ Location permission denied.")),
@@ -118,12 +132,7 @@ class _Intro4LocationScreenState extends State<Intro4LocationScreen> {
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const LoginSelectionScreen()),
-                    );
-                  },
+                  onPressed: _saveIntroSeenAndNavigate, // ✅ mark intro as seen & go to login
                   style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),

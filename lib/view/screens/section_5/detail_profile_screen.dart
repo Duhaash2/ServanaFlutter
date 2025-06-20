@@ -7,6 +7,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
 import '../../../controller/profile_controller.dart';
+import '../../../l10n/app_localizations.dart';
+
 import 'profile_screen.dart';
 
 class DetailProfileScreen extends StatefulWidget {
@@ -44,6 +46,7 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
   Future<void> _pickImage() async {
     await Permission.photos.request();
     await Permission.camera.request();
+    final locale = AppLocalizations.of(context)!;
 
     showModalBottomSheet(
       context: context,
@@ -51,7 +54,9 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
         children: [
           ListTile(
             leading: const Icon(Icons.camera_alt),
-            title: const Text("Take from Camera"),
+
+            title: Text(locale.take_from_camera),
+
             onTap: () async {
               Navigator.pop(context);
               final picked = await picker.pickImage(source: ImageSource.camera);
@@ -64,7 +69,10 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
           ),
           ListTile(
             leading: const Icon(Icons.photo_library),
-            title: const Text("Pick from Gallery"),
+
+            title: Text(locale.pick_from_gallery),
+
+
             onTap: () async {
               Navigator.pop(context);
               final picked = await picker.pickImage(source: ImageSource.gallery);
@@ -118,6 +126,7 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final profileController = Provider.of<ProfileController>(context);
+    final locale = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -137,7 +146,11 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text('Profile', style: TextStyle(color: Colors.white)),
+
+          title: Text(locale.profile, style: const TextStyle(color: Colors.white)),
+
+   
+
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.pop(context),
@@ -183,9 +196,13 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
               Text(profileController.fullname,
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
               Text(profileController.email, style: const TextStyle(fontSize: 14, color: Colors.white70)),
-              SizedBox(height: 8),
-              _buildInfoCard(profileController, isDark),
-              SizedBox(height: 8),
+
+              const SizedBox(height: 8),
+              _buildInfoCard(profileController, isDark, locale),
+              const SizedBox(height: 8),
+
+           
+
               ElevatedButton(
                 onPressed: () {
                   profileController.setAllUserData(
@@ -197,7 +214,10 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
                     profileImage: _profileImage,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Profile updated successfully")),
+
+                    SnackBar(content: Text(locale.profile_updated_successfully)),
+
+
                   );
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ProfileScreen()));
                 },
@@ -206,7 +226,11 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.015),
                 ),
-                child: const Text("Update"),
+
+                child: Text(locale.update),
+
+         
+
               ),
             ],
           ),
@@ -215,7 +239,7 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
     );
   }
 
-  Widget _buildInfoCard(ProfileController controller, bool isDark) {
+  Widget _buildInfoCard(ProfileController controller, bool isDark, AppLocalizations locale) {
     return Container(
       decoration: BoxDecoration(
         color: isDark ? Colors.grey[900] : Colors.white,
@@ -225,11 +249,14 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          _buildTextField("Full Name", _usernameController, controller.updateUsername, isDark),
-          _buildTextField("Email", _emailController, controller.updateEmail, isDark, readOnly: true),
-          _buildTextField("Phone Number", _phoneController, controller.updatePhoneNumber, isDark),
-          _buildTextField("Password", _passwordController, controller.updatePassword, isDark, isPassword: true),
-          _buildAddressField(isDark),
+
+          _buildTextField(locale.full_name, _usernameController, controller.updateUsername, isDark),
+          _buildTextField(locale.email, _emailController, controller.updateEmail, isDark, readOnly: true),
+          _buildTextField(locale.phone_number, _phoneController, controller.updatePhoneNumber, isDark),
+          _buildTextField(locale.password, _passwordController, controller.updatePassword, isDark, isPassword: true),
+          _buildAddressField(isDark, locale),
+
+
         ],
       ),
     );
@@ -277,13 +304,19 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
     );
   }
 
-  Widget _buildAddressField(bool isDark) {
+
+  Widget _buildAddressField(bool isDark, AppLocalizations locale) {
+
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Address",
+
+          Text(locale.address,
+
+
               style: TextStyle(fontSize: 14, color: isDark ? Colors.white70 : Colors.black87, fontWeight: FontWeight.w500)),
           const SizedBox(height: 3),
           GestureDetector(
@@ -298,7 +331,11 @@ class _DetailProfileScreenState extends State<DetailProfileScreen> {
                   contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                   suffixIcon: const Icon(Icons.location_on),
-                  hintText: "Tap to detect your location",
+
+                  hintText: "Tap to detect your location", // you can localize this too if needed
+
+                 
+
                 ),
               ),
             ),

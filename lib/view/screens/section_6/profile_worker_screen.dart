@@ -160,20 +160,7 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
                         inactiveTrackColor: isDarkMode ? Colors.grey : Colors.grey[300],
                       ),
                     ),
-                    _buildTile(
-                      context,
-                      Icons.notifications_none,
-                      'Promotional Notifications',
-                      null,
-                      trailing: Switch(
-                        value: promotionalNotifications,
-                        onChanged: (v) => setState(() => promotionalNotifications = v),
-                        activeColor: isDarkMode ? Colors.white : Colors.grey,
-                        activeTrackColor: isDarkMode ? Colors.white38 : Colors.black26,
-                        inactiveThumbColor: isDarkMode ? Colors.grey[600] : Colors.grey[400],
-                        inactiveTrackColor: isDarkMode ? Colors.grey : Colors.grey[300],
-                      ),
-                    ),
+
                   ]),
 
                   /// More

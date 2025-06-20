@@ -207,8 +207,11 @@
   "no_notifications": "لا توجد إشعارات",
   "paymentTitle": "الدفع",
   "cash": "نقداً",
+
+
   "client_request_title": "طلب العميل",
   "client_request_sub": "انقر لرؤية طلبات العمل من العميل",
+
   "hours": "عدد الساعات",
   "hourUnit": "ساعات",
   "serviceFee": "رسوم الخدمة",

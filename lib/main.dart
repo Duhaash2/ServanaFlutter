@@ -5,6 +5,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+
+import 'package:servana/view/screens/section_5/payment_screen.dart';
+
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
@@ -172,6 +176,10 @@ class _MyAppState extends State<MyApp> {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: themeProvider.themeMode,
+
+     //    home: PaymentScreen(),
+
+
           home: const SplashScreen(), // 🔁 Splash أولاً دائماً
         );
       },

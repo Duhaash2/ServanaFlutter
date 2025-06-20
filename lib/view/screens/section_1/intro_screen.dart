@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../l10n/app_localizations.dart';
 import 'intro2_screen.dart';
 import 'intro4_location_screen.dart';
@@ -13,6 +14,17 @@ class IntroScreen extends StatefulWidget {
 
 class _IntroScreenState extends State<IntroScreen> {
   final PageController _controller = PageController();
+
+  Future<void> _handleSkip() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('seenIntro', true);
+
+    if (!mounted) return;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const Intro4LocationScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,12 +116,7 @@ class _IntroScreenState extends State<IntroScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const Intro4LocationScreen()),
-                    );
-                  },
+                  onPressed: _handleSkip,
                   child: Text(
                     "Skip",
                     style: TextStyle(

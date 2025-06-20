@@ -29,6 +29,7 @@ class _RatingScreenState extends State<RatingScreen> {
     const Color darkBackground = Color(0xFF121212);
     const Color cardColor = Color(0xFF1E1E1E);
     const Color primaryBlue = Color(0xFF2196F3);
+    final local = AppLocalizations.of(context)!;
 
     return Container(
       color: darkBackground,
@@ -144,7 +145,7 @@ class _RatingScreenState extends State<RatingScreen> {
                             onPressed: () {
                               ScaffoldMessenger.of(context).showSnackBar(
                                  SnackBar(
-                                  content: Text(AppLocalizations.of(context)!.rating_submitted),
+                                  content: Text(local.rating_submitted),
                                   backgroundColor: Colors.blueAccent,
                                   duration: Duration(seconds: 2),
                                 ),
@@ -163,8 +164,8 @@ class _RatingScreenState extends State<RatingScreen> {
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
-                            child: const Text(
-                              "Submit Rating",
+                            child:  Text(
+                              local.submit_rating,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -192,7 +193,7 @@ class _RatingScreenState extends State<RatingScreen> {
               children: [
                 BottonNavigationWidget(
                   icon: Icons.home_filled,
-                  label: "Home",
+                  label: local.bottomNavHome,
                   isSelected: selectedIndex2 == 0,
                   onTap: () {
                     onItemTapped2(0);
@@ -201,7 +202,7 @@ class _RatingScreenState extends State<RatingScreen> {
                 ),
                 BottonNavigationWidget(
                   icon: Icons.wallet,
-                  label: "Wallet",
+                  label: local.wallet,
                   isSelected: selectedIndex2 == 1,
                   onTap: () {
                     onItemTapped2(1);
@@ -210,7 +211,7 @@ class _RatingScreenState extends State<RatingScreen> {
                 ),
                 BottonNavigationWidget(
                   icon: Icons.history,
-                  label: "History",
+                  label: local.history,
                   isSelected: selectedIndex2 == 2,
                   onTap: () {
                     onItemTapped2(2);
@@ -219,7 +220,7 @@ class _RatingScreenState extends State<RatingScreen> {
                 ),
                 BottonNavigationWidget(
                   icon: Icons.person,
-                  label: "Profile",
+                  label: local.profile,
                   isSelected: selectedIndex2 == 3,
                   onTap: () {
                     onItemTapped2(3);

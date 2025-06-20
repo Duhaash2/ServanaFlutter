@@ -56,15 +56,17 @@ class HistoryWidget extends StatelessWidget {
 
           // Info Section
           Expanded(
-            child: Column(
+            child:
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 Text(
                   title,
                   style: TextStyle(
                     fontSize: responsiveFont(20),
                     fontWeight: FontWeight.bold,
-                    color:  Colors.white,
+                    color:  Colors.blue[900],
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),

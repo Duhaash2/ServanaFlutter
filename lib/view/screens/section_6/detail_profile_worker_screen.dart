@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../../../controller/profile_controller.dart';
+import '../../../l10n/app_localizations.dart';
 import '../section_6/profile_worker_screen.dart';
 
 class DetailProfileWorkerScreen extends StatefulWidget {
@@ -51,7 +52,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
         children: [
           ListTile(
             leading: const Icon(Icons.camera_alt),
-            title: const Text("Take from Camera"),
+            title: Text(AppLocalizations.of(context)!.take_from_camera),
             onTap: () async {
               Navigator.pop(context);
               final picked = await picker.pickImage(source: ImageSource.camera);
@@ -64,7 +65,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
           ),
           ListTile(
             leading: const Icon(Icons.photo_library),
-            title: const Text("Pick from Gallery"),
+            title: Text(AppLocalizations.of(context)!.pick_from_gallery),
             onTap: () async {
               Navigator.pop(context);
               final picked = await picker.pickImage(source: ImageSource.gallery);
@@ -92,6 +93,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context)!;
     final profileController = Provider.of<ProfileController>(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final width = MediaQuery.of(context).size.width;
@@ -112,7 +114,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text('Profile', style: TextStyle(color: Colors.white)),
+          title: Text(locale.profile, style: const TextStyle(color: Colors.white)),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.pop(context),
@@ -155,7 +157,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
               Text(profileController.fullname, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
               Text(profileController.email, style: const TextStyle(fontSize: 14, color: Colors.white70)),
               SizedBox(height: height * 0.03),
-              _buildInfoCard(profileController, isDark),
+              _buildInfoCard(profileController, isDark, locale),
               SizedBox(height: height * 0.03),
               ElevatedButton(
                 onPressed: () {
@@ -170,7 +172,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
                     profileImage: _profileImage,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Profile updated successfully")),
+                    SnackBar(content: Text(locale.profile_updated_successfully)),
                   );
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ProfileWorkerScreen()));
                 },
@@ -179,7 +181,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.015),
                 ),
-                child: const Text("Update"),
+                child: Text(locale.update),
               ),
             ],
           ),
@@ -188,7 +190,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
     );
   }
 
-  Widget _buildInfoCard(ProfileController controller, bool isDark) {
+  Widget _buildInfoCard(ProfileController controller, bool isDark, AppLocalizations locale) {
     return Container(
       decoration: BoxDecoration(
         color: isDark ? Colors.grey[900] : Colors.white,
@@ -198,77 +200,73 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          _buildTextField("Full Name", _usernameController, controller.updateUsername, isDark),
-          _buildTextField("Email", _emailController, controller.updateEmail, isDark, readOnly: true),
-          _buildTextField("Phone Number", _phoneController, controller.updatePhoneNumber, isDark),
-          _buildTextField("Password", _passwordController, controller.updatePassword, isDark, isPassword: true),
-          _buildTextField("Price Per Hour", _priceController, controller.updatePricePerHour, isDark),
+          _buildTextField(locale.full_name, _usernameController, controller.updateUsername, isDark),
+          _buildTextField(locale.email, _emailController, controller.updateEmail, isDark, readOnly: true),
+          _buildTextField(locale.phone_number, _phoneController, controller.updatePhoneNumber, isDark),
+          _buildTextField(locale.password, _passwordController, controller.updatePassword, isDark, isPassword: true),
+          _buildTextField(locale.price_per_hour, _priceController, controller.updatePricePerHour, isDark),
           const SizedBox(height: 12),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Profession",
-            style: TextStyle(
-              fontSize: 14,
-              color: isDark ? Colors.white70 : Colors.black87,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Theme(
-            data: Theme.of(context).copyWith(
-              canvasColor: isDark ? Colors.grey[850] : Colors.white,
-            ),
-            child: DropdownButtonFormField<String>(
-              value: ["Plumber", "Electrician", "Gardner", "Painter", "Cleaning"]
-                  .contains(_selectedProfession)
-                  ? _selectedProfession
-                  : null, // ✅ نتحقق إنها موجودة أو null
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: isDark ? Colors.grey[700] : Colors.grey[100],
-                contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: isDark ? Colors.white54 : Colors.grey,
-                    width: 1,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: isDark ? Colors.white : Colors.blue,
-                    width: 1.5,
-                  ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                locale.profession,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: isDark ? Colors.white70 : Colors.black87,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-              style: TextStyle(color: isDark ? Colors.white : Colors.black),
-              iconEnabledColor: isDark ? Colors.white70 : Colors.black54,
-              items: const [
-                DropdownMenuItem(value: "Plumber", child: Text("Plumber")),
-                DropdownMenuItem(value: "Electrician", child: Text("Electrician")),
-                DropdownMenuItem(value: "Gardner", child: Text("Gardner")),
-                DropdownMenuItem(value: "Painter", child: Text("Painter")),
-                DropdownMenuItem(value: "Cleaning", child: Text("Cleaning")),
-              ],
-              onChanged: (value) {
-                setState(() => _selectedProfession = value);
-              },
-            ),
-          )
-
-        ],
-      ),
-
+              const SizedBox(height: 6),
+              Theme(
+                data: Theme.of(context).copyWith(
+                  canvasColor: isDark ? Colors.grey[850] : Colors.white,
+                ),
+                child: DropdownButtonFormField<String>(
+                  value: [
+                    locale.plumber,
+                    locale.electrician,
+                    locale.gardner,
+                    locale.painter,
+                    locale.cleaning,
+                  ].contains(_selectedProfession)
+                      ? _selectedProfession
+                      : null,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: isDark ? Colors.grey[700] : Colors.grey[100],
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: isDark ? Colors.white54 : Colors.grey, width: 1),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: isDark ? Colors.white : Colors.blue, width: 1.5),
+                    ),
+                  ),
+                  style: TextStyle(color: isDark ? Colors.white : Colors.black),
+                  iconEnabledColor: isDark ? Colors.white70 : Colors.black54,
+                  items: [
+                    DropdownMenuItem(value: locale.plumber, child: Text(locale.plumber)),
+                    DropdownMenuItem(value: locale.electrician, child: Text(locale.electrician)),
+                    DropdownMenuItem(value: locale.gardner, child: Text(locale.gardner)),
+                    DropdownMenuItem(value: locale.painter, child: Text(locale.painter)),
+                    DropdownMenuItem(value: locale.cleaning, child: Text(locale.cleaning)),
+                  ],
+                  onChanged: (value) {
+                    setState(() => _selectedProfession = value);
+                  },
+                ),
+              ),
             ],
           ),
-
-
+        ],
+      ),
     );
   }
+
   Widget _buildTextField(
       String label,
       TextEditingController controller,
