@@ -27,7 +27,7 @@ class HomeWorkerWidget extends StatelessWidget {
     // 🎨 Dark and Light Theme Colors
     final boxColor = isDark ? Colors.grey[500] : Colors.blue[50];
     final iconBgColor = isDark ? Colors.white38 : Colors.blue[100];
-    final iconColor = isDark ? Color(0xFF203A43) : Colors.blue[100];
+    final iconColor = isDark ? Color(0xFF203A43) : Colors.blue[900];
     final titleColor = isDark ? Colors.black87 : Colors.black87;
     final descColor = isDark ? Colors.black87 : Colors.black54;
 

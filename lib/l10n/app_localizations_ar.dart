@@ -639,6 +639,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hr => 'ساعة';
 
   @override
+  String get hourUnit => 'ساعات';
+
+  @override
   String get incomingRequests => 'الطلبات الواردة';
 
   @override
@@ -654,9 +657,36 @@ class AppLocalizationsAr extends AppLocalizations {
   String get verified => 'موثوق';
 
   @override
+  String get no_notifications => 'لا توجد إشعارات';
+
+  @override
+  String get paymentTitle => 'الدفع';
+
+  @override
+  String get cash => 'نقداً';
+
+  @override
+  String get hours => 'عدد الساعات';
+
+  @override
+  String get serviceFee => 'رسوم الخدمة';
+
+  @override
+  String get totalPrice => 'السعر الإجمالي';
+
+  @override
+  String get payForJob => 'ادفع للعمل';
+
+  @override
   String get passwords_do_not_match => 'كلمات المرور غير متطابقة';
 
   @override
   String get please_enter_email_and_password =>
       'يرجى إدخال البريد وكلمة المرور';
+  @override
+  String get client_request_title => 'طلب من العميل';
+
+  @override
+  String get client_request_sub => 'اضغط لعرض تفاصيل الطلب من العميل';
+
 }
