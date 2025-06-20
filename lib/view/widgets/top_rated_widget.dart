@@ -10,6 +10,7 @@ class TopRatedWidget extends StatelessWidget {
   final String? tag;
   final String? subtitle;
   final IconData? subtitleIcon;
+  final String? price; // ✅ New
 
   const TopRatedWidget({
     super.key,
@@ -21,6 +22,7 @@ class TopRatedWidget extends StatelessWidget {
     this.tag,
     this.subtitle,
     this.subtitleIcon,
+    this.price, // ✅ New
   });
 
   @override
@@ -142,6 +144,7 @@ class TopRatedWidget extends StatelessWidget {
                   const SizedBox(height: 8),
                   if (subtitle != null)
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Icon(
                           subtitleIcon ?? Icons.work_outline,
@@ -156,8 +159,20 @@ class TopRatedWidget extends StatelessWidget {
                               fontSize: 12,
                               color: subtitleColor,
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                        if (price != null) ...[
+                          const SizedBox(width: 6),
+                          Text(
+                            '${price!} ${local.jd}/${local.hr}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: subtitleColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                 ],

@@ -203,11 +203,20 @@
   "rateWorker": "Rate Worker",
   "jd": "JD",
   "hr": "hr",
+  "hourUnit": "hours",
   "incomingRequests": "Incoming Requests",
   "incomingRequestsDesc": "View all new job requests from clients.",
   "profileSettings": "Profile Settings",
   "profileSettingsDesc": "Manage your personal and work details.",
   "verified": "Verified",
+  "no_notifications": "No notifications available",
+  "paymentTitle": "PAYMENT",
+  "cash": "Cash",
+
+  "hours": "Hours",
+  "serviceFee": "Service Fee",
+  "totalPrice": "Total Price",
+  "payForJob": "PAY FOR JOB",
   "passwords_do_not_match": "Passwords do not match",
   "please_enter_email_and_password": "Please enter both email and password"
 }

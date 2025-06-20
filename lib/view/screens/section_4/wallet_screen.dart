@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../widgets/botton_navigation_widget.dart';
+import '../section_3/home_client_screen.dart';
+import '../section_5/profile_screen.dart';
+import 'history_screen.dart';
 
 class WalletScreen extends StatefulWidget {
   @override
@@ -14,6 +18,13 @@ class _WalletScreenState extends State<WalletScreen> {
     {"id": "#1233", "amount": 50.0, "date": "5 June"},
     {"id": "#1232", "amount": -20.0, "date": "5 June"},
   ];
+
+  int selectedIndex2 = 0;
+  void onItemTapped2(int index2) {
+    setState(() {
+      selectedIndex2 = index2;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -210,6 +221,56 @@ class _WalletScreenState extends State<WalletScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        child: SizedBox(
+          height: 50,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              BottonNavigationWidget(
+                icon: Icons.home_filled,
+                label: local.bottomNavHome,
+                isSelected: selectedIndex2 == 1,
+                onTap: () {
+                  onItemTapped2(1);
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+                },
+              ),
+              BottonNavigationWidget(
+                icon: Icons.wallet,
+                label: local.wallet,
+                isSelected: selectedIndex2 == 0,
+                onTap: () {
+                  onItemTapped2(0);
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => WalletScreen()));
+                },
+              ),
+              BottonNavigationWidget(
+                icon: Icons.history,
+                label: local.history,
+                isSelected: selectedIndex2 == 2,
+                onTap: () {
+                  onItemTapped2(2);
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => HistoryScreen()));
+                },
+              ),
+              BottonNavigationWidget(
+                icon: Icons.person,
+                label: local.profile,
+                isSelected: selectedIndex2 == 3,
+                onTap: () {
+                  onItemTapped2(3);
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => ProfileScreen()));
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+
     );
   }
 }

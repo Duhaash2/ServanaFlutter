@@ -1326,6 +1326,12 @@ abstract class AppLocalizations {
   /// **'hr'**
   String get hr;
 
+  /// No description provided for @hourUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'hours'**
+  String get hourUnit;
+
   /// No description provided for @incomingRequests.
   ///
   /// In en, this message translates to:
@@ -1355,6 +1361,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Verified'**
   String get verified;
+
+  /// No description provided for @no_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications available'**
+  String get no_notifications;
+
+  /// No description provided for @paymentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PAYMENT'**
+  String get paymentTitle;
+
+  /// No description provided for @cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get cash;
+
+  /// No description provided for @hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours'**
+  String get hours;
+
+  /// No description provided for @serviceFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Fee'**
+  String get serviceFee;
+
+  /// No description provided for @totalPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Price'**
+  String get totalPrice;
+
+  /// No description provided for @payForJob.
+  ///
+  /// In en, this message translates to:
+  /// **'PAY FOR JOB'**
+  String get payForJob;
 
   /// No description provided for @passwords_do_not_match.
   ///
