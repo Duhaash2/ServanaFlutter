@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-
-import 'package:provider/provider.dart';
-import '../../../controller/notification_controller.dart';
-import '../../../l10n/app_localizations.dart';
-import 'package:servana/view/screens/section_3/home_client_screen.dart';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
-
 import 'package:servana/view/screens/section_5/profile_screen.dart';
 import 'package:servana/view/screens/section_3/home_client_screen.dart';
 import 'package:servana/view/widgets/botton_navigation_widget.dart';
+import 'package:servana/view/screens/section_6/worker_notification_screen.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ClientNotificationScreen extends StatefulWidget {
   final List<RemoteMessage>? fcmMessages;
@@ -45,111 +40,86 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
       notifications = [
         {
           'icon': Icons.check_circle,
-          'title': 'Your job has been completed',
-          'subtitle': 'The worker marked your job as completed',
+          'title': AppLocalizations.of(context)!.job_completed_title,
+          'subtitle': AppLocalizations.of(context)!.job_completed_body,
           'time': '2h ago',
           'isRead': false,
         },
         {
           'icon': Icons.payment,
-          'title': 'Payment received',
-          'subtitle': 'Your payment has been processed',
+          'title': AppLocalizations.of(context)!.payment_received_title,
+          'subtitle': AppLocalizations.of(context)!.payment_received_body,
           'time': '4h ago',
           'isRead': true,
         },
         {
           'icon': Icons.message,
-          'title': 'You have a new message',
-          'subtitle': 'The worker: Hello, I\'m on my way',
+          'title': AppLocalizations.of(context)!.new_message_title,
+          'subtitle': AppLocalizations.of(context)!.new_message_body_1,
           'time': 'Yesterday',
           'isRead': false,
         },
         {
           'icon': Icons.check_circle,
-          'title': 'Job started',
-          'subtitle': 'The worker started the job',
+          'title': AppLocalizations.of(context)!.job_started_title,
+          'subtitle': AppLocalizations.of(context)!.job_started_body,
           'time': 'Yesterday',
           'isRead': true,
         },
         {
           'icon': Icons.message,
-          'title': 'You have a new message',
-          'subtitle': 'The worker: I will arrive shortly',
+          'title': AppLocalizations.of(context)!.new_message_title,
+          'subtitle': AppLocalizations.of(context)!.new_message_body_2,
           'time': '2d ago',
           'isRead': false,
         },
         {
           'icon': Icons.check_circle,
-          'title': 'Job request accepted',
-          'subtitle': 'The worker accepted your request',
+          'title': AppLocalizations.of(context)!.job_request_accepted_title,
+          'subtitle': AppLocalizations.of(context)!.job_request_accepted_body,
           'time': '2d ago',
           'isRead': true,
-        },
-        {
-          'icon': Icons.message,
-          'title': 'You have a new message',
-          'subtitle': 'The worker: I can come tomorrow',
-          'time': '3d ago',
-          'isRead': true,
-        },
-        {
-          'icon': Icons.close,
-          'title': 'Job request rejected',
-          'subtitle': 'The worker is not available at the moment',
-          'time': '3d ago',
-          'isRead': false,
         },
       ];
     }
   }
 
   void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+    setState(() => selectedIndex = index);
   }
 
   void _navigate(int index, Widget screen) {
-    setState(() {
-      selectedIndex = index;
-    });
+    setState(() => selectedIndex = index);
     Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isDark ? const Color(0xFF121212) : Colors.white;
-    final iconBackground = isDark ? Colors.blueGrey[800] : Colors.blue[100];
-    final iconColor = isDark ? Colors.lightBlueAccent : Colors.blue[900];
-    final textColor = isDark ? Colors.white : Colors.black;
-    final subtitleColor = isDark ? Colors.white70 : Colors.black54;
-
     List<Map<String, dynamic>> unreadNotifications =
     notifications.where((n) => n['isRead'] == false).toList();
 
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: backgroundColor,
+        backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          'Notifications',
-          style: TextStyle(
+          AppLocalizations.of(context)!.notifications,
+          style: const TextStyle(
             fontSize: 26,
-            color: textColor,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
         ),
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: iconColor,
-          labelColor: iconColor,
+          indicatorColor: Colors.blue[900],
+          labelColor: Colors.blue[900],
           unselectedLabelColor: Colors.grey,
           labelStyle: const TextStyle(fontWeight: FontWeight.w500),
-          tabs: const [
-            Tab(text: 'All'),
-            Tab(text: 'Unread'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context)!.all),
+            Tab(text: AppLocalizations.of(context)!.unread),
           ],
         ),
       ),
@@ -161,19 +131,19 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  _buildNotificationList(notifications, iconBackground, iconColor, textColor, subtitleColor),
-                  _buildNotificationList(unreadNotifications, iconBackground, iconColor, textColor, subtitleColor),
+                  _buildNotificationList(notifications),
+                  _buildNotificationList(unreadNotifications),
                 ],
               ),
             ),
           );
         },
       ),
-      bottomNavigationBar: _buildBottomBar(),
+      bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
     );
   }
 
-  Widget _buildNotificationList(List<Map<String, dynamic>> data, Color? iconBg, Color? iconColor, Color textColor, Color subtitleColor) {
+  Widget _buildNotificationList(List<Map<String, dynamic>> data) {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(vertical: 12),
       itemCount: data.length,
@@ -184,8 +154,8 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
           leading: Stack(
             children: [
               CircleAvatar(
-                backgroundColor: iconBg,
-                child: Icon(item['icon'], color: iconColor),
+                backgroundColor: Colors.blue[100],
+                child: Icon(item['icon'], color: Colors.blue[900]),
               ),
               if (item['isRead'] == false)
                 Positioned(
@@ -202,16 +172,17 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
                 ),
             ],
           ),
-          title: Text(item['title'], style: TextStyle(fontWeight: FontWeight.bold, color: textColor)),
-          subtitle: Text(item['subtitle'], style: TextStyle(color: subtitleColor)),
-          trailing: Text(item['time'], style: TextStyle(fontSize: 12, color: subtitleColor)),
+          title: Text(item['title'], style: const TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: Text(item['subtitle']),
+          trailing: Text(item['time'], style: const TextStyle(fontSize: 12, color: Colors.grey)),
         );
       },
     );
   }
 
-  BottomAppBar _buildBottomBar() {
+  BottomAppBar _buildBottomBar(double width) {
     return BottomAppBar(
+      color: Colors.white,
       shape: const CircularNotchedRectangle(),
       notchMargin: 8,
       child: SizedBox(
