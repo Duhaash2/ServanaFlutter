@@ -34,7 +34,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final profileController = Provider.of<ProfileController>(context, listen: false);
-      _usernameController = TextEditingController(text: profileController.username);
+      _usernameController = TextEditingController(text: profileController.fullname);
       _emailController = TextEditingController(text: profileController.email);
       _phoneController = TextEditingController(text: profileController.phoneNumber);
       _passwordController = TextEditingController(text: profileController.password);
@@ -150,7 +150,7 @@ class _DetailProfileWorkerScreenState extends State<DetailProfileWorkerScreen> {
                 ],
               ),
               SizedBox(height: height * 0.015),
-              Text(profileController.username,
+              Text(profileController.fullname,
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
               Text(profileController.email,
                   style: const TextStyle(fontSize: 14, color: Colors.white70)),

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:servana/controller/profile_controller.dart';
 import 'package:servana/view/screens/section_2/login_worker_screen.dart';
-import 'package:servana/view/screens/section_5/detail_profile_worker_screen.dart';
 import 'package:servana/view/screens/section_6/home_worker_screen.dart';
 import '../../../controller/lang_controller.dart';
 import '../../../core/theme/theme_provider.dart';
 import '../../widgets/botton_navigation_widget.dart';
 import '../section_3/home_client_screen.dart';
 import '../../../l10n/app_localizations.dart';
+import '../section_6/detail_profile_worker_screen.dart';
 
 class ProfileWorkerScreen extends StatefulWidget {
   const ProfileWorkerScreen({super.key});
@@ -48,7 +48,7 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeWorkerScreen())),
         ),
-        title: Text(
+        title:Text(
           AppLocalizations.of(context)!.profile,
           style: TextStyle(
             fontSize: width * .06,
@@ -81,7 +81,7 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
                 ),
                 SizedBox(height: height * .02),
                 Text(
-                  profileController.username.isNotEmpty ? profileController.username : AppLocalizations.of(context)!.your_name,
+                  profileController.fullname.isNotEmpty ? profileController.fullname : AppLocalizations.of(context)!.your_name,
                   style: TextStyle(
                     fontSize: width * .045,
                     fontWeight: FontWeight.bold,
