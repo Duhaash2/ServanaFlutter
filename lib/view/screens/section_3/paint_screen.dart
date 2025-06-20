@@ -41,7 +41,7 @@ class _PaintScreenState extends State<PaintScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Painters",
+              AppLocalizations.of(context)!.painter, // ✅ Localized title
               style: TextStyle(
                 color: Colors.blue[900],
                 fontSize: 28,
@@ -53,10 +53,8 @@ class _PaintScreenState extends State<PaintScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder:
-                          (context) => ClientNotificationScreen()),
+                      builder: (context) => const ClientNotificationScreen()),
                 );
-
               },
               icon: Icon(Icons.notifications, color: Colors.blue[900], size: 32),
             ),
@@ -65,7 +63,6 @@ class _PaintScreenState extends State<PaintScreen> {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          double maxWidth = constraints.maxWidth;
           return SingleChildScrollView(
             child: Center(
               child: ConstrainedBox(
@@ -93,56 +90,56 @@ class _PaintScreenState extends State<PaintScreen> {
                       // Workers List
                       PlumingWidget(
                         title: "David Harris",
-                        description: "Request?",
+                        description: AppLocalizations.of(context)!.request,
                         imagePath: "assets/images/man1.PNG",
                         rating: 4.0,
                         price: "30",
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (_) => RequestScreen()),
+                            MaterialPageRoute(builder: (_) =>  RequestScreen()),
                           );
                         },
                       ),
                       const SizedBox(height: 13),
                       PlumingWidget(
                         title: "Amanda Wood",
-                        description: "Request?",
+                        description: AppLocalizations.of(context)!.request,
                         imagePath: "assets/images/girl1.PNG",
                         rating: 3.5,
                         price: "30",
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (_) => RequestScreen()),
+                            MaterialPageRoute(builder: (_) =>  RequestScreen()),
                           );
                         },
                       ),
                       const SizedBox(height: 13),
                       PlumingWidget(
                         title: "James Clark",
-                        description: "Request?",
+                        description: AppLocalizations.of(context)!.request,
                         imagePath: "assets/images/man2.PNG",
                         rating: 3.0,
                         price: "30",
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (_) => RequestScreen()),
+                            MaterialPageRoute(builder: (_) =>  RequestScreen()),
                           );
                         },
                       ),
                       const SizedBox(height: 13),
                       PlumingWidget(
                         title: "Kristin Waston",
-                        description: "Request?",
+                        description: AppLocalizations.of(context)!.request,
                         imagePath: "assets/images/girl2.PNG",
                         rating: 4.2,
                         price: "30",
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (_) => RequestScreen()),
+                            MaterialPageRoute(builder: (_) =>  RequestScreen()),
                           );
                         },
                       ),
@@ -165,7 +162,7 @@ class _PaintScreenState extends State<PaintScreen> {
             children: [
               BottonNavigationWidget(
                 icon: Icons.home_filled,
-                label: "Home",
+                label: AppLocalizations.of(context)!.home,
                 isSelected: selectedIndex2 == 0,
                 onTap: () {
                   onItemTapped2(0);
@@ -177,7 +174,7 @@ class _PaintScreenState extends State<PaintScreen> {
               ),
               BottonNavigationWidget(
                 icon: Icons.wallet,
-                label: "Wallet",
+                label: AppLocalizations.of(context)!.wallet,
                 isSelected: selectedIndex2 == 1,
                 onTap: () {
                   onItemTapped2(1);
@@ -189,28 +186,25 @@ class _PaintScreenState extends State<PaintScreen> {
               ),
               BottonNavigationWidget(
                 icon: Icons.history,
-                label: "History",
+                label: AppLocalizations.of(context)!.history,
                 isSelected: selectedIndex2 == 2,
                 onTap: () {
                   onItemTapped2(2);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => HistoryScreen()),
+                    MaterialPageRoute(builder: (_) => const HistoryScreen()),
                   );
                 },
               ),
               BottonNavigationWidget(
                 icon: Icons.person,
-                label: "Profile",
+                label: AppLocalizations.of(context)!.profile,
                 isSelected: selectedIndex2 == 3,
                 onTap: () {
                   onItemTapped2(3);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => ProfileScreen(),
-                    ),
+                    MaterialPageRoute(builder: (_) => const ProfileScreen()),
                   );
                 },
               ),
@@ -218,7 +212,6 @@ class _PaintScreenState extends State<PaintScreen> {
           ),
         ),
       ),
-
     );
   }
 }

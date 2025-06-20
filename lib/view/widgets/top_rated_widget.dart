@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servana/l10n/app_localizations.dart';
 
 class TopRatedWidget extends StatelessWidget {
   final String title;
@@ -6,8 +7,8 @@ class TopRatedWidget extends StatelessWidget {
   final String imagePath;
   final double rating;
   final VoidCallback onPressed;
-  final String? tag;
-  final String? subtitle;
+  final String? tag;       // "Top Rated", "Verified", etc.
+  final String? subtitle;  // e.g. "Plumbing • 18 Jobs"
   final IconData? subtitleIcon;
 
   const TopRatedWidget({
@@ -24,13 +25,7 @@ class TopRatedWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    final backgroundColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
-    final textColor = isDark ? Colors.white : Colors.black;
-    final secondaryTextColor = isDark ? Colors.grey[300] : Colors.black87;
-    final subtitleColor = isDark ? Colors.grey[400] : Colors.grey[700];
-    final borderColor = isDark ? Colors.grey[700]! : Colors.grey.shade200;
+    final local = AppLocalizations.of(context)!;
 
     return GestureDetector(
       onTap: onPressed,
@@ -38,12 +33,12 @@ class TopRatedWidget extends StatelessWidget {
         width: 170,
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
         decoration: BoxDecoration(
-          color: backgroundColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: borderColor),
+          border: Border.all(color: Colors.grey.shade200),
           boxShadow: [
             BoxShadow(
-              color: isDark ? Colors.black.withOpacity(0.2) : Colors.black.withOpacity(0.03),
+              color: Colors.black.withOpacity(0.03),
               blurRadius: 6,
               offset: const Offset(0, 4),
             ),
@@ -73,15 +68,15 @@ class TopRatedWidget extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: tag == "Verified"
-                            ? (isDark ? Colors.teal[700] : Colors.grey[800])
+                        color: tag == local.verified
+                            ? Colors.grey[800]
                             : Colors.amber.shade600,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
                         children: [
                           Icon(
-                            tag == "Verified" ? Icons.verified : Icons.star,
+                            tag == local.verified ? Icons.verified : Icons.star,
                             color: Colors.white,
                             size: 14,
                           ),
@@ -100,7 +95,6 @@ class TopRatedWidget extends StatelessWidget {
                   ),
               ],
             ),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               child: Column(
@@ -108,10 +102,9 @@ class TopRatedWidget extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: textColor,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -121,18 +114,17 @@ class TopRatedWidget extends StatelessWidget {
                       const SizedBox(width: 3),
                       Text(
                         rating.toStringAsFixed(1),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
-                          color: textColor,
                         ),
                       ),
                       const SizedBox(width: 5),
                       Text(
                         description,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 13,
-                          color: secondaryTextColor,
+                          color: Colors.black87,
                         ),
                       ),
                     ],
@@ -144,7 +136,7 @@ class TopRatedWidget extends StatelessWidget {
                         Icon(
                           subtitleIcon ?? Icons.work_outline,
                           size: 16,
-                          color: isDark ? Colors.tealAccent : Colors.teal,
+                          color: Colors.teal,
                         ),
                         const SizedBox(width: 6),
                         Expanded(
@@ -152,7 +144,7 @@ class TopRatedWidget extends StatelessWidget {
                             subtitle!,
                             style: TextStyle(
                               fontSize: 12,
-                              color: subtitleColor,
+                              color: Colors.grey[700],
                             ),
                           ),
                         ),

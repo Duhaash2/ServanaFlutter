@@ -16,14 +16,13 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final bool isDarkMode = theme.brightness == Brightness.dark;
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
 
     return Scaffold(
-      backgroundColor: isDarkMode ? theme.scaffoldBackgroundColor : const Color(0xFFEAF6FF),
+      backgroundColor: const Color(0xFFEAF6FF),
       body: Column(
         children: [
           // 🔵 Top Image Section (Responsive Height)
@@ -45,7 +44,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.welcome_to_servana,
-                    style: theme.textTheme.titleMedium!.copyWith(
+                    style: TextStyle(
                       fontSize: width * 0.060,
                       fontWeight: FontWeight.bold,
                       color: isDarkMode ? Colors.white : Colors.blue[900],
@@ -55,7 +54,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   Text(
                     AppLocalizations.of(context)!.experience_quick_seamless_service,
                     textAlign: TextAlign.center,
-                    style: theme.textTheme.bodyMedium!.copyWith(
+                    style: TextStyle(
                       fontSize: width * 0.042,
                       color: isDarkMode ? Colors.grey[300] : Colors.grey[700],
                     ),
@@ -71,7 +70,7 @@ class _IntroScreenState extends State<IntroScreen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: isDarkMode ? Colors.blue[900] : Colors.blue[900],
+                        backgroundColor: Colors.blue[900],
                         padding: EdgeInsets.symmetric(
                           vertical: height * 0.018,
                         ),
@@ -114,7 +113,7 @@ class _IntroScreenState extends State<IntroScreen> {
                     "Skip",
                     style: TextStyle(
                       fontSize: width * 0.04,
-                      color: isDarkMode ? Colors.white : Colors.grey[800],
+                      color: isDarkMode ? Colors.blue[900] : Colors.grey,
                     ),
                   ),
                 ),
@@ -122,7 +121,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   controller: _controller,
                   count: 1,
                   effect: ExpandingDotsEffect(
-                    activeDotColor: isDarkMode ? Colors.blue[900]! : Colors.blue[900]!,
+                    activeDotColor: Colors.blue[900]!,
                     dotHeight: 8,
                     dotWidth: 8,
                   ),
@@ -130,7 +129,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 IconButton(
                   icon: Icon(
                     Icons.arrow_forward,
-                    color: isDarkMode ? Colors.blue[900] : Colors.blue[900],
+                    color: Colors.blue[900],
                     size: width * 0.07,
                   ),
                   onPressed: () {
