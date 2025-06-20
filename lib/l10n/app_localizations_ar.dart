@@ -654,6 +654,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get verified => 'موثوق';
 
   @override
+  String get jod => 'د.أ';
+
+  @override
+  String get my_requests => 'طلباتي';
+
+  @override
+  String get wallet_sub => 'اضغط لرؤية محفظتك';
+
+  @override
+  String get no_notifications => 'ليس لديك إشعارات بعد.';
+
+  @override
   String get passwords_do_not_match => 'كلمات المرور غير متطابقة';
 
   @override

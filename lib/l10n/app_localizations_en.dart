@@ -654,6 +654,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get verified => 'Verified';
 
   @override
+  String get jod => 'JOD';
+
+  @override
+  String get my_requests => 'My Requests ';
+
+  @override
+  String get wallet_sub => 'Click It To See Your Wallet';
+
+  @override
+  String get no_notifications => 'You have no notifications yet.';
+
+  @override
   String get passwords_do_not_match => 'Passwords do not match';
 
   @override

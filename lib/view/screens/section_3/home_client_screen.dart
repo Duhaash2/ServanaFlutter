@@ -28,22 +28,21 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex2 = 0;
 
   void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+    setState(() => selectedIndex = index);
   }
 
   void onItemTapped2(int index2) {
-    setState(() {
-      selectedIndex2 = index2;
-    });
+    setState(() => selectedIndex2 = index2);
   }
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? Colors.black : Colors.white;
+    final bgColor = Theme.of(context).scaffoldBackgroundColor;
+    final cardColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final hintTextColor = isDark ? Colors.grey[400] : Colors.grey[700];
+    final iconColor = isDark ? Colors.white : Colors.black;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -57,7 +56,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
                   decoration: BoxDecoration(
-                    color: Colors.blue[900],
+                    gradient: LinearGradient(
+                      colors: isDark
+                          ? [Color(0xFF0F2027), Color(0xFF203A43), Color(0xFF2C5364)]
+                          : [Colors.blue.shade900, Colors.lightBlue.shade100],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30),
@@ -71,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Text(
                             "Servana",
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
@@ -81,23 +86,27 @@ class _HomeScreenState extends State<HomeScreen> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ClientNotificationScreen()),
+                                MaterialPageRoute(
+                                  builder: (context) => ClientNotificationScreen(),
+                                ),
                               );
                             },
-                            icon: const Icon(Icons.notifications, color: Colors.white, size: 28),
+                            icon: Icon(Icons.notifications, color: Colors.white, size: 28),
                           ),
                         ],
                       ),
                       const SizedBox(height: 15),
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: cardColor,
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: TextField(
+                          style: TextStyle(color: textColor),
                           decoration: InputDecoration(
-                            hintText: local.search_service_workers_or_etc,
-                            prefixIcon: const Icon(Icons.search),
+                            hintText: AppLocalizations.of(context)!.search_service_workers_or_etc,
+                            hintStyle: TextStyle(color: hintTextColor),
+                            prefixIcon: Icon(Icons.search, color: iconColor),
                             border: InputBorder.none,
                             contentPadding: const EdgeInsets.symmetric(vertical: 14),
                           ),
@@ -112,11 +121,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        local.categories,
+                        "Categories",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 22,
-                          color: Colors.blue[900],
+                          color: isDark ? Colors.white : Colors.blue[900],
                         ),
                       ),
                       const SizedBox(height: 13),
@@ -125,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                           children: [
                             CategoryButtonWidget(
-                              title: local.plumbing,
+                              title: AppLocalizations.of(context)!.pluming,
                               isSelected: selectedIndex == 0,
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (_) => PlumingScreen()));
@@ -134,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ImagePath: 'assets/images/plumingg.png',
                             ),
                             CategoryButtonWidget(
-                              title: local.electrical,
+                              title: AppLocalizations.of(context)!.electrical,
                               isSelected: selectedIndex == 1,
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (_) => ElectricalScreen()));
@@ -143,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ImagePath: 'assets/images/Electricall.png',
                             ),
                             CategoryButtonWidget(
-                              title: local.gardner,
+                              title: AppLocalizations.of(context)!.gardner,
                               isSelected: selectedIndex == 2,
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (_) => GardnerScreen()));
@@ -152,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ImagePath: 'assets/images/gardnerr.png',
                             ),
                             CategoryButtonWidget(
-                              title: local.paint,
+                              title: AppLocalizations.of(context)!.paint,
                               isSelected: selectedIndex == 3,
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (_) => PaintScreen()));
@@ -161,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ImagePath: 'assets/images/paintingg.png',
                             ),
                             CategoryButtonWidget(
-                              title: local.cleaning,
+                              title: AppLocalizations.of(context)!.cleaning,
                               isSelected: selectedIndex == 4,
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (_) => PaintScreen()));
@@ -177,15 +186,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            local.top_rated_workers,
+                            "Top Rated Workers",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
-                              color: Colors.blue[900],
+                              color: isDark ? Colors.white : Colors.blue[900],
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.tune, color: Colors.blue[900]),
+                            icon: Icon(Icons.tune, color: isDark ? Colors.white : Colors.blue[900]),
                             onPressed: () {
                               showModalBottomSheet(
                                 context: context,
@@ -207,18 +216,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: "John Deo",
                               imagePath: "assets/images/man2.PNG",
                               rating: 4.5,
-                              subtitle: "24 ${local.jobs}",
-                              tag: local.top_rated,
+                              subtitle: "24 Jobs",
+                              tag: "Top Rated",
                               onPressed: () {},
-                              description: local.plumbing,
+                              description: 'Plumbing',
                             ),
                             TopRatedWidget(
                               title: "Emma Smith",
                               imagePath: "assets/images/girl2.PNG",
                               rating: 3.0,
-                              subtitle: "18 ${local.jobs}",
+                              subtitle: "18 Jobs",
                               onPressed: () {},
-                              description: local.cleaning,
+                              description: 'Cleaning',
                             ),
                           ],
                         ),
@@ -232,17 +241,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: "Clivia Brown",
                               imagePath: "assets/images/girl1.PNG",
                               rating: 4.0,
-                              subtitle: "10 ${local.jobs}",
+                              subtitle: "10 Jobs",
                               onPressed: () {},
-                              description: local.paint,
+                              description: 'Paint',
                             ),
                             TopRatedWidget(
                               title: "James Jonson",
                               imagePath: "assets/images/man1.PNG",
                               rating: 3.5,
-                              subtitle: "18 ${local.jobs}",
+                              subtitle: "18 Jobs",
                               onPressed: () {},
-                              description: local.plumbing,
+                              description: 'Plumbing',
                             ),
                           ],
                         ),
@@ -266,25 +275,27 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               BottonNavigationWidget(
                 icon: Icons.home_filled,
-                label: local.bottomNavHome,
+                label: "Home",
                 isSelected: selectedIndex2 == 0,
                 onTap: () {
                   onItemTapped2(0);
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
                 },
               ),
+
               BottonNavigationWidget(
                 icon: Icons.wallet,
-                label: local.bottomNavWallet,
+                label: "Wallet",
                 isSelected: selectedIndex2 == 1,
                 onTap: () {
                   onItemTapped2(1);
                   Navigator.push(context, MaterialPageRoute(builder: (_) => WalletScreen()));
                 },
               ),
+
               BottonNavigationWidget(
                 icon: Icons.history,
-                label: local.bottomNavHistory,
+                label: "History",
                 isSelected: selectedIndex2 == 2,
                 onTap: () {
                   onItemTapped2(2);
@@ -293,17 +304,19 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               BottonNavigationWidget(
                 icon: Icons.person,
-                label: local.bottomNavProfile,
+                label: "Profile",
                 isSelected: selectedIndex2 == 3,
                 onTap: () {
                   onItemTapped2(3);
                   Navigator.push(context, MaterialPageRoute(builder: (_) => ProfileScreen()));
                 },
               ),
+
             ],
           ),
         ),
       ),
     );
   }
+
 }

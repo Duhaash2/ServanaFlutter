@@ -24,6 +24,7 @@ class PlumingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final width = MediaQuery.of(context).size.width;
     final scale = width / 375;
 
@@ -32,11 +33,11 @@ class PlumingWidget extends StatelessWidget {
       margin: EdgeInsets.only(right: scale * 10, bottom: scale * 12),
       padding: EdgeInsets.all(scale * 12),
       decoration: BoxDecoration(
-        color: Colors.blue[50],
+        color: isDark ? Colors.grey[900] : Colors.blue[50],
         borderRadius: BorderRadius.circular(scale * 16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.07),
+            color: Colors.black.withOpacity(isDark ? 0.2 : 0.07),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -59,7 +60,7 @@ class PlumingWidget extends StatelessWidget {
                   style: TextStyle(
                     fontSize: scale * 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                    color: isDark ? Colors.white : Colors.black87,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -82,6 +83,7 @@ class PlumingWidget extends StatelessWidget {
                       style: TextStyle(
                         fontSize: scale * 14,
                         fontWeight: FontWeight.w600,
+                        color: isDark ? Colors.white70 : Colors.black87,
                       ),
                     ),
                   ],

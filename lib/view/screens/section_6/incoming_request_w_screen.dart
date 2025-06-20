@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:servana/view/screens/section_6/home_worker_screen.dart';
 import 'package:servana/view/screens/section_6/job_detail_screen.dart';
 
-import '../../../l10n/app_localizations.dart';
-
 class IncomingRequestWScreen extends StatefulWidget {
   const IncomingRequestWScreen({super.key});
 
@@ -12,38 +10,30 @@ class IncomingRequestWScreen extends StatefulWidget {
 }
 
 class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
-  int selectedIndex = 0;
-
-  void _navigate(int index, Widget screen) {
-    setState(() {
-      selectedIndex = index;
-    });
-    Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
-  }
-
-  void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDark ? const Color(0xFF121212) : const Color(0xFFF3EEEC);
+    final cardColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+    final titleColor = isDark ? Colors.white : Colors.black;
+    final subtitleColor = isDark ? Colors.white70 : Colors.grey[700];
+    final declineButtonColor = isDark ? Colors.grey[800] : Colors.blue[50];
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF3EEEC),
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         title: Text(
-          local.incoming_requests,
-          style: const TextStyle(
-            color: Colors.black,
+          'Incoming Requests',
+          style: TextStyle(
+            color: titleColor,
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
+        iconTheme: IconThemeData(color: titleColor),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -52,29 +42,37 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
             name: 'Alice Smith',
             service: 'Plumbing - Leaky Faucet',
             address: '123 Mani St. Anytown',
-            onTap: () => _navigate(0, const JobDetailScreen()),
-            local: local,
+            cardColor: cardColor,
+            titleColor: titleColor,
+            subtitleColor: subtitleColor!,
+            declineButtonColor: declineButtonColor!,
           ),
           _buildRequestCard(
             name: 'Dayid Johnson',
             service: 'Electrical - Light Fixture',
             address: '45 Ehn St. Anytown',
-            onTap: () => _navigate(0, const JobDetailScreen()),
-            local: local,
+            cardColor: cardColor,
+            titleColor: titleColor,
+            subtitleColor: subtitleColor!,
+            declineButtonColor: declineButtonColor!,
           ),
           _buildRequestCard(
             name: 'Susan Brown',
             service: 'HVAC - Amotallation',
             address: '55 Gan St. Anytown',
-            onTap: () => _navigate(0, const JobDetailScreen()),
-            local: local,
+            cardColor: cardColor,
+            titleColor: titleColor,
+            subtitleColor: subtitleColor!,
+            declineButtonColor: declineButtonColor!,
           ),
           _buildRequestCard(
             name: 'Jakob Alice',
             service: 'HVAC - Amotallation',
             address: '123 Mani St. Anytown',
-            onTap: () => _navigate(0, const JobDetailScreen()),
-            local: local,
+            cardColor: cardColor,
+            titleColor: titleColor,
+            subtitleColor: subtitleColor!,
+            declineButtonColor: declineButtonColor!,
           ),
         ],
       ),
@@ -85,14 +83,16 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
     required String name,
     required String service,
     required String address,
-    required VoidCallback onTap,
-    required AppLocalizations local,
+    required Color cardColor,
+    required Color titleColor,
+    required Color subtitleColor,
+    required Color declineButtonColor,
   }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [
           BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
@@ -101,18 +101,21 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(name, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 4),
-          Text(service, style: const TextStyle(fontSize: 14)),
-          const SizedBox(height: 2),
-          Text(address, style: const TextStyle(fontSize: 13, color: Colors.grey)),
+          Text(name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: titleColor)),
+          Text(service, style: TextStyle(fontSize: 14, color: subtitleColor)),
+          Text(address, style: TextStyle(fontSize: 13, color: subtitleColor)),
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
-              onPressed: onTap,
-              child: Text(
-                local.view_details,
-                style: const TextStyle(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const JobDetailScreen()),
+                );
+              },
+              child: const Text(
+                "View Details",
+                style: TextStyle(
                   fontSize: 13,
                   decoration: TextDecoration.underline,
                   color: Colors.blue,
@@ -120,22 +123,24 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextButton(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(local.request_accepted),
+                    const SnackBar(
+                      content: Text("Request Accepted"),
                       backgroundColor: Colors.green,
                       behavior: SnackBarBehavior.floating,
-                      duration: const Duration(seconds: 2),
+                      duration: Duration(seconds: 2),
                     ),
                   );
                   Future.delayed(const Duration(milliseconds: 500), () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeWorkerScreen()));
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HomeWorkerScreen()),
+                    );
                   });
                 },
                 style: TextButton.styleFrom(
@@ -143,28 +148,31 @@ class _IncomingRequestsScreenState extends State<IncomingRequestWScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: Text(local.accept, style: const TextStyle(fontSize: 13, color: Colors.white)),
+                child: const Text("Accept", style: TextStyle(fontSize: 13, color: Colors.white)),
               ),
               ElevatedButton(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(local.request_declined),
+                    const SnackBar(
+                      content: Text("Request Declined"),
                       backgroundColor: Colors.red,
                       behavior: SnackBarBehavior.floating,
-                      duration: const Duration(seconds: 2),
+                      duration: Duration(seconds: 2),
                     ),
                   );
                   Future.delayed(const Duration(milliseconds: 500), () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeWorkerScreen()));
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HomeWorkerScreen()),
+                    );
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[50],
+                  backgroundColor: declineButtonColor,
                   padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: Text(local.decline, style: const TextStyle(color: Colors.black)),
+                child: Text("Decline", style: TextStyle(color: titleColor)),
               ),
             ],
           ),
