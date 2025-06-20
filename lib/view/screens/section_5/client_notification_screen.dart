@@ -104,21 +104,8 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
               child: TabBarView(
                 controller: _tabController,
                 children: [
-<<<<<<< duha
-                  _buildNotificationList(notifications),
-                  _buildNotificationList(unreadNotifications),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-      bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width),
-    );
-  }
 
-  Widget _buildNotificationList(List<Map<String, dynamic>> data) {
-=======
+
                   _buildNotificationList(notifications, isDark),
                   _buildNotificationList(unreadNotifications, isDark),
                 ],
@@ -132,16 +119,14 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> wit
   }
 
   Widget _buildNotificationList(List<Map<String, dynamic>> data, bool isDark) {
->>>>>>> master
+
     if (data.isEmpty) {
       return Center(
         child: Text(
           AppLocalizations.of(context)!.no_notifications,
-<<<<<<< duha
-          style: const TextStyle(color: Colors.grey, fontSize: 16),
-=======
+
           style: TextStyle(color: isDark ? Colors.white60 : Colors.grey, fontSize: 16),
->>>>>>> master
+
         ),
       );
     }
