@@ -87,7 +87,7 @@ class _ProfileWorkerScreenState extends State<ProfileWorkerScreen> {
 
                   SizedBox(height: height * .02),
                   Text(
-                    profileController.fullname.isNotEmpty ? profileController.fullname : 'Your Name',
+                    profileController.username.isNotEmpty ? profileController.username : 'Your Name',
                     style: TextStyle(
                       fontSize: width * .045,
                       fontWeight: FontWeight.bold,
