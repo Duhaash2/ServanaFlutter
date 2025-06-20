@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../l10n/app_localizations.dart';
 
 class BottonNavigationWidget extends StatelessWidget {
   final IconData icon;
@@ -17,17 +16,6 @@ class BottonNavigationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-
-    // Map hardcoded labels to localized keys
-    String localizedLabel = switch (label.toLowerCase()) {
-      'home' => localizations.home,
-      'wallet' => localizations.wallet,
-      'history' => localizations.history,
-      'profile' => localizations.profile,
-      _ => label,
-    };
-
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
@@ -40,7 +28,7 @@ class BottonNavigationWidget extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              localizedLabel,
+              label,
               style: TextStyle(
                 fontSize: 14,
                 color: isSelected ? Colors.blue[900] : Colors.grey,

@@ -204,6 +204,10 @@
   "profileSettings": "إعدادات الملف الشخصي",
   "profileSettingsDesc": "إدارة بياناتك الشخصية والمهنية.",
   "verified": "موثوق",
+  "jod": "د.أ",
+  "wallet_sub": "اضغط لرؤية محفظتك",
+  "my_requests": "طلباتي",
+  "no_notifications": "ليس لديك إشعارات بعد.",
   "passwords_do_not_match": "كلمات المرور غير متطابقة",
   "please_enter_email_and_password": "يرجى إدخال البريد وكلمة المرور"
 }
