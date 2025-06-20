@@ -17,14 +17,13 @@ class _Intro2ScreenState extends State<Intro2Screen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final bool isDarkMode = theme.brightness == Brightness.dark;
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
 
     return Scaffold(
-      backgroundColor: isDarkMode ? theme.scaffoldBackgroundColor : const Color(0xFFEAF6FF),
+      backgroundColor: const Color(0xFFEAF6FF), // Light blue background
 
       body: Column(
         children: [
@@ -49,7 +48,7 @@ class _Intro2ScreenState extends State<Intro2Screen> {
                   Text(
                     AppLocalizations.of(context)!.receive_professional_help_on_time,
                     textAlign: TextAlign.center,
-                    style: theme.textTheme.titleMedium!.copyWith(
+                    style: TextStyle(
                       fontSize: width * 0.05,
                       fontWeight: FontWeight.bold,
                       color: isDarkMode ? Colors.white : Colors.blue[900],
@@ -59,7 +58,7 @@ class _Intro2ScreenState extends State<Intro2Screen> {
                   Text(
                     AppLocalizations.of(context)!.request_services_from_comfort_of_home,
                     textAlign: TextAlign.center,
-                    style: theme.textTheme.bodyMedium!.copyWith(
+                    style: TextStyle(
                       fontSize: width * 0.042,
                       color: isDarkMode ? Colors.grey[300] : Colors.grey[700],
                     ),
@@ -77,7 +76,7 @@ class _Intro2ScreenState extends State<Intro2Screen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: isDarkMode ? Colors.blue[900] : Colors.blue[900],
+                        backgroundColor: Colors.blue[900],
                         padding: EdgeInsets.symmetric(
                           horizontal: width * 0.15,
                           vertical: height * 0.015,
@@ -88,10 +87,7 @@ class _Intro2ScreenState extends State<Intro2Screen> {
                       ),
                       child: Text(
                         AppLocalizations.of(context)!.btn_cont,
-                        style: TextStyle(
-                          fontSize: width * 0.045,
-                          color: Colors.white,
-                        ),
+                        style: TextStyle(fontSize: width * 0.045, color: Colors.white),
                       ),
                     ),
                   ),
@@ -117,7 +113,7 @@ class _Intro2ScreenState extends State<Intro2Screen> {
                     "Skip",
                     style: TextStyle(
                       fontSize: width * 0.04,
-                      color: isDarkMode ? Colors.grey : Colors.blue[900],
+                      color: isDarkMode ? Colors.white : Colors.blue[900],
                     ),
                   ),
                 ),
@@ -125,7 +121,7 @@ class _Intro2ScreenState extends State<Intro2Screen> {
                   controller: _controller,
                   count: 2,
                   effect: ExpandingDotsEffect(
-                    activeDotColor: isDarkMode ? Colors.blue[900]! : Colors.blue[900]!,
+                    activeDotColor: Colors.blue[900]!,
                     dotHeight: 8,
                     dotWidth: 8,
                   ),
@@ -133,7 +129,7 @@ class _Intro2ScreenState extends State<Intro2Screen> {
                 IconButton(
                   icon: Icon(
                     Icons.arrow_forward,
-                    color: isDarkMode ? Colors.blue[900] : Colors.blue[900],
+                    color: Colors.blue[900],
                     size: width * 0.07,
                   ),
                   onPressed: () {

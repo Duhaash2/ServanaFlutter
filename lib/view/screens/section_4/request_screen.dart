@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servana/view/screens/section_3/home_client_screen.dart';
+import '../../../l10n/app_localizations.dart';
 
 class RequestScreen extends StatefulWidget {
   @override
@@ -11,23 +12,13 @@ class _RequestScreenState extends State<RequestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final Color backgroundStart = isDark ? const Color(0xFF121212) : const Color(0xFFEAF6FF);
-    final Color backgroundEnd = isDark ? const Color(0xFF1F1F1F) : const Color(0xFF90CAF9);
-    final Color textColor = isDark ? Colors.white : const Color(0xFF0D47A1);
-    final Color cardColor = isDark ?  Colors.grey[800]! : Colors.white;
-    final Color hintColor = isDark ? Colors.grey[400]! : Colors.grey[700]!;
-    final Color buttonColor = const Color(0xFF0D47A1);
-    final Color snackBg = isDark ? Colors.grey[800]! : const Color(0xFFEAF6FF);
-    final Color snackText = isDark ? Colors.white : Colors.black87;
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: buttonColor, size: 35),
+          icon: Icon(Icons.arrow_back, color: Colors.blue[900], size: 35),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -36,9 +27,9 @@ class _RequestScreenState extends State<RequestScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [backgroundStart, backgroundEnd],
+            colors: [Color(0xFFEAF6FF), Color(0xFF90CAF9)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -52,18 +43,18 @@ class _RequestScreenState extends State<RequestScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Request a Service",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.request_service_title,
+                      style: const TextStyle(
                         fontSize: 26,
-                        color: textColor,
+                        color: Color(0xFF0D47A1),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 30),
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 60,
-                      backgroundColor: cardColor,
-                      child: const CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: CircleAvatar(
                         radius: 52,
                         backgroundImage: AssetImage("assets/images/man1.PNG"),
                       ),
@@ -73,16 +64,15 @@ class _RequestScreenState extends State<RequestScreen> {
                       width: MediaQuery.of(context).size.width * 0.85,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: cardColor.withOpacity(0.95),
+                        color: Colors.white.withOpacity(0.95),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: TextField(
                         controller: issueController,
                         maxLines: 7,
-                        style: TextStyle(color: textColor, fontSize: 16),
                         decoration: InputDecoration.collapsed(
-                          hintText: "Describe the issue you need help with",
-                          hintStyle: TextStyle(color: hintColor, fontSize: 16),
+                          hintText: AppLocalizations.of(context)!.describe_issue_hint,
+                          hintStyle: TextStyle(fontSize: 16, color: Colors.grey[700]),
                         ),
                       ),
                     ),
@@ -92,10 +82,10 @@ class _RequestScreenState extends State<RequestScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              "Request A Service Submitted Successfully!",
-                              style: TextStyle(color: snackText),
+                              AppLocalizations.of(context)!.request_success_message,
+                              style: const TextStyle(color: Colors.black87),
                             ),
-                            backgroundColor: snackBg,
+                            backgroundColor: const Color(0xFFEAF6FF),
                             duration: const Duration(seconds: 2),
                           ),
                         );
@@ -107,15 +97,15 @@ class _RequestScreenState extends State<RequestScreen> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: buttonColor,
+                        backgroundColor: const Color(0xFF0D47A1),
                         padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
                         ),
                       ),
-                      child: const Text(
-                        "Request Service",
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      child: Text(
+                        AppLocalizations.of(context)!.submit_request_button,
+                        style: const TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ],

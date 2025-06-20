@@ -9,7 +9,7 @@ class InputWidget extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
 
-  InputWidget({
+  const InputWidget({
     super.key,
     required this.textEditingController,
     required this.obscureText,
