@@ -2,17 +2,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ProfileController extends ChangeNotifier {
-  String fullname = '';
+  String username = '';
   String email = '';
   String phoneNumber = '';
   String password = '';
   String address = '';
   String pricePerHour = '';
-  String categoryName = '';
   File? profileImage;
 
   void updateUsername(String value) {
-    fullname = value;
+    username = value;
     notifyListeners();
   }
 
@@ -41,11 +40,6 @@ class ProfileController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateCategory(String value) {
-    categoryName = value;
-    notifyListeners();
-  }
-
   void updateProfileImage(File newImage) {
     profileImage = newImage;
     notifyListeners();
@@ -58,16 +52,14 @@ class ProfileController extends ChangeNotifier {
     required String password,
     required String address,
     String? pricePerHour,
-    String? category,
     File? profileImage,
   }) {
-    this.fullname = username;
+    this.username = username;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.password = password;
     this.address = address;
     if (pricePerHour != null) this.pricePerHour = pricePerHour;
-    if (category != null) this.categoryName = category;
     if (profileImage != null) this.profileImage = profileImage;
     notifyListeners();
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 
 class WalletScreen extends StatefulWidget {
   @override
@@ -16,30 +17,22 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final backgroundStart = isDark ? const Color(0xFF121212) : const Color(0xFFEAF6FF);
-    final backgroundEnd = isDark ? const Color(0xFF1C1C1C) : const Color(0xFF86D3EC);
-    final cardColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
-    final textColor = isDark ? Colors.white : Colors.black;
-    final subTextColor = isDark ? Colors.grey[400]! : Colors.grey[700]!;
-    final withdrawBg = isDark ? Colors.grey[800]! : const Color(0xFFD1F3FF);
-    final withdrawText = isDark ? Colors.white : Colors.black87;
+    final local = AppLocalizations.of(context)!;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text("Wallet", style: TextStyle(color: textColor)),
+        title: Text(local.wallet),
         centerTitle: true,
-        iconTheme: IconThemeData(color: textColor),
       ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [backgroundStart, backgroundEnd],
+            colors: [Color(0xFFEAF6FF), Color(0xFF86D3EC)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -62,28 +55,24 @@ class _WalletScreenState extends State<WalletScreen> {
                           margin: const EdgeInsets.symmetric(horizontal: 20),
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: cardColor,
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12.withOpacity(0.1),
-                                blurRadius: 10,
-                              ),
+                            boxShadow: const [
+                              BoxShadow(color: Colors.black12, blurRadius: 10),
                             ],
                           ),
                           child: Column(
                             children: [
                               Text(
-                                "Your Balance",
-                                style: TextStyle(fontSize: 18, color: subTextColor),
+                                local.your_balance,
+                                style: const TextStyle(fontSize: 18),
                               ),
                               const SizedBox(height: 6),
                               Text(
                                 "\$${walletBalance.toStringAsFixed(2)}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 34,
                                   fontWeight: FontWeight.bold,
-                                  color: textColor,
                                 ),
                               ),
                               const SizedBox(height: 12),
@@ -98,23 +87,23 @@ class _WalletScreenState extends State<WalletScreen> {
                                       ),
                                     ),
                                     onPressed: () {},
-                                    child: const Text(
-                                      "Add Money",
-                                      style: TextStyle(color: Colors.white),
+                                    child: Text(
+                                      local.add_money,
+                                      style: const TextStyle(color: Colors.white),
                                     ),
                                   ),
                                   const SizedBox(width: 10),
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: withdrawBg,
+                                      backgroundColor: const Color(0xFFD1F3FF),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                     ),
                                     onPressed: () {},
                                     child: Text(
-                                      "Withdraw",
-                                      style: TextStyle(color: withdrawText),
+                                      local.withdraw,
+                                      style: const TextStyle(color: Colors.black87),
                                     ),
                                   ),
                                 ],
@@ -128,11 +117,10 @@ class _WalletScreenState extends State<WalletScreen> {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "Transaction History",
-                              style: TextStyle(
+                              local.transaction_history,
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: textColor,
                               ),
                             ),
                           ),
@@ -148,7 +136,7 @@ class _WalletScreenState extends State<WalletScreen> {
                             final bool isPositive = tx['amount'] > 0;
 
                             return Card(
-                              color: cardColor,
+                              color: Colors.white,
                               elevation: 3,
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               shape: RoundedRectangleBorder(
@@ -165,7 +153,9 @@ class _WalletScreenState extends State<WalletScreen> {
                                       ? const Color(0xFFB2DFDB)
                                       : const Color(0xFFFFCDD2),
                                   child: Icon(
-                                    isPositive ? Icons.arrow_upward : Icons.arrow_downward,
+                                    isPositive
+                                        ? Icons.arrow_upward
+                                        : Icons.arrow_downward,
                                     color: isPositive
                                         ? const Color(0xFF00695C)
                                         : const Color(0xFFC62828),
@@ -173,15 +163,14 @@ class _WalletScreenState extends State<WalletScreen> {
                                 ),
                                 title: Text(
                                   tx['id'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
-                                    color: textColor,
                                   ),
                                 ),
                                 subtitle: Text(
                                   tx['date'],
-                                  style: TextStyle(color: subTextColor),
+                                  style: TextStyle(color: Colors.grey[700]),
                                 ),
                                 trailing: Text(
                                   "${isPositive ? '+' : '-'}\$${tx['amount'].abs()}",
