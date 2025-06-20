@@ -57,18 +57,14 @@ class _EndWorkWScreenState extends State<EndWorkWScreen> {
         child: Column(
           children: [
             const SizedBox(height: 30),
-            _infoCard("CLIENT NAME", "John Doe", Icons.person),
             _infoCard(local.client_name, "John Doe", Icons.person),
             const SizedBox(height: 16),
             _infoCard(local.location, "123 Main St", Icons.location_on),
             const SizedBox(height: 16),
-            _infoCard("ISSUE", "Leaking faucet in kitchen", Icons.warning_amber_rounded),
             _infoCard(local.issue, "Leaking faucet in kitchen", Icons.warning_amber_rounded),
             const SizedBox(height: 16),
             _infoCard(local.duration, "01:25:30", Icons.timer),
             const SizedBox(height: 16),
-            _infoCard("STATUS", "Working", Icons.work_outline),
-            const SizedBox(height: 20),
             _infoCard(local.status, local.working_status, Icons.work_outline),
             const SizedBox(height: 20),
             SizedBox(

@@ -14,8 +14,7 @@ class ClientNotificationScreen extends StatefulWidget {
   State<ClientNotificationScreen> createState() => _ClientNotificationScreenState();
 }
 
-class _ClientNotificationScreenState extends State<ClientNotificationScreen>
-    with SingleTickerProviderStateMixin {
+class _ClientNotificationScreenState extends State<ClientNotificationScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int selectedIndex = 0;
 
@@ -36,6 +35,10 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
 
   @override
   Widget build(BuildContext context) {
+
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final fcmMessages = Provider.of<NotificationController>(context).messages;
 
     List<Map<String, dynamic>> notifications = fcmMessages.map((msg) {
@@ -58,19 +61,24 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
       };
     }).toList();
 
-    List<Map<String, dynamic>> unreadNotifications =
-    notifications.where((n) => n['isRead'] == false).toList();
+    List<Map<String, dynamic>> unreadNotifications = notifications.where((n) => n['isRead'] == false).toList();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+
+
+      backgroundColor: isDark ? Colors.grey[900] : Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? Colors.grey[900] : Colors.white,
+
         elevation: 0,
+        iconTheme: IconThemeData(color: isDark ? Colors.white : Colors.black),
         title: Text(
           AppLocalizations.of(context)!.notifications,
-          style: const TextStyle(
+
+          style: TextStyle(
             fontSize: 26,
-            color: Colors.black,
+            color: isDark ? Colors.white : Colors.black,
+
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -78,7 +86,9 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
           controller: _tabController,
           indicatorColor: Colors.blue[900],
           labelColor: Colors.blue[900],
-          unselectedLabelColor: Colors.grey,
+
+          unselectedLabelColor: isDark ? Colors.white60 : Colors.grey,
+
           labelStyle: const TextStyle(fontWeight: FontWeight.w500),
           tabs: [
             Tab(text: AppLocalizations.of(context)!.all),
@@ -94,6 +104,7 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
               child: TabBarView(
                 controller: _tabController,
                 children: [
+<<<<<<< duha
                   _buildNotificationList(notifications),
                   _buildNotificationList(unreadNotifications),
                 ],
@@ -107,11 +118,30 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
   }
 
   Widget _buildNotificationList(List<Map<String, dynamic>> data) {
+=======
+                  _buildNotificationList(notifications, isDark),
+                  _buildNotificationList(unreadNotifications, isDark),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      bottomNavigationBar: _buildBottomBar(MediaQuery.of(context).size.width, isDark),
+    );
+  }
+
+  Widget _buildNotificationList(List<Map<String, dynamic>> data, bool isDark) {
+>>>>>>> master
     if (data.isEmpty) {
       return Center(
         child: Text(
           AppLocalizations.of(context)!.no_notifications,
+<<<<<<< duha
           style: const TextStyle(color: Colors.grey, fontSize: 16),
+=======
+          style: TextStyle(color: isDark ? Colors.white60 : Colors.grey, fontSize: 16),
+>>>>>>> master
         ),
       );
     }
@@ -148,23 +178,41 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen>
           ),
           title: Text(
             item['title'],
-            style: const TextStyle(fontWeight: FontWeight.bold),
+
+
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : Colors.black,
+            ),
+
           ),
           subtitle: isDeclined
               ? Text(
             AppLocalizations.of(context)!.request_declined,
-            style: TextStyle(color: Colors.red[700], fontWeight: FontWeight.bold),
+
+
+            style: TextStyle(
+              color: Colors.red[700],
+              fontWeight: FontWeight.bold,
+            ),
           )
-              : Text(item['subtitle']),
-          trailing: Text(item['time'], style: const TextStyle(fontSize: 12, color: Colors.grey)),
+              : Text(
+            item['subtitle'],
+            style: TextStyle(color: isDark ? Colors.white70 : Colors.black87),
+          ),
+          trailing: Text(
+            item['time'],
+            style: TextStyle(fontSize: 12, color: isDark ? Colors.white60 : Colors.grey),
+          ),
         );
       },
     );
   }
 
-  BottomAppBar _buildBottomBar(double width) {
+  BottomAppBar _buildBottomBar(double width, bool isDark) {
     return BottomAppBar(
-      color: Colors.white,
+      color: isDark ? Colors.grey[900] : Colors.white,
+
       shape: const CircularNotchedRectangle(),
       notchMargin: 8,
       child: SizedBox(

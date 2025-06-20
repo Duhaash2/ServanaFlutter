@@ -60,7 +60,7 @@ class _RatingScreenState extends State<RatingScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ClientNotificationScreen()),
+                    MaterialPageRoute(builder: (context) =>  ClientNotificationScreen()),
                   );
                 },
                 icon: const Icon(Icons.notifications, color: Colors.white, size: 32),

@@ -36,6 +36,10 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
 
   @override
   Widget build(BuildContext context) {
+
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final local = AppLocalizations.of(context)!;
     final fcmMessages = Provider.of<NotificationController>(context).messages;
 
@@ -52,19 +56,31 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
     List<Map<String, dynamic>> unread = notifications.where((n) => n['isRead'] == false).toList();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+
+
+      backgroundColor: isDark ? Colors.grey[900] : Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? Colors.grey[900] : Colors.white,
+
         elevation: 0,
+        iconTheme: IconThemeData(color: isDark ? Colors.white : Colors.black),
         title: Text(
           local.notifications,
-          style: const TextStyle(fontSize: 26, color: Colors.black, fontWeight: FontWeight.bold),
+
+          style: TextStyle(
+            fontSize: 26,
+            color: isDark ? Colors.white : Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+
         ),
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.blue[900],
           labelColor: Colors.blue[900],
-          unselectedLabelColor: Colors.grey,
+
+          unselectedLabelColor: isDark ? Colors.white70 : Colors.grey,
+
           labelStyle: const TextStyle(fontWeight: FontWeight.w500),
           tabs: [
             Tab(text: local.all),
@@ -75,19 +91,23 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
       body: TabBarView(
         controller: _tabController,
         children: [
-          _buildNotificationList(notifications, local),
-          _buildNotificationList(unread, local),
+
+          _buildNotificationList(notifications, local, isDark),
+          _buildNotificationList(unread, local, isDark),
         ],
       ),
     );
   }
 
-  Widget _buildNotificationList(List<Map<String, dynamic>> data, AppLocalizations local) {
+  Widget _buildNotificationList(List<Map<String, dynamic>> data, AppLocalizations local, bool isDark) {
+
     if (data.isEmpty) {
       return Center(
         child: Text(
           local.no_notifications,
-          style: const TextStyle(color: Colors.grey, fontSize: 16),
+
+          style: TextStyle(color: isDark ? Colors.white60 : Colors.grey, fontSize: 16),
+
         ),
       );
     }
@@ -116,9 +136,28 @@ class _WorkerNotificationScreenState extends State<WorkerNotificationScreen> wit
                 ),
             ],
           ),
-          title: Text(item['title'], style: const TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(item['subtitle']),
-          trailing: Text(item['time'], style: const TextStyle(fontSize: 12, color: Colors.grey)),
+
+          title: Text(
+            item['title'],
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : Colors.black,
+            ),
+          ),
+          subtitle: Text(
+            item['subtitle'],
+            style: TextStyle(
+              color: isDark ? Colors.white70 : Colors.black87,
+            ),
+          ),
+          trailing: Text(
+            item['time'],
+            style: TextStyle(
+              fontSize: 12,
+              color: isDark ? Colors.white60 : Colors.grey,
+            ),
+          ),
+
         );
       },
     );

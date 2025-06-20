@@ -683,4 +683,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get please_enter_email_and_password =>
       'Please enter both email and password';
+  @override
+  String get client_request_title => 'Client Request';
+
+  @override
+  String get client_request_sub => 'Click to view client request details';
+
 }

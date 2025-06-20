@@ -213,6 +213,11 @@
   "paymentTitle": "PAYMENT",
   "cash": "Cash",
 
+
+
+  "client_request_title": "Client Request",
+  "client_request_sub": "Click to see client job requests",
+
   "hours": "Hours",
   "serviceFee": "Service Fee",
   "totalPrice": "Total Price",

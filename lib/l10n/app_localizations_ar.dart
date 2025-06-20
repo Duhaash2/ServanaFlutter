@@ -683,4 +683,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get please_enter_email_and_password =>
       'يرجى إدخال البريد وكلمة المرور';
+  @override
+  String get client_request_title => 'طلب من العميل';
+
+  @override
+  String get client_request_sub => 'اضغط لعرض تفاصيل الطلب من العميل';
+
 }
